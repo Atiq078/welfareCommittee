@@ -109,7 +109,7 @@ export default class TutorialsList extends Component<Props, State>{
             <input
               type="text"
               className="form-control"
-              placeholder="Search by title"
+              placeholder="Search by name"
               value={searchTitle}
               onChange={this.onChangeSearchTitle}
             />
@@ -125,7 +125,7 @@ export default class TutorialsList extends Component<Props, State>{
           </div>
         </div>
         <div className="col-md-6">
-          <h4>Tutorials List</h4>
+          <h4>Candidates List</h4>
 
           <ul className="list-group">
             {tutorials &&
@@ -153,28 +153,64 @@ export default class TutorialsList extends Component<Props, State>{
         <div className="col-md-6">
           {currentTutorial ? (
             <div>
-              <h4>Tutorial</h4>
+              <h4>Candidate</h4>
               <div>
                 <label>
-                  <strong>Title:</strong>
+                  <strong>Name:</strong>
                 </label>{" "}
                 {currentTutorial.name}
               </div>
               <div>
                 <label>
-                  <strong>Description:</strong>
+                  <strong>InActive:</strong>
                 </label>{" "}
                 {currentTutorial.inactive}
               </div>
               <div>
                 <label>
-                  <strong>Status:</strong>
+                  <strong>Hidden:</strong>
                 </label>{" "}
-                {currentTutorial.mode ? "Published" : "Pending"}
+                {currentTutorial.hidden}
+              </div>
+              <div>
+                <label>
+                  <strong>Phone:</strong>
+                </label>{" "}
+                {currentTutorial.phone}
+              </div>
+              <div>
+                <label>
+                  <strong>Address:</strong>
+                </label>{" "}
+                {currentTutorial.address}
+              </div>
+              <div>
+                <label>
+                  <strong>Bank Details:</strong>
+                </label>{" "}
+                {currentTutorial.bankdetails}
+              </div>
+              <div>
+                <label>
+                  <strong>Email:</strong>
+                </label>{" "}
+                {currentTutorial.email}
+              </div>
+              <div>
+                <label>
+                  <strong>Password:</strong>
+                </label>{" "}
+                {currentTutorial.password}
+              </div>
+              <div>
+                <label>
+                  <strong>Mode:</strong>
+                </label>{" "}
+                {currentTutorial.mode==="admin" ? "Published" : "Pending"}
               </div>
 
               <Link
-                to={"/tutorials/" + currentTutorial.id}
+                to={"/candidates/" + currentTutorial.id}
                 className="badge badge-warning"
               >
                 Edit
@@ -183,7 +219,7 @@ export default class TutorialsList extends Component<Props, State>{
           ) : (
             <div>
               <br />
-              <p>Please click on a Tutorial...</p>
+              <p>Please click on a Candidate...</p>
             </div>
           )}
         </div>

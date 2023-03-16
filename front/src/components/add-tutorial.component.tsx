@@ -12,7 +12,14 @@ export default class AddTutorial extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);//hidden
+    this.onChangeInactive = this.onChangeInactive.bind(this);
+    this.onChangeMode = this.onChangeMode.bind(this);
+    this.onChangePhone = this.onChangePhone.bind(this);
+    this.onChangeAddress = this.onChangeAddress.bind(this);
+    this.onChangeBankdetails = this.onChangeBankdetails.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
     this.saveTutorial = this.saveTutorial.bind(this);
     this.newTutorial = this.newTutorial.bind(this);
 
@@ -37,9 +44,52 @@ export default class AddTutorial extends Component<Props, State> {
     });
   }
 
+  //hidden
   onChangeDescription(e: ChangeEvent<HTMLInputElement>) {
     this.setState({
       hidden: e.target.value
+    });
+  }
+
+  onChangeInactive(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      inactive: e.target.value
+    });
+  }
+
+  onChangeMode(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      mode: e.target.value
+    });
+  }
+
+  onChangePhone(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      phone: e.target.value
+    });
+  }
+
+  onChangeAddress(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      address: e.target.value
+    });
+  }
+
+  onChangeBankdetails(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      bankdetails: e.target.value
+    });
+  }
+
+  onChangeEmail(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      email: e.target.value
+    });
+  }
+
+  onChangePassword(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      password: e.target.value
     });
   }
 
@@ -63,6 +113,12 @@ export default class AddTutorial extends Component<Props, State> {
           name: response.data.name,
           hidden: response.data.hidden,
           inactive: response.data.inactive,
+          mode: response.data.mode,
+          phone: response.data.phone,
+          address: response.data.address,
+          bankdetails: response.data.bankdetails,
+          email: response.data.email,
+          password: response.data.password,
           submitted: true
         });
         console.log(response.data);
@@ -78,12 +134,18 @@ export default class AddTutorial extends Component<Props, State> {
       name: "",
       hidden: "",
       inactive: "",
+      mode: "",
+      phone: "",
+      address: "",
+      bankdetails: "",
+      email: "",
+      password: "",
       submitted: false
     });
   }
 
   render() {
-    const { submitted, name, hidden } = this.state;
+    const { submitted, name, hidden, inactive, mode, phone, address, bankdetails, email, password } = this.state;
 
     return (
       <div className="submit-form">
@@ -97,7 +159,7 @@ export default class AddTutorial extends Component<Props, State> {
         ) : (
           <div>
             <div className="form-group">
-              <label htmlFor="name">Title</label>
+              <label htmlFor="name">Name</label>
               <input
                 type="text"
                 className="form-control"
@@ -110,7 +172,7 @@ export default class AddTutorial extends Component<Props, State> {
             </div>
 
             <div className="form-group">
-              <label htmlFor="hidden">Description</label>
+              <label htmlFor="hidden">Hidden</label>
               <input
                 type="text"
                 className="form-control"
@@ -121,6 +183,98 @@ export default class AddTutorial extends Component<Props, State> {
                 name="hidden"
               />
             </div>
+
+            <div className="form-group">
+              <label htmlFor="inactive">Inactive</label>
+              <input
+                type="text"
+                className="form-control"
+                id="inactive"
+                required
+                value={inactive}
+                onChange={this.onChangeInactive}
+                name="inactive"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="mode">Mode</label>
+              <input
+                type="text"
+                className="form-control"
+                id="mode"
+                required
+                value={mode}
+                onChange={this.onChangeMode}
+                name="mode"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="phone">Phone</label>
+              <input
+                type="text"
+                className="form-control"
+                id="phone"
+                required
+                value={phone}
+                onChange={this.onChangePhone}
+                name="phone"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="address">Address</label>
+              <input
+                type="text"
+                className="form-control"
+                id="address"
+                required
+                value={address}
+                onChange={this.onChangeAddress}
+                name="address"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="bankdetails">Bank Details</label>
+              <input
+                type="text"
+                className="form-control"
+                id="bankdetails"
+                required
+                value={bankdetails}
+                onChange={this.onChangeBankdetails}
+                name="bankdetails"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                className="form-control"
+                id="email"
+                required
+                value={email}
+                onChange={this.onChangeEmail}
+                name="email"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="text"
+                className="form-control"
+                id="password"
+                required
+                value={password}
+                onChange={this.onChangePassword}
+                name="password"
+              />
+            </div>
+
 
             <button onClick={this.saveTutorial} className="btn btn-success">
               Submit

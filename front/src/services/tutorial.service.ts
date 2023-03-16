@@ -27,8 +27,8 @@ class TutorialDataService {
     return http.delete<any>(`/candidates`);
   }
 
-  findByTitle(title: string) {
-    return http.get<Array<ITutorialData>>(`/candidates?title=${title}`);
+  findByTitle(name: string) {
+    return http.get<Array<ITutorialData>>(`/candidates?name=${name}`);
   }
 }
 

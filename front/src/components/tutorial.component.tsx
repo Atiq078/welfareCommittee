@@ -20,6 +20,13 @@ export default class Tutorial extends Component<Props, State> {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeInactive = this.onChangeInactive.bind(this);
+    this.onChangeMode = this.onChangeMode.bind(this);
+    this.onChangePhone = this.onChangePhone.bind(this);
+    this.onChangeAddress = this.onChangeAddress.bind(this);
+    this.onChangeBankdetails = this.onChangeBankdetails.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
     this.getTutorial = this.getTutorial.bind(this);
     this.updatePublished = this.updatePublished.bind(this);
     this.updateTutorial = this.updateTutorial.bind(this);
@@ -59,6 +66,7 @@ export default class Tutorial extends Component<Props, State> {
     });
   }
 
+  //hidden
   onChangeDescription(e: ChangeEvent<HTMLInputElement>) {
     const hidden = e.target.value;
 
@@ -66,6 +74,83 @@ export default class Tutorial extends Component<Props, State> {
       currentTutorial: {
         ...prevState.currentTutorial,
         hidden: hidden,
+      },
+    }));
+  }
+
+  onChangeInactive(e: ChangeEvent<HTMLInputElement>) {
+    const inactive = e.target.value;
+
+    this.setState((prevState) => ({
+      currentTutorial: {
+        ...prevState.currentTutorial,
+        inactive: inactive,
+      },
+    }));
+  }
+
+  onChangeMode(e: ChangeEvent<HTMLInputElement>) {
+    const mode = e.target.value;
+
+    this.setState((prevState) => ({
+      currentTutorial: {
+        ...prevState.currentTutorial,
+        mode: mode,
+      },
+    }));
+  }
+
+  onChangePhone(e: ChangeEvent<HTMLInputElement>) {
+    const phone = e.target.value;
+
+    this.setState((prevState) => ({
+      currentTutorial: {
+        ...prevState.currentTutorial,
+        phone: phone,
+      },
+    }));
+  }
+
+  onChangeAddress(e: ChangeEvent<HTMLInputElement>) {
+    const address = e.target.value;
+
+    this.setState((prevState) => ({
+      currentTutorial: {
+        ...prevState.currentTutorial,
+        address: address,
+      },
+    }));
+  }
+
+  onChangeBankdetails(e: ChangeEvent<HTMLInputElement>) {
+    const bankdetails = e.target.value;
+
+    this.setState((prevState) => ({
+      currentTutorial: {
+        ...prevState.currentTutorial,
+        bankdetails: bankdetails,
+      },
+    }));
+  }
+
+  onChangeEmail(e: ChangeEvent<HTMLInputElement>) {
+    const email = e.target.value;
+
+    this.setState((prevState) => ({
+      currentTutorial: {
+        ...prevState.currentTutorial,
+        email: email,
+      },
+    }));
+  }
+
+  onChangePassword(e: ChangeEvent<HTMLInputElement>) {
+    const password = e.target.value;
+
+    this.setState((prevState) => ({
+      currentTutorial: {
+        ...prevState.currentTutorial,
+        password: password,
       },
     }));
   }
@@ -133,7 +218,7 @@ export default class Tutorial extends Component<Props, State> {
     TutorialDataService.delete(this.state.currentTutorial.id)
       .then((response: any) => {
         console.log(response.data);
-        this.props.history.push("/tutorials");
+        this.props.history.push("/candidates");
       })
       .catch((e: Error) => {
         console.log(e);
@@ -150,7 +235,7 @@ export default class Tutorial extends Component<Props, State> {
             <h4>Tutorial</h4>
             <form>
               <div className="form-group">
-                <label htmlFor="name">Title</label>
+                <label htmlFor="name">NAME</label>
                 <input
                   type="text"
                   className="form-control"
@@ -160,7 +245,7 @@ export default class Tutorial extends Component<Props, State> {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="hidden">Description</label>
+                <label htmlFor="hidden">HIDDEN</label>
                 <input
                   type="text"
                   className="form-control"
@@ -169,13 +254,78 @@ export default class Tutorial extends Component<Props, State> {
                   onChange={this.onChangeDescription}
                 />
               </div>
-
               <div className="form-group">
-                <label>
-                  <strong>Status:</strong>
-                </label>
-                {currentTutorial.inactive ? "Published" : "Pending"}
+                <label htmlFor="inactive">INACTIVE</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="inactive"
+                  value={currentTutorial.inactive}
+                  onChange={this.onChangeInactive}
+                />
               </div>
+              <div className="form-group">
+                <label htmlFor="mode">MODE</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="mode"
+                  value={currentTutorial.mode}
+                  onChange={this.onChangeMode}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">PHONE</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="phone"
+                  value={currentTutorial.phone}
+                  onChange={this.onChangePhone}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="address">ADDRESS</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="address"
+                  value={currentTutorial.address}
+                  onChange={this.onChangeAddress}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="bankdetails">BANK DETAILS</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="bankdetails"
+                  value={currentTutorial.bankdetails}
+                  onChange={this.onChangeBankdetails}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">EMAIL</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="email"
+                  value={currentTutorial.email}
+                  onChange={this.onChangeEmail}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">PASSWORD</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="password"
+                  value={currentTutorial.password}
+                  onChange={this.onChangePassword}
+                />
+              </div>
+
+              
             </form>
 
             {currentTutorial.inactive ? (
