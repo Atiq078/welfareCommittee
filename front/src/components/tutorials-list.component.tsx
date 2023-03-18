@@ -2,6 +2,13 @@ import { Component, ChangeEvent } from "react";
 import TutorialDataService from "../services/tutorial.service";
 import { Link } from "react-router-dom";
 import ITutorialData from '../types/tutorial.type';
+import React from "react";
+
+import Table from 'react-bootstrap/Table';
+//import { getCoreRowModel, useReactTable, flexRender } from '@tanstack/react-table';
+//import type { ColumnDef } from '@tanstack/react-table';
+import ListGroup from 'react-bootstrap/ListGroup';
+import "./component.css";
 
 type Props = {};
 
@@ -99,8 +106,12 @@ export default class TutorialsList extends Component<Props, State>{
       });
   }
 
+  
+
+ 
   render() {
     const { searchTitle, tutorials, currentTutorial, currentIndex } = this.state;
+    
 
     return (
       <div className="list row">
@@ -142,6 +153,8 @@ export default class TutorialsList extends Component<Props, State>{
                 </li>
               ))}
           </ul>
+
+
 
           <button
             className="m-3 btn btn-sm btn-danger"
@@ -209,6 +222,91 @@ export default class TutorialsList extends Component<Props, State>{
                 {currentTutorial.mode==="admin" ? "Published" : "Pending"}
               </div>
 
+              <div className="table-wrapper">
+      <Table className="table table-earnings table-earnings__challenge">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>{currentTutorial.name}</td>
+          <td>{currentTutorial.hidden}</td>
+          <td>@{currentTutorial.inactive}</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td colSpan={2}>Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </Table>
+    </div>
+    <div>
+              <br />
+            </div>
+
               <Link
                 to={"/candidates/" + currentTutorial.id}
                 className="badge badge-warning"
@@ -223,7 +321,13 @@ export default class TutorialsList extends Component<Props, State>{
             </div>
           )}
         </div>
+
+
+
+
       </div>
+      
     );
   }
+
 }

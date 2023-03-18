@@ -1,0 +1,31 @@
+
+
+.example-title1 {
+  background-color: blanchedalmond;
+  padding: 10px;
+}
+
+.list-group{
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  
+.list-group1{
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-wrapper {
+    max-width: 100px;
+    max-height: 400px;
+    overflow: auto;
+    display:inline-block;
+  }
+  .table-earnings {
+    background: #F3F5F6;
+  }
