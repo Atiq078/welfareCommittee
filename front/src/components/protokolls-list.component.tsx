@@ -1,58 +1,57 @@
 import { Component, ChangeEvent } from "react";
-import TutorialDataService from "../services/tutorial.service";
+import ProtokollDataService from "../services/protokoll.service";
 import { Link } from "react-router-dom";
-import ITutorialData from '../types/tutorial.type';
+import ProtokollData from '../types/protokoll.type';
 import React from "react";
 
 import Table from 'react-bootstrap/Table';
-
 //import ListGroup from 'react-bootstrap/ListGroup';
 import "./component.css";
 
 type Props = {};
 
 type State = {
-  tutorials: Array<ITutorialData>,
-  currentTutorial: ITutorialData | null,
+  protokolls: Array<ProtokollData>,
+  currentProtokoll: ProtokollData | null,
   currentIndex: number,
-  searchTitle: string
+  searchKommentar: string
 };
 
-export default class TutorialsList extends Component<Props, State>{
+export default class ProtokollsList extends Component<Props, State>{
   constructor(props: Props) {
     super(props);
-    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
-    this.retrieveTutorials = this.retrieveTutorials.bind(this);
+    this.onChangeSearchKommentar = this.onChangeSearchKommentar.bind(this);
+    this.retrieveProtokolls = this.retrieveProtokolls.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveTutorial = this.setActiveTutorial.bind(this);
-    this.removeAllTutorials = this.removeAllTutorials.bind(this);
-    this.searchTitle = this.searchTitle.bind(this);
+    this.setActiveProtokoll = this.setActiveProtokoll.bind(this);
+    this.removeAllProtokolls = this.removeAllProtokolls.bind(this);
+    this.searchKommentar = this.searchKommentar.bind(this);
 
     this.state = {
-      tutorials: [],
-      currentTutorial: null,
+      protokolls: [],
+      currentProtokoll: null,
       currentIndex: -1,
-      searchTitle: ""
+      searchKommentar: ""
     };
   }
 
   componentDidMount() {
-    this.retrieveTutorials();
+    this.retrieveProtokolls();
   }
 
-  onChangeSearchTitle(e: ChangeEvent<HTMLInputElement>) {
-    const searchTitle = e.target.value;
+  onChangeSearchKommentar(e: ChangeEvent<HTMLInputElement>) {
+    const searchKommentar = e.target.value;
 
     this.setState({
-      searchTitle: searchTitle
+      searchKommentar: searchKommentar
     });
   }
 
-  retrieveTutorials() {
-    TutorialDataService.getAll()
+  retrieveProtokolls() {
+    ProtokollDataService.getAll()
       .then((response: any) => {
         this.setState({
-          tutorials: response.data
+          protokolls: response.data
         });
         console.log(response.data);
       })
@@ -62,22 +61,22 @@ export default class TutorialsList extends Component<Props, State>{
   }
 
   refreshList() {
-    this.retrieveTutorials();
+    this.retrieveProtokolls();
     this.setState({
-      currentTutorial: null,
+      currentProtokoll: null,
       currentIndex: -1
     });
   }
 
-  setActiveTutorial(tutorial: ITutorialData, index: number) {
+  setActiveProtokoll(protokoll: ProtokollData, index: number) {
     this.setState({
-      currentTutorial: tutorial,
+      currentProtokoll: protokoll,
       currentIndex: index
     });
   }
 
-  removeAllTutorials() {
-    TutorialDataService.deleteAll()
+  removeAllProtokolls() {
+    ProtokollDataService.deleteAll()
       .then((response: any) => {
         console.log(response.data);
         this.refreshList();
@@ -87,16 +86,16 @@ export default class TutorialsList extends Component<Props, State>{
       });
   }
 
-  searchTitle() {
+  searchKommentar() {
     this.setState({
-      currentTutorial: null,
+      currentProtokoll: null,
       currentIndex: -1
     });
 
-    TutorialDataService.findByTitle(this.state.searchTitle)
+    ProtokollDataService.findByTitle(this.state.searchKommentar)
       .then((response: any) => {
         this.setState({
-          tutorials: response.data
+          protokolls: response.data
         });
         console.log(response.data);
       })
@@ -109,7 +108,7 @@ export default class TutorialsList extends Component<Props, State>{
 
  
   render() {
-    const { searchTitle, tutorials, currentTutorial, currentIndex } = this.state;
+    const { searchKommentar, protokolls, currentProtokoll, currentIndex } = this.state;
     
 
     return (
@@ -119,15 +118,15 @@ export default class TutorialsList extends Component<Props, State>{
             <input
               type="text"
               className="form-control"
-              placeholder="Search by name"
-              value={searchTitle}
-              onChange={this.onChangeSearchTitle}
+              placeholder="Search by kommentar"
+              value={searchKommentar}
+              onChange={this.onChangeSearchKommentar}
             />
             <div className="input-group-append">
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={this.searchTitle}
+                onClick={this.searchKommentar}
               >
                 Search
               </button>
@@ -135,20 +134,20 @@ export default class TutorialsList extends Component<Props, State>{
           </div>
         </div>
         <div className="col-md-6">
-          <h4>Candidates List</h4>
+          <h4>Protokoll List</h4>
 
           <ul className="list-group">
-            {tutorials &&
-              tutorials.map((tutorial: ITutorialData, index: number) => (
+            {protokolls &&
+              protokolls.map((protokoll: ProtokollData, index: number) => (
                 <li
                   className={
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveTutorial(tutorial, index)}
+                  onClick={() => this.setActiveProtokoll(protokoll, index)}
                   key={index}
                 >
-                  {tutorial.name}
+                  {protokoll.kommentar}
                 </li>
               ))}
           </ul>
@@ -157,68 +156,45 @@ export default class TutorialsList extends Component<Props, State>{
 
           <button
             className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllTutorials}
+            onClick={this.removeAllProtokolls}
           >
             Remove All
           </button>
         </div>
         <div className="col-md-6">
-          {currentTutorial ? (
+          {currentProtokoll ? (
             <div>
               <h4>Candidate</h4>
               <div>
                 <label>
-                  <strong>Name:</strong>
+                  <strong>Kommentar:</strong>
                 </label>{" "}
-                {currentTutorial.name}
+                {currentProtokoll.kommentar}
               </div>
               <div>
                 <label>
-                  <strong>InActive:</strong>
+                  <strong>Timestamp:</strong>
                 </label>{" "}
-                {currentTutorial.inactive}
+                {currentProtokoll.timestamp}
               </div>
               <div>
                 <label>
-                  <strong>Hidden:</strong>
+                  <strong>UserId:</strong>
                 </label>{" "}
-                {currentTutorial.hidden}
+                {currentProtokoll.userid}
               </div>
               <div>
                 <label>
-                  <strong>Phone:</strong>
+                  <strong>ActioID:</strong>
                 </label>{" "}
-                {currentTutorial.phone}
+                {currentProtokoll.actionid}
               </div>
+              
               <div>
                 <label>
-                  <strong>Address:</strong>
+                  <strong>Value:</strong>
                 </label>{" "}
-                {currentTutorial.address}
-              </div>
-              <div>
-                <label>
-                  <strong>Bank Details:</strong>
-                </label>{" "}
-                {currentTutorial.bankdetails}
-              </div>
-              <div>
-                <label>
-                  <strong>Email:</strong>
-                </label>{" "}
-                {currentTutorial.email}
-              </div>
-              <div>
-                <label>
-                  <strong>Password:</strong>
-                </label>{" "}
-                {currentTutorial.password}
-              </div>
-              <div>
-                <label>
-                  <strong>Mode:</strong>
-                </label>{" "}
-                {currentTutorial.mode==="admin" ? "Published" : "Pending"}
+                {currentProtokoll.value==="admin" ? "Published" : "Pending"}
               </div>
 
               <div className="table-wrapper">
@@ -234,9 +210,9 @@ export default class TutorialsList extends Component<Props, State>{
       <tbody>
         <tr>
           <td>1</td>
-          <td>{currentTutorial.name}</td>
-          <td>{currentTutorial.hidden}</td>
-          <td>@{currentTutorial.inactive}</td>
+          <td>{currentProtokoll.kommentar}</td>
+          <td>{currentProtokoll.userid}</td>
+          <td>@{currentProtokoll.timestamp}</td>
         </tr>
         
         <tr>
@@ -307,7 +283,7 @@ export default class TutorialsList extends Component<Props, State>{
             </div>
 
               <Link
-                to={"/candidates/" + currentTutorial.id}
+                to={"/protokolls/" + currentProtokoll.id}
                 className="badge badge-warning"
               >
                 Edit

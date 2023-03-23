@@ -3,11 +3,12 @@ import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-//import AddTutorial from "./components/tutorials-list.component";
 import AddTutorial from "./components/add-tutorial.component";
-//import Tutorial from "./components/tutorials-list.component";
 import Tutorial from "./components/tutorial.component";
 import TutorialsList from "./components/tutorials-list.component";
+import AddProtokoll from "./components/add-protokoll.component";
+import Protokoll from "./components/protokoll.component";
+import ProtokollsList from "./components/protokolls-list.component";
 
 class App extends Component {
   render() {
@@ -25,7 +26,17 @@ class App extends Component {
             </li>
             <li className="nav-item">
               <Link to={"/add"} className="nav-link">
-                Add
+                Add Candidate
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/protokolls"} className="nav-link">
+                Protokolls
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/addprotokolls"} className="nav-link">
+                Add Protokolls
               </Link>
             </li>
           </div>
@@ -36,6 +47,9 @@ class App extends Component {
             <Route exact path={["/", "/candidates"]} component={TutorialsList} />
             <Route exact path="/add" component={AddTutorial} />
             <Route path="/candidates/:id" component={Tutorial} />
+            <Route exact path={["/protokolls"]} component={ProtokollsList} />
+            <Route exact path="/addprotokolls" component={AddProtokoll} />
+            <Route path="/protokolls/:id" component={Protokoll} />
           </Switch>
         </div>
       </div>
