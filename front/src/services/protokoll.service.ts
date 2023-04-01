@@ -29,6 +29,10 @@ class ProtokollDataService {
   findByTitle(kommentar: string) {
     return http.get<Array<ProtokollData>>(`/protokolls?kommentar=${kommentar}`);
   }
+
+  findByUserID(userid: string) {
+    return http.get<Array<ProtokollData>>(`/protokolls?userid=${userid}`);
+  }
 }
 
 export default new ProtokollDataService();

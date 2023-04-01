@@ -1,8 +1,8 @@
 import { Component, ChangeEvent } from "react";
 import { RouteComponentProps } from 'react-router-dom';
 
-import TutorialDataService from "../services/tutorial.service";
-import ITutorialData from "../types/tutorial.type";
+import CandidateDataService from "../services/candidate.service";
+import ICandidateData from "../types/candidate.type";
 
 interface RouterProps { // type for `match.params`
   id: string; // must be type `string` since value comes from the URL
@@ -11,15 +11,15 @@ interface RouterProps { // type for `match.params`
 type Props = RouteComponentProps<RouterProps>;
 
 type State = {
-  currentTutorial: ITutorialData;
+  currentCandidate: ICandidateData;
   message: string;
 }
 
-export default class Tutorial extends Component<Props, State> {
+export default class Candidate extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeHidden = this.onChangeHidden.bind(this);
     this.onChangeInactive = this.onChangeInactive.bind(this);
     this.onChangeMode = this.onChangeMode.bind(this);
     this.onChangePhone = this.onChangePhone.bind(this);
@@ -27,13 +27,13 @@ export default class Tutorial extends Component<Props, State> {
     this.onChangeBankdetails = this.onChangeBankdetails.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.getTutorial = this.getTutorial.bind(this);
+    this.getCandidate = this.getCandidate.bind(this);
     this.updatePublished = this.updatePublished.bind(this);
-    this.updateTutorial = this.updateTutorial.bind(this);
-    this.deleteTutorial = this.deleteTutorial.bind(this);
+    this.updateCandidate = this.updateCandidate.bind(this);
+    this.deleteCandidate = this.deleteCandidate.bind(this);
 
     this.state = {
-      currentTutorial: {
+      currentCandidate: {
         id: null,
         name: "",
         hidden: "",
@@ -50,16 +50,16 @@ export default class Tutorial extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.getTutorial(this.props.match.params.id);
+    this.getCandidate(this.props.match.params.id);
   }
 
-  onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
+  onChangeName(e: ChangeEvent<HTMLInputElement>) {
     const name = e.target.value;
 
     this.setState(function (prevState) {
       return {
-        currentTutorial: {
-          ...prevState.currentTutorial,
+        currentCandidate: {
+          ...prevState.currentCandidate,
           name: name,
         },
       };
@@ -67,12 +67,12 @@ export default class Tutorial extends Component<Props, State> {
   }
 
   //hidden
-  onChangeDescription(e: ChangeEvent<HTMLInputElement>) {
+  onChangeHidden(e: ChangeEvent<HTMLInputElement>) {
     const hidden = e.target.value;
 
     this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
+      currentCandidate: {
+        ...prevState.currentCandidate,
         hidden: hidden,
       },
     }));
@@ -82,8 +82,8 @@ export default class Tutorial extends Component<Props, State> {
     const inactive = e.target.value;
 
     this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
+      currentCandidate: {
+        ...prevState.currentCandidate,
         inactive: inactive,
       },
     }));
@@ -93,8 +93,8 @@ export default class Tutorial extends Component<Props, State> {
     const mode = e.target.value;
 
     this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
+      currentCandidate: {
+        ...prevState.currentCandidate,
         mode: mode,
       },
     }));
@@ -104,8 +104,8 @@ export default class Tutorial extends Component<Props, State> {
     const phone = e.target.value;
 
     this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
+      currentCandidate: {
+        ...prevState.currentCandidate,
         phone: phone,
       },
     }));
@@ -115,8 +115,8 @@ export default class Tutorial extends Component<Props, State> {
     const address = e.target.value;
 
     this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
+      currentCandidate: {
+        ...prevState.currentCandidate,
         address: address,
       },
     }));
@@ -126,8 +126,8 @@ export default class Tutorial extends Component<Props, State> {
     const bankdetails = e.target.value;
 
     this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
+      currentCandidate: {
+        ...prevState.currentCandidate,
         bankdetails: bankdetails,
       },
     }));
@@ -137,8 +137,8 @@ export default class Tutorial extends Component<Props, State> {
     const email = e.target.value;
 
     this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
+      currentCandidate: {
+        ...prevState.currentCandidate,
         email: email,
       },
     }));
@@ -148,18 +148,18 @@ export default class Tutorial extends Component<Props, State> {
     const password = e.target.value;
 
     this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
+      currentCandidate: {
+        ...prevState.currentCandidate,
         password: password,
       },
     }));
   }
 
-  getTutorial(id: string) {
-    TutorialDataService.get(id)
+  getCandidate(id: string) {
+    CandidateDataService.get(id)
       .then((response: any) => {
         this.setState({
-          currentTutorial: response.data,
+          currentCandidate: response.data,
         });
         console.log(response.data);
       })
@@ -169,24 +169,24 @@ export default class Tutorial extends Component<Props, State> {
   }
 
   updatePublished(status: boolean) {
-    const data: ITutorialData = {
-      id: this.state.currentTutorial.id,
-      name: this.state.currentTutorial.name,
-      hidden: this.state.currentTutorial.hidden,
-      inactive: this.state.currentTutorial.inactive,//status,
-      mode: this.state.currentTutorial.mode,
-      phone: this.state.currentTutorial.phone,
-      address: this.state.currentTutorial.address,
-      bankdetails: this.state.currentTutorial.bankdetails,
-      email: this.state.currentTutorial.email,
-      password: this.state.currentTutorial.password,
+    const data: ICandidateData = {
+      id: this.state.currentCandidate.id,
+      name: this.state.currentCandidate.name,
+      hidden: this.state.currentCandidate.hidden,
+      inactive: this.state.currentCandidate.inactive,//status,
+      mode: this.state.currentCandidate.mode,
+      phone: this.state.currentCandidate.phone,
+      address: this.state.currentCandidate.address,
+      bankdetails: this.state.currentCandidate.bankdetails,
+      email: this.state.currentCandidate.email,
+      password: this.state.currentCandidate.password,
     };
 
-    TutorialDataService.update(data, this.state.currentTutorial.id)
+    CandidateDataService.update(data, this.state.currentCandidate.id)
       .then((response: any) => {
         this.setState((prevState) => ({
-          currentTutorial: {
-            ...prevState.currentTutorial,
+          currentCandidate: {
+            ...prevState.currentCandidate,
             inactive: "",//status,
           },
           message: "The status was updated successfully!"
@@ -198,15 +198,15 @@ export default class Tutorial extends Component<Props, State> {
       });
   }
 
-  updateTutorial() {
-    TutorialDataService.update(
-      this.state.currentTutorial,
-      this.state.currentTutorial.id
+  updateCandidate() {
+    CandidateDataService.update(
+      this.state.currentCandidate,
+      this.state.currentCandidate.id
     )
       .then((response: any) => {
         console.log(response.data);
         this.setState({
-          message: "The tutorial was updated successfully!",
+          message: "The candidate was updated successfully!",
         });
       })
       .catch((e: Error) => {
@@ -214,8 +214,8 @@ export default class Tutorial extends Component<Props, State> {
       });
   }
 
-  deleteTutorial() {
-    TutorialDataService.delete(this.state.currentTutorial.id)
+  deleteCandidate() {
+    CandidateDataService.delete(this.state.currentCandidate.id)
       .then((response: any) => {
         console.log(response.data);
         this.props.history.push("/candidates");
@@ -226,13 +226,13 @@ export default class Tutorial extends Component<Props, State> {
   }
 
   render() {
-    const { currentTutorial } = this.state;
+    const { currentCandidate } = this.state;
 
     return (
       <div>
-        {currentTutorial ? (
+        {currentCandidate ? (
           <div className="edit-form">
-            <h4>Tutorial</h4>
+            <h4>Candidate</h4>
             <form>
               <div className="form-group">
                 <label htmlFor="name">NAME</label>
@@ -240,8 +240,8 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="name"
-                  value={currentTutorial.name}
-                  onChange={this.onChangeTitle}
+                  value={currentCandidate.name}
+                  onChange={this.onChangeName}
                 />
               </div>
               <div className="form-group">
@@ -250,8 +250,8 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="hidden"
-                  value={currentTutorial.hidden}
-                  onChange={this.onChangeDescription}
+                  value={currentCandidate.hidden}
+                  onChange={this.onChangeHidden}
                 />
               </div>
               <div className="form-group">
@@ -260,7 +260,7 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="inactive"
-                  value={currentTutorial.inactive}
+                  value={currentCandidate.inactive}
                   onChange={this.onChangeInactive}
                 />
               </div>
@@ -270,7 +270,7 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="mode"
-                  value={currentTutorial.mode}
+                  value={currentCandidate.mode}
                   onChange={this.onChangeMode}
                 />
               </div>
@@ -280,7 +280,7 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="phone"
-                  value={currentTutorial.phone}
+                  value={currentCandidate.phone}
                   onChange={this.onChangePhone}
                 />
               </div>
@@ -290,7 +290,7 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="address"
-                  value={currentTutorial.address}
+                  value={currentCandidate.address}
                   onChange={this.onChangeAddress}
                 />
               </div>
@@ -300,7 +300,7 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="bankdetails"
-                  value={currentTutorial.bankdetails}
+                  value={currentCandidate.bankdetails}
                   onChange={this.onChangeBankdetails}
                 />
               </div>
@@ -310,7 +310,7 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="email"
-                  value={currentTutorial.email}
+                  value={currentCandidate.email}
                   onChange={this.onChangeEmail}
                 />
               </div>
@@ -320,7 +320,7 @@ export default class Tutorial extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="password"
-                  value={currentTutorial.password}
+                  value={currentCandidate.password}
                   onChange={this.onChangePassword}
                 />
               </div>
@@ -328,7 +328,7 @@ export default class Tutorial extends Component<Props, State> {
               
             </form>
 
-            {currentTutorial.inactive ? (
+            {currentCandidate.inactive ? (
               <button
                 className="badge badge-primary mr-2"
                 onClick={() => this.updatePublished(false)}
@@ -346,7 +346,7 @@ export default class Tutorial extends Component<Props, State> {
 
             <button
               className="badge badge-danger mr-2"
-              onClick={this.deleteTutorial}
+              onClick={this.deleteCandidate}
             >
               Delete
             </button>
@@ -354,7 +354,7 @@ export default class Tutorial extends Component<Props, State> {
             <button
               type="submit"
               className="badge badge-success"
-              onClick={this.updateTutorial}
+              onClick={this.updateCandidate}
             >
               Update
             </button>
@@ -363,7 +363,7 @@ export default class Tutorial extends Component<Props, State> {
         ) : (
           <div>
             <br />
-            <p>Please click on a Tutorial...</p>
+            <p>Please click on a Candidate...</p>
           </div>
         )}
       </div>

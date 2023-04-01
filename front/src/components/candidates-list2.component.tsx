@@ -1,7 +1,7 @@
 import { Component, ChangeEvent } from "react";
-import TutorialDataService from "../services/tutorial.service";
+import CandidateDataService from "../services/candidate.service";
 import { Link } from "react-router-dom";
-import ITutorialData from '../types/tutorial.type';
+import ICandidateData from '../types/candidate.type';
 import React from "react";
 
 import Table from 'react-bootstrap/Table';
@@ -12,49 +12,63 @@ import "./component.css";
 type Props = {};
 
 type State = {
-  tutorials: Array<ITutorialData>,
-  currentTutorial: ITutorialData | null,
+  candidates: Array<ICandidateData>,
+  currentCandidate: ICandidateData | null,
   currentIndex: number,
-  searchTitle: string
+  searchName: string,
+  userName1: string
 };
 
-export default class TutorialsList extends Component<Props, State>{
+export default class CandidatesList extends Component<Props, State>{
   constructor(props: Props) {
     super(props);
-    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
-    this.retrieveTutorials = this.retrieveTutorials.bind(this);
+    this.onChangeSearchName = this.onChangeSearchName.bind(this);
+    this.retrieveCandidates = this.retrieveCandidates.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveTutorial = this.setActiveTutorial.bind(this);
-    this.removeAllTutorials = this.removeAllTutorials.bind(this);
-    this.searchTitle = this.searchTitle.bind(this);
+    this.setActiveCandidate = this.setActiveCandidate.bind(this);
+    this.removeAllCandidates = this.removeAllCandidates.bind(this);
+    this.searchName = this.searchName.bind(this);
 
     this.state = {
-      tutorials: [],
-      currentTutorial: null,
+      candidates: [],
+      currentCandidate: null,
       currentIndex: -1,
-      searchTitle: ""
+      searchName: "",
+      userName1: ""
     };
   }
 
   componentDidMount() {
-    this.retrieveTutorials();
+    this.retrieveCandidates();
   }
 
-  onChangeSearchTitle(e: ChangeEvent<HTMLInputElement>) {
-    const searchTitle = e.target.value;
+  onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
+    const searchName = e.target.value;
 
     this.setState({
-      searchTitle: searchTitle
+      searchName: searchName
     });
   }
 
-  retrieveTutorials() {
-    TutorialDataService.getAll()
+  
+  retrieveCandidates() {
+    CandidateDataService.getAll()
+
+
+
       .then((response: any) => {
+        var loopData = ''
+        for (let i = 0; i < response.data.length; i++) {
+          if (response.data[i].name==="Anees") {
+            loopData += `${response.data[i].name}`   
+          }
+        }  
         this.setState({
-          tutorials: response.data
+          candidates: response.data,
+          userName1: loopData
         });
         console.log(response.data);
+  
       })
       .catch((e: Error) => {
         console.log(e);
@@ -62,22 +76,22 @@ export default class TutorialsList extends Component<Props, State>{
   }
 
   refreshList() {
-    this.retrieveTutorials();
+    this.retrieveCandidates();
     this.setState({
-      currentTutorial: null,
+      currentCandidate: null,
       currentIndex: -1
     });
   }
 
-  setActiveTutorial(tutorial: ITutorialData, index: number) {
+  setActiveCandidate(candidate: ICandidateData, index: number) {
     this.setState({
-      currentTutorial: tutorial,
+      currentCandidate: candidate,
       currentIndex: index
     });
   }
 
-  removeAllTutorials() {
-    TutorialDataService.deleteAll()
+  removeAllCandidates() {
+    CandidateDataService.deleteAll()
       .then((response: any) => {
         console.log(response.data);
         this.refreshList();
@@ -87,16 +101,17 @@ export default class TutorialsList extends Component<Props, State>{
       });
   }
 
-  searchTitle() {
+  searchName() {
     this.setState({
-      currentTutorial: null,
+      currentCandidate: null,
       currentIndex: -1
     });
 
-    TutorialDataService.findByTitle(this.state.searchTitle)
+    CandidateDataService.findByTitle("Anees")
+    //CandidateDataService.findByTitle(this.state.searchName)
       .then((response: any) => {
         this.setState({
-          tutorials: response.data
+          candidates: response.data
         });
         console.log(response.data);
       })
@@ -109,9 +124,16 @@ export default class TutorialsList extends Component<Props, State>{
 
  
   render() {
-    const { searchTitle, tutorials, currentTutorial, currentIndex } = this.state;
+    const { searchName, candidates, currentCandidate, currentIndex,userName1 } = this.state;
     
-
+      const messages = [
+        { content: "Lorem", id: 1 },
+        { content: "Ipsum", id: 2 },
+        { content: "dolor", id: 3 },
+        { content: "Sit", id: 4 },
+        { content: "Amet", id: 5 }
+      ];
+      
     return (
       <div className="list row">
         <div className="col-md-8">
@@ -120,14 +142,14 @@ export default class TutorialsList extends Component<Props, State>{
               type="text"
               className="form-control"
               placeholder="Search by name"
-              value={searchTitle}
-              onChange={this.onChangeSearchTitle}
+              value={searchName}
+              onChange={this.onChangeSearchName}
             />
             <div className="input-group-append">
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={this.searchTitle}
+                onClick={this.searchName}
               >
                 Search
               </button>
@@ -135,20 +157,64 @@ export default class TutorialsList extends Component<Props, State>{
           </div>
         </div>
         <div className="col-md-6">
-          <h4>Candidates List</h4>
+          <h4>Candidates List{userName1}</h4>
+
+          <ol>
+      {candidates && candidates.map((reptile: ICandidateData, index: number) => (
+        <li key={index}>{(reptile.mode) === "admin" ? "Administrator" : "" }</li>
+      ))}
+    </ol>
+Test 1
+    <ul>
+      {messages
+        .filter(({ content }) => content === "dolor")
+        .map(message => (
+          <li key={message.id}>{message.content} {message.id}</li>
+        ))}
+    </ul>
+
+    Test 2
+    <ul>
+      {candidates
+        .filter(({ name }) => name === "Anees")
+        .map(candidates => (
+          <div key={candidates.id}>{candidates.name} {candidates.id}</div>
+        ))}
+    </ul>
+
+    Test 3
+    <ul>
+      {candidates
+        .filter(({ hidden }) => hidden === "yes")
+        .map(candidates => (
+          <div key={candidates.id}>{candidates.name} {candidates.id}</div>
+        ))}
+    </ul>
+    Test 4
+
+    <ul>
+      {candidates
+        .filter(({ id }) => id === 1)
+        .map(candidates => (
+          <div key={candidates.id}>{candidates.name} {candidates.id}</div>
+        ))}
+    </ul>
+
+
 
           <ul className="list-group">
-            {tutorials &&
-              tutorials.map((tutorial: ITutorialData, index: number) => (
+          
+            {candidates &&
+              candidates.map((candidate: ICandidateData, index: number) => (
                 <li
                   className={
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveTutorial(tutorial, index)}
+                  onClick={() => this.setActiveCandidate(candidate, index)}
                   key={index}
                 >
-                  {tutorial.name}
+                  {candidate.name}
                 </li>
               ))}
           </ul>
@@ -157,71 +223,71 @@ export default class TutorialsList extends Component<Props, State>{
 
           <button
             className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllTutorials}
+            onClick={this.removeAllCandidates}
           >
             Remove All
           </button>
         </div>
         <div className="col-md-6">
-          {currentTutorial ? (
+          {currentCandidate ? (
             <div>
               <h4>Candidate</h4>
               <div>
                 <label>
                   <strong>Name:</strong>
                 </label>{" "}
-                {currentTutorial.name}
+                {currentCandidate.name}
               </div>
               <div>
                 <label>
                   <strong>InActive:</strong>
                 </label>{" "}
-                {currentTutorial.inactive}
+                {currentCandidate.inactive}
               </div>
               <div>
                 <label>
                   <strong>Hidden:</strong>
                 </label>{" "}
-                {currentTutorial.hidden}
+                {currentCandidate.hidden}
               </div>
               <div>
                 <label>
                   <strong>Phone:</strong>
                 </label>{" "}
-                {currentTutorial.phone}
+                {currentCandidate.phone}
               </div>
               <div>
                 <label>
                   <strong>Address:</strong>
                 </label>{" "}
-                {currentTutorial.address}
+                {currentCandidate.address}
               </div>
               <div>
                 <label>
                   <strong>Bank Details:</strong>
                 </label>{" "}
-                {currentTutorial.bankdetails}
+                {currentCandidate.bankdetails}
               </div>
               <div>
                 <label>
                   <strong>Email:</strong>
                 </label>{" "}
-                {currentTutorial.email}
+                {currentCandidate.email}
               </div>
               <div>
                 <label>
                   <strong>Password:</strong>
                 </label>{" "}
-                {currentTutorial.password}
+                {currentCandidate.password}
               </div>
               <div>
                 <label>
                   <strong>Mode:</strong>
                 </label>{" "}
-                {currentTutorial.mode==="admin" ? "Published" : "Pending"}
+                {currentCandidate.mode==="admin" ? "Published" : "Pending"}
               </div>
 
-              <div className="table-wrapper">
+      <div className="table-wrapper">
       <Table className="table table-earnings table-earnings__challenge">
       <thead>
         <tr>
@@ -234,9 +300,9 @@ export default class TutorialsList extends Component<Props, State>{
       <tbody>
         <tr>
           <td>1</td>
-          <td>{currentTutorial.name}</td>
-          <td>{currentTutorial.hidden}</td>
-          <td>@{currentTutorial.inactive}</td>
+          <td>{currentCandidate.name}</td>
+          <td>{currentCandidate.hidden}</td>
+          <td>@{currentCandidate.inactive}</td>
         </tr>
         
         <tr>
@@ -307,7 +373,7 @@ export default class TutorialsList extends Component<Props, State>{
             </div>
 
               <Link
-                to={"/candidates/" + currentTutorial.id}
+                to={"/candidates/" + currentCandidate.id}
                 className="badge badge-warning"
               >
                 Edit

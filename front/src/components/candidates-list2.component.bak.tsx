@@ -1,59 +1,73 @@
 import { Component, ChangeEvent } from "react";
-import ProtokollDataService from "../services/protokoll.service";
+import CandidateDataService from "../services/candidate.service";
 import { Link } from "react-router-dom";
-import ProtokollData from '../types/protokoll.type';
+import ICandidateData from '../types/candidate.type';
 import React from "react";
 
 import Table from 'react-bootstrap/Table';
+
 //import ListGroup from 'react-bootstrap/ListGroup';
 import "./component.css";
 
 type Props = {};
 
 type State = {
-  protokolls: Array<ProtokollData>,
-  currentProtokoll: ProtokollData | null,
+  candidates: Array<ICandidateData>,
+  currentCandidate: ICandidateData | null,
   currentIndex: number,
-  searchKommentar: string
+  searchName: string,
+  userName1: string
 };
 
-export default class ProtokollsList extends Component<Props, State>{
+export default class CandidatesList extends Component<Props, State>{
   constructor(props: Props) {
     super(props);
-    this.onChangeSearchKommentar = this.onChangeSearchKommentar.bind(this);
-    this.retrieveProtokolls = this.retrieveProtokolls.bind(this);
+    this.onChangeSearchName = this.onChangeSearchName.bind(this);
+    this.retrieveCandidates = this.retrieveCandidates.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveProtokoll = this.setActiveProtokoll.bind(this);
-    this.removeAllProtokolls = this.removeAllProtokolls.bind(this);
-    this.searchKommentar = this.searchKommentar.bind(this);
+    this.setActiveCandidate = this.setActiveCandidate.bind(this);
+    this.removeAllCandidates = this.removeAllCandidates.bind(this);
+    this.searchName = this.searchName.bind(this);
 
     this.state = {
-      protokolls: [],
-      currentProtokoll: null,
+      candidates: [],
+      currentCandidate: null,
       currentIndex: -1,
-      searchKommentar: ""
+      searchName: "",
+      userName1: ""
     };
   }
 
   componentDidMount() {
-    this.retrieveProtokolls();
+    this.retrieveCandidates();
   }
 
-  onChangeSearchKommentar(e: ChangeEvent<HTMLInputElement>) {
-    const searchKommentar = e.target.value;
+  onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
+    const searchName = e.target.value;
 
     this.setState({
-      searchKommentar: searchKommentar
+      searchName: searchName
     });
   }
 
-  retrieveProtokolls() {
-    ProtokollDataService.getAll()
+  retrieveCandidates() {
+    CandidateDataService.getAll()
+
+
+
       .then((response: any) => {
+        var loopData = ''
+        for (let i = 0; i < response.data.length; i++) {
+          if (response.data[i].name==="Anees") {
+            loopData += `<h4>${response.data[i].name}</h4>`   
+          }
+        }  
         this.setState({
-          protokolls: response.data
+          candidates: response.data,
+          userName1: loopData
         });
         console.log(response.data);
+  
       })
       .catch((e: Error) => {
         console.log(e);
@@ -61,22 +75,22 @@ export default class ProtokollsList extends Component<Props, State>{
   }
 
   refreshList() {
-    this.retrieveProtokolls();
+    this.retrieveCandidates();
     this.setState({
-      currentProtokoll: null,
+      currentCandidate: null,
       currentIndex: -1
     });
   }
 
-  setActiveProtokoll(protokoll: ProtokollData, index: number) {
+  setActiveCandidate(candidate: ICandidateData, index: number) {
     this.setState({
-      currentProtokoll: protokoll,
+      currentCandidate: candidate,
       currentIndex: index
     });
   }
 
-  removeAllProtokolls() {
-    ProtokollDataService.deleteAll()
+  removeAllCandidates() {
+    CandidateDataService.deleteAll()
       .then((response: any) => {
         console.log(response.data);
         this.refreshList();
@@ -86,18 +100,17 @@ export default class ProtokollsList extends Component<Props, State>{
       });
   }
 
-  searchKommentar() {
+  searchName() {
     this.setState({
-      currentProtokoll: null,
+      currentCandidate: null,
       currentIndex: -1
     });
 
-    //ProtokollDataService.findByTitle(this.state.searchKommentar)
-    //ProtokollDataService.findByUserID("12")
-    ProtokollDataService.findByUserID(this.state.searchKommentar)
+    CandidateDataService.findByTitle("Anees")
+    //CandidateDataService.findByTitle(this.state.searchName)
       .then((response: any) => {
         this.setState({
-          protokolls: response.data
+          candidates: response.data
         });
         console.log(response.data);
       })
@@ -110,7 +123,7 @@ export default class ProtokollsList extends Component<Props, State>{
 
  
   render() {
-    const { searchKommentar, protokolls, currentProtokoll, currentIndex } = this.state;
+    const { searchName, candidates, currentCandidate, currentIndex,userName1 } = this.state;
     
 
     return (
@@ -120,15 +133,15 @@ export default class ProtokollsList extends Component<Props, State>{
             <input
               type="text"
               className="form-control"
-              placeholder="Search by kommentar"
-              value={searchKommentar}
-              onChange={this.onChangeSearchKommentar}
+              placeholder="Search by name"
+              value={searchName}
+              onChange={this.onChangeSearchName}
             />
             <div className="input-group-append">
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={this.searchKommentar}
+                onClick={this.searchName}
               >
                 Search
               </button>
@@ -136,20 +149,28 @@ export default class ProtokollsList extends Component<Props, State>{
           </div>
         </div>
         <div className="col-md-6">
-          <h4>Protokoll List</h4>
+          <h4>Candidates List{userName1}</h4>
+
+
+          <ol>
+      {candidates && candidates.map((reptile: ICandidateData, index: number) => (
+        <li key={index}>{(reptile.mode) === "admin" ? "Administrator" : "" }</li>
+      ))}
+    </ol>
 
           <ul className="list-group">
-            {protokolls &&
-              protokolls.map((protokoll: ProtokollData, index: number) => (
+          
+            {candidates &&
+              candidates.map((candidate: ICandidateData, index: number) => (
                 <li
                   className={
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveProtokoll(protokoll, index)}
+                  onClick={() => this.setActiveCandidate(candidate, index)}
                   key={index}
                 >
-                  {protokoll.kommentar}
+                  {candidate.name}
                 </li>
               ))}
           </ul>
@@ -158,48 +179,71 @@ export default class ProtokollsList extends Component<Props, State>{
 
           <button
             className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllProtokolls}
+            onClick={this.removeAllCandidates}
           >
             Remove All
           </button>
         </div>
         <div className="col-md-6">
-          {currentProtokoll ? (
+          {currentCandidate ? (
             <div>
               <h4>Candidate</h4>
               <div>
                 <label>
-                  <strong>Kommentar:</strong>
+                  <strong>Name:</strong>
                 </label>{" "}
-                {currentProtokoll.kommentar}
+                {currentCandidate.name}
               </div>
               <div>
                 <label>
-                  <strong>Timestamp:</strong>
+                  <strong>InActive:</strong>
                 </label>{" "}
-                {currentProtokoll.timestamp}
+                {currentCandidate.inactive}
               </div>
               <div>
                 <label>
-                  <strong>UserId:</strong>
+                  <strong>Hidden:</strong>
                 </label>{" "}
-                {currentProtokoll.userid}
+                {currentCandidate.hidden}
               </div>
               <div>
                 <label>
-                  <strong>ActioID:</strong>
+                  <strong>Phone:</strong>
                 </label>{" "}
-                {currentProtokoll.actionid}
+                {currentCandidate.phone}
               </div>
-              
               <div>
                 <label>
-                  <strong>Value:</strong>
+                  <strong>Address:</strong>
                 </label>{" "}
-                {currentProtokoll.value==="admin" ? "Published" : "Pending"}
+                {currentCandidate.address}
+              </div>
+              <div>
+                <label>
+                  <strong>Bank Details:</strong>
+                </label>{" "}
+                {currentCandidate.bankdetails}
+              </div>
+              <div>
+                <label>
+                  <strong>Email:</strong>
+                </label>{" "}
+                {currentCandidate.email}
+              </div>
+              <div>
+                <label>
+                  <strong>Password:</strong>
+                </label>{" "}
+                {currentCandidate.password}
+              </div>
+              <div>
+                <label>
+                  <strong>Mode:</strong>
+                </label>{" "}
+                {currentCandidate.mode==="admin" ? "Published" : "Pending"}
               </div>
 
-              <div className="table-wrapper">
+      <div className="table-wrapper">
       <Table className="table table-earnings table-earnings__challenge">
       <thead>
         <tr>
@@ -212,9 +256,9 @@ export default class ProtokollsList extends Component<Props, State>{
       <tbody>
         <tr>
           <td>1</td>
-          <td>{currentProtokoll.kommentar}</td>
-          <td>{currentProtokoll.userid}</td>
-          <td>@{currentProtokoll.timestamp}</td>
+          <td>{currentCandidate.name}</td>
+          <td>{currentCandidate.hidden}</td>
+          <td>@{currentCandidate.inactive}</td>
         </tr>
         
         <tr>
@@ -285,7 +329,7 @@ export default class ProtokollsList extends Component<Props, State>{
             </div>
 
               <Link
-                to={"/protokolls/" + currentProtokoll.id}
+                to={"/candidates/" + currentCandidate.id}
                 className="badge badge-warning"
               >
                 Edit

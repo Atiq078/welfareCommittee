@@ -1,18 +1,18 @@
 import { Component, ChangeEvent } from "react";
-import TutorialDataService from "../services/tutorial.service";
-import ITutorialData from '../types/tutorial.type';
+import CandidateDataService from "../services/candidate.service";
+import ICandidateData from '../types/candidate.type';
 
 type Props = {};
 
-type State = ITutorialData & {
+type State = ICandidateData & {
   submitted: boolean
 };
 
-export default class AddTutorial extends Component<Props, State> {
+export default class AddCandidate extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);//hidden
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeHidden = this.onChangeHidden.bind(this);//hidden
     this.onChangeInactive = this.onChangeInactive.bind(this);
     this.onChangeMode = this.onChangeMode.bind(this);
     this.onChangePhone = this.onChangePhone.bind(this);
@@ -20,8 +20,8 @@ export default class AddTutorial extends Component<Props, State> {
     this.onChangeBankdetails = this.onChangeBankdetails.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.saveTutorial = this.saveTutorial.bind(this);
-    this.newTutorial = this.newTutorial.bind(this);
+    this.saveCandidate = this.saveCandidate.bind(this);
+    this.newCandidate = this.newCandidate.bind(this);
 
     this.state = {
       id: null,
@@ -38,14 +38,14 @@ export default class AddTutorial extends Component<Props, State> {
     };
   }
 
-  onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
+  onChangeName(e: ChangeEvent<HTMLInputElement>) {
     this.setState({
       name: e.target.value
     });
   }
 
   //hidden
-  onChangeDescription(e: ChangeEvent<HTMLInputElement>) {
+  onChangeHidden(e: ChangeEvent<HTMLInputElement>) {
     this.setState({
       hidden: e.target.value
     });
@@ -93,8 +93,8 @@ export default class AddTutorial extends Component<Props, State> {
     });
   }
 
-  saveTutorial() {
-    const data: ITutorialData = {
+  saveCandidate() {
+    const data: ICandidateData = {
       name: this.state.name,
       hidden: this.state.hidden,
       inactive: this.state.inactive,
@@ -106,7 +106,7 @@ export default class AddTutorial extends Component<Props, State> {
       password: this.state.password,
     };
 
-    TutorialDataService.create(data)
+    CandidateDataService.create(data)
       .then((response: any) => {
         this.setState({
           id: response.data.id,
@@ -128,7 +128,7 @@ export default class AddTutorial extends Component<Props, State> {
       });
   }
 
-  newTutorial() {
+  newCandidate() {
     this.setState({
       id: null,
       name: "",
@@ -152,7 +152,7 @@ export default class AddTutorial extends Component<Props, State> {
         {submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
-            <button className="btn btn-success" onClick={this.newTutorial}>
+            <button className="btn btn-success" onClick={this.newCandidate}>
               Add
             </button>
           </div>
@@ -166,7 +166,7 @@ export default class AddTutorial extends Component<Props, State> {
                 id="name"
                 required
                 value={name}
-                onChange={this.onChangeTitle}
+                onChange={this.onChangeName}
                 name="name"
               />
             </div>
@@ -179,7 +179,7 @@ export default class AddTutorial extends Component<Props, State> {
                 id="hidden"
                 required
                 value={hidden}
-                onChange={this.onChangeDescription}
+                onChange={this.onChangeHidden}
                 name="hidden"
               />
             </div>
@@ -276,7 +276,7 @@ export default class AddTutorial extends Component<Props, State> {
             </div>
 
 
-            <button onClick={this.saveTutorial} className="btn btn-success">
+            <button onClick={this.saveCandidate} className="btn btn-success">
               Submit
             </button>
           </div>
