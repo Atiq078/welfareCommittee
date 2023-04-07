@@ -1,6 +1,6 @@
 import http from "../http-common";
-//import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,} from "../types/misc.type"
-import ILoanLeft  from "../types/misc.type"
+import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,} from "../types/misc.type"
+
 class SqlDataService {
 
   //localhost:8080/api/sql/loanleft/?id=13&cid=1
@@ -8,9 +8,8 @@ class SqlDataService {
     return http.get<ILoanLeft>(`/sql/loanleft?id=${id}&cid=${cid}`);
   }
   
-  /*
   findLastLoanByIdandCid(id: string,cid: string) {
-    return http.get<Array<ILastLoan>>(`/sql/lastloan?id=${id}&cid=${cid}`);
+    return http.get<ILastLoan>(`/sql/lastloan?id=${id}&cid=${cid}`);
   }
   
   findMaxInstByCid(cid: string) {
@@ -22,7 +21,7 @@ class SqlDataService {
   }
 
   findLoanDurationByIdandCid(id: string,cid: string) {
-    return http.get<Array<ILoanDuration>>(`/sql/loanduration?id=${id}&cid=${cid}`);
+    return http.get<ILoanDuration>(`/sql/loanduration?id=${id}&cid=${cid}`);
 }
 
   findInstPaidByIdandCid(id: string,cid: string) {
@@ -30,33 +29,32 @@ class SqlDataService {
   }
 
   findDueMonthsByIdandCid(id: string,cid: string) {
-    return http.get<Array<IDueMonths>>(`/sql/duemonths?id=${id}&cid=${cid}`);
+    return http.get<IDueMonths>(`/sql/duemonths?id=${id}&cid=${cid}`);
   }
   
   findMinInstAmountByIdandCid(id: string,cid: string) {
-    return http.get<Array<IMinInstAmount>>(`/sql/mininstamount?id=${id}&cid=${cid}`);
+    return http.get<IMinInstAmount>(`/sql/mininstamount?id=${id}&cid=${cid}`);
   }
-  
+  //Admin
   findTotalBalByCid(cid: string) {
     return http.get<ITotalBal>(`/sql/totalbal/${cid}`);
   }
 
   findAllMonthlyDuesByCid(cid: string) {
-    return http.get<IAllMonthlyDues>(`/sql/allmonthlydues/${cid}`);
+    return http.get<Array<IAllMonthlyDues>>(`/sql/allmonthlydues/${cid}`);
   }
 
   findOverallBalByCid(cid: string) {
-    return http.get<IOverallBal>(`/sql/overallbal/${cid}`);
+    return http.get<Array<IOverallBal>>(`/sql/overallbal/${cid}`);
   }
 
   findOverallLoanByCid(cid: string) {
-    return http.get<IOverallLoan>(`/sql/overallloan/${cid}`);
+    return http.get<Array<IOverallLoan>>(`/sql/overallloan/${cid}`);
   }
 
   findOverallLoanDuesByCid(cid: string) {
-    return http.get<IOverallLoanDues>(`/sql/overallloandues/${cid}`);
+    return http.get<Array<IOverallLoanDues>>(`/sql/overallloandues/${cid}`);
   }
-*/
 }
 
 export default new SqlDataService();

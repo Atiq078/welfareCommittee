@@ -1,13 +1,14 @@
 import { Component, ChangeEvent } from "react";
 import CandidateDataService from "../services/candidate.service";
+import SqlDataService from "../services/misc.service";
 import SqlDataService0 from "../services/misc0.service";
 import SqlDataService1 from "../services/misc1.service";
 import SqlDataService2 from "../services/misc2.service";
 import { Link } from "react-router-dom";
 import ICandidateData from '../types/candidate.type';
-//import {ILoanLeft , /*ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,*/} from "../types/misc.type"
+import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,} from "../types/misc.type"
 import ILoanLeft0 from "../types/misc0.type"
-import ILastLoan from "../types/misc1.type"
+import ILastLoan1 from "../types/misc1.type"
 import ILastLoan2 from "../types/misc2.type"
 
 import React from "react";
@@ -15,6 +16,7 @@ import React from "react";
 import Table from 'react-bootstrap/Table';
 
 import "./component.css";
+import { green, red } from "@material-ui/core/colors";
 
 type Props = {};
 
@@ -22,8 +24,21 @@ type State = {
   candidates: Array<ICandidateData>,
   currentCandidate: ICandidateData | null,
   loanLeft0: ILoanLeft0,
-  lastLoan: ILastLoan,
+  lastLoan1: ILastLoan1,
   lastLoan2: ILastLoan2,
+  loanLeft: ILoanLeft| null,
+  lastLoan: ILastLoan| null,   
+  maxInst: IMaxInst| null,   
+  maxLoan: IMaxLoan| null,  
+  loanDuration:ILoanDuration| null,  
+  instPaid: Array<IInstPaid>| null, 
+  dueMonths: IDueMonths| null,
+  minInstAmount: IMinInstAmount| null,  
+  totalBal: ITotalBal| null,  
+  allMonthlyDues: Array<IAllMonthlyDues>| null,  
+  overallBal: Array<IOverallBal>| null,  
+  overallLoan: Array<IOverallLoan>| null,
+  overallLoanDues: Array<IOverallLoanDues>| null,
   currentIndex: number,
   searchName: string,
   currentCommittee: string,
@@ -40,10 +55,25 @@ export default class CandidatesList extends Component<Props, State>{
     //this.setActiveCandidate = this.setActiveCandidate.bind(this);
     //this.removeAllCandidates = this.removeAllCandidates.bind(this);
     //this.searchName = this.searchName.bind(this);
-    this.getLoanLeft = this.getLoanLeft.bind(this);
-    this.getLastLoan = this.getLastLoan.bind(this);
+    this.getLoanLeft0 = this.getLoanLeft0.bind(this);
+    this.getLastLoan1 = this.getLastLoan1.bind(this);
     this.getLastLoan2 = this.getLastLoan2.bind(this);
     this.getCandidate = this.getCandidate.bind(this);
+    //Admin
+    this.getOverallLoanDues = this.getOverallLoanDues.bind(this);
+    this.getOverallLoan = this.getOverallLoan.bind(this);
+    this.getOverallBal = this.getOverallBal.bind(this);
+    this.getAllMonthlyDues = this.getAllMonthlyDues.bind(this);
+    this.getTotalBal = this.getTotalBal.bind(this);
+    //User
+    this.getMinInstAmount = this.getMinInstAmount.bind(this);
+    this.getDueMonths = this.getDueMonths.bind(this);
+    this.getInstPaid = this.getInstPaid.bind(this);
+    this.getLoanDuration = this.getLoanDuration.bind(this);
+    this.getMaxLoan = this.getMaxLoan.bind(this);
+    this.getMaxInst = this.getMaxInst.bind(this);
+    this.getLastLoan = this.getLastLoan.bind(this);
+    this.getLoanLeft = this.getLoanLeft.bind(this);
 
     this.state = {
       candidates: [],
@@ -51,7 +81,7 @@ export default class CandidatesList extends Component<Props, State>{
       loanLeft0: {
         loan_left: null,
       },
-      lastLoan: {
+      lastLoan1: {
         name: "",
         address: "",
         username: "",
@@ -61,6 +91,19 @@ export default class CandidatesList extends Component<Props, State>{
         value: "",
         kommentar: "",
       },     
+      loanLeft: null,
+      lastLoan: null,   
+      maxInst: null,   
+      maxLoan: null,  
+      loanDuration:null,  
+      instPaid: null, 
+      dueMonths: null,
+      minInstAmount: null,  
+      totalBal: null,  
+      allMonthlyDues: null,  
+      overallBal: null,  
+      overallLoan: null,
+      overallLoanDues: null,
       currentIndex: -1,
       searchName: "",
       currentCommittee: "1",
@@ -83,10 +126,28 @@ export default class CandidatesList extends Component<Props, State>{
   componentDidMount() {
     //this.retrieveCandidates();
     //this.getCandidate("13");
-    this.getLoanLeft("22","1");
-    this.getLastLoan("22","1");
-    this.getLastLoan2("22","1");
-
+    let id: string; 
+    let cid:string;
+    id = "22"
+    cid = "1"
+    this.getLoanLeft0(id, cid);
+    this.getLastLoan1(id, cid);
+    this.getLastLoan2(id, cid);
+    //User Individuals
+    this.getLoanLeft(id, cid);
+    this.getLastLoan(id, cid);
+    this.getMaxInst(cid);
+    this.getMaxLoan(cid) ;
+    this.getLoanDuration(id, cid); 
+    this.getInstPaid(id, cid) ;
+    this.getDueMonths(id, cid) ;
+    this.getMinInstAmount(id,cid); 
+    //Admin
+    this.getTotalBal(cid);
+    this.getAllMonthlyDues(cid);
+    this.getOverallBal(cid);
+    this.getOverallLoan(cid);
+    this.getOverallLoanDues(cid);
   }
 
   
@@ -103,7 +164,7 @@ export default class CandidatesList extends Component<Props, State>{
       });
   }
 
-  getLoanLeft(id:string, cid:string) {
+  getLoanLeft0(id:string, cid:string) {
     SqlDataService0.findLoanLeftByIdandCid(id,cid)
       .then((response: any) => {
         this.setState({
@@ -116,11 +177,11 @@ export default class CandidatesList extends Component<Props, State>{
       });
   }
 
-  getLastLoan(id:string, cid:string) {
+  getLastLoan1(id:string, cid:string) {
     SqlDataService1.findLastLoanByIdandCid(id,cid)
       .then((response: any) => {
         this.setState({
-          lastLoan: response.data,
+          lastLoan1: response.data,
         });
         console.log(response.data);
       })
@@ -158,9 +219,192 @@ export default class CandidatesList extends Component<Props, State>{
       });
   }
 
+  //User Individuals
+getLoanLeft(id:string, cid:string) {
+  SqlDataService.findLoanLeftByIdandCid(id,cid)
+    .then((response: any) => {
+      this.setState({
+        loanLeft: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getLastLoan(id:string, cid:string) {
+  SqlDataService.findLastLoanByIdandCid(id,cid)
+    .then((response: any) => {
+      this.setState({
+        lastLoan: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getMaxInst(cid:string) {
+  SqlDataService.findMaxInstByCid(cid)
+    .then((response: any) => {
+      this.setState({
+        maxInst: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getMaxLoan(cid:string) {
+  SqlDataService.findMaxLoanByCid(cid)
+    .then((response: any) => {
+      this.setState({
+        maxLoan: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getLoanDuration(id:string, cid:string) {
+  SqlDataService.findLoanDurationByIdandCid(id,cid)
+    .then((response: any) => {
+      this.setState({
+        loanDuration: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getInstPaid(id:string, cid:string) {
+  SqlDataService.findInstPaidByIdandCid(id,cid)
+    .then((response: any) => {
+      this.setState({
+        instPaid: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getDueMonths(id:string, cid:string) {
+  SqlDataService.findDueMonthsByIdandCid(id,cid)
+    .then((response: any) => {
+      this.setState({
+        dueMonths: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+
+getMinInstAmount(id:string, cid:string) {
+  SqlDataService.findMinInstAmountByIdandCid(id,cid)
+    .then((response: any) => {
+      this.setState({
+        minInstAmount: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+//Admin
+
+getTotalBal(cid:string) {
+  SqlDataService.findTotalBalByCid(cid)
+    .then((response: any) => {
+      this.setState({
+        totalBal: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getAllMonthlyDues(cid:string) {
+  SqlDataService.findAllMonthlyDuesByCid(cid)
+    .then((response: any) => {
+      this.setState({
+        allMonthlyDues: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getOverallBal(cid:string) {
+  SqlDataService.findOverallBalByCid(cid)
+    .then((response: any) => {
+      this.setState({
+        overallBal: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+getOverallLoan(cid:string) {
+  SqlDataService.findOverallLoanByCid(cid)
+    .then((response: any) => {
+      this.setState({
+        overallLoan: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+getOverallLoanDues(cid:string) {
+  SqlDataService.findOverallLoanDuesByCid(cid)
+    .then((response: any) => {
+      this.setState({
+        overallLoanDues: response.data,
+      });
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
  
   render() {
-  const {  currentCandidate1, currentIndex, loanLeft0, lastLoan, lastLoan2 } = this.state;
+  const {  currentCandidate1, currentIndex, loanLeft0, lastLoan1, lastLoan2,
+    //User
+    loanLeft,
+    lastLoan,   
+    maxInst,   
+    maxLoan,  
+    loanDuration,  
+    instPaid, 
+    dueMonths,
+    minInstAmount, 
+    //Admin
+    totalBal,  allMonthlyDues,  overallBal,  overallLoan, overallLoanDues } = this.state;
     
     return (
  
@@ -210,12 +454,12 @@ export default class CandidatesList extends Component<Props, State>{
 
         <div>
         <h3>Last Loan</h3>
-        {lastLoan ? (
+        {lastLoan1 ? (
           <div>
             <p></p>
-            <p>Timestamp: {lastLoan.name}</p>
-            <p>loan: {lastLoan.address}</p>
-            <p>kommentar: {lastLoan.username}</p>
+            <p>Timestamp: {lastLoan1.name}</p>
+            <p>loan: {lastLoan1.address}</p>
+            <p>kommentar: {lastLoan1.username}</p>
           </div>
         ) : (
           <div>
@@ -241,6 +485,257 @@ export default class CandidatesList extends Component<Props, State>{
           </div>
         )}
         </div>
+
+
+        <div>
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>User</h3>
+        <h5>Loan Left</h5>
+        {loanLeft ? (
+          <div>
+            <p></p>
+            <p>Loan Left: {loanLeft.loan_left}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a loanLeft...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+        <h5>The Last Loan</h5>
+        {lastLoan ? (
+          <div>
+            <p></p>
+            <p>kommentar: {lastLoan.kommentar}</p>
+            <p>Loan: {lastLoan.loan}</p>
+            <p>timestamp: {lastLoan.timestamp}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a lastloan...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+
+        <h5>Max Installments</h5>
+        {maxInst ? (
+          <div>
+            <p></p>
+            <p>Max Inst: {maxInst.maxinst}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a maxInst...</p>
+          </div>
+        )}
+        </div>
+        <div>
+        <h5>Max Loan</h5>
+        {maxLoan ? (
+          <div>
+            <p></p>
+            <p>Max Loan: {maxLoan.loan}</p>
+            <p>Max Inst: {maxLoan.maxinst}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a maxLoan...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+        <h5>Loan Duration</h5>
+        {loanDuration ? (
+          <div>
+            <p></p>
+            <p>Loan Start: {loanDuration.loan_start}</p>
+            <p>Loan End: {loanDuration.loan_end}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a loanDuration...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+        <h5>Installments Paid</h5>
+        {instPaid ? (
+          <div>
+            <p></p>
+            <p>timestamp: {instPaid[0].timestamp}</p>
+            <p>installment: {instPaid[0].installment}</p>
+            <p>kommentar: {instPaid[0].kommentar}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a instPaid...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+        <h5>Due Months</h5>
+        {dueMonths ? (
+          <div>
+            <p></p>
+            <p>Due Months: {dueMonths.due_months}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a dueMonths...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+        <h5>Min Installment Amount</h5>
+        {minInstAmount ? (
+          <div>
+            <p></p>
+            <p>Inst Amount: {minInstAmount.min_instal}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a minInstAmount...</p>
+          </div>
+        )}
+        </div>
+
+
+        <div>
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Administrator</h3>
+        <h5>Total Balance</h5>
+        {totalBal ? (
+          <div>
+            <p></p>
+            <p>Total Balance: {totalBal.total_bal}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a TotalBal...</p>
+          </div>
+        )}
+        </div>
+         
+        <div>
+        <h5>All Monthly Dues</h5>
+        {allMonthlyDues ? (
+          <div>
+            <p></p>
+            <p>ID: {allMonthlyDues[0].id}</p>
+            <p>Name: {allMonthlyDues[0].name}</p>
+            <p>Current Dues: {allMonthlyDues[0].current_dues}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a allMonthlyDues...</p>
+          </div>
+        )}
+        </div>
+        
+        <div>
+        <h5>Overall Dues</h5>
+        {overallBal ? (
+          <div>
+            <p></p>
+            <p>ID: {overallBal[0].id}</p>
+            <p>Name: {overallBal[0].name}</p>
+            <p>Current Balance: {overallBal[0].total_bal}</p>
+            <p>Komments: {overallBal[0].kommentar}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a overallBal...</p>
+          </div>
+        )}
+        </div>
+        
+        <div>
+        <h5>Overall Loan</h5>
+        {overallLoan ? (
+          <div>
+            <p></p>
+            <p>ID: {overallLoan[0].id}</p>
+            <p>Name: {overallLoan[0].name}</p>
+            <p>Current Overall Loan: {overallLoan[0].total_loan}</p>
+            <p>Komments: {overallLoan[0].kommentar}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a overallLoan...</p>
+          </div>
+        )}
+        </div>
+
+        
+        <div>
+        <h5>Overall Loan Left</h5>
+        {overallLoanDues ? (
+          <div>
+            <p></p>
+            <p>ID: {overallLoanDues[0].id}</p>
+            <p>Name: {overallLoanDues[0].name}</p>
+            <p>Current Loan Left: {overallLoanDues[0].total_loan_left}</p>
+            <p>Komments: {overallLoanDues[0].kommentar}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a overallLoanDues...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Using Tables</h3>
+        <h5>Overall Loan Left</h5>
+        {overallLoanDues ? (
+          <div>
+            <p></p>
+<table>
+<tr key={"header"}>
+        {Object.keys(overallLoanDues[0]).map((key) => (
+          <th>{key}</th>
+        ))}
+      </tr>
+
+  {overallLoanDues.map((item =>
+  <tr key={item.id}> 
+  {Object.values(item).map((val) => (
+            <td>{val}</td>
+          ))}
+
+  </tr>
+  ))}
+</table>        
+			
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a overallLoanDues...</p>
+          </div>
+        )}
+        </div>
+  
+
 
       </div>
     );

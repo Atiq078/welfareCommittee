@@ -1,8 +1,7 @@
 
-export default interface ILoanLeft {
-  loan_left: any,
+export interface ILoanLeft {
+  loan_left: string,
 }
-/*
 export interface ILastLoan {
     timestamp: string,
     loan: string,
@@ -12,7 +11,6 @@ export interface ILastLoan {
 export interface IMaxInst {
     maxinst: string,
 }
-
 
 export interface IMaxLoan {
     loan: string,
@@ -69,4 +67,3 @@ export interface IOverallLoanDues {
     total_loan_left: string,
     kommentar: string,
 }
-*/

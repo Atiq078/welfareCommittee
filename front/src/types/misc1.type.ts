@@ -5,7 +5,7 @@
     kommentar: string,
 }
 */
-export default interface ILastLoan {
+export default interface ILastLoan1 {
     name: string,
     address: string,
     username: string,

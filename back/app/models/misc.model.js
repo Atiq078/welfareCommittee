@@ -168,7 +168,7 @@ myModel.findMinInstAmountByIdandCid = (id, cid, result) => {
     result(null, res[0]);
   });
 };
-
+//Admin
 myModel.findTotalBalByCid = (cid, result) => {
   let query = `SELECT SUM(value)*1000 as "total_bal" FROM protokoll WHERE cid=${cid}`;
   myModel.query(query, (err, res) => {
@@ -199,8 +199,8 @@ myModel.findAllMonthlyDuesByCid = (cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res[0]);
-    result(null, res[0]);
+    console.log("sqlLoanLeft: ", res);
+    result(null, res);
   });
 };
 

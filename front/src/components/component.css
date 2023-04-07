@@ -29,3 +29,11 @@
   .table-earnings {
     background: #F3F5F6;
   }
+
+
+  th,
+td {
+  border: 1px solid black;
+  margin: 0px 0px;
+  padding: 5px 5px;
+}

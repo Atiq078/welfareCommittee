@@ -1,6 +1,6 @@
 import http from "../http-common";
 //import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,} from "../types/misc.type"
-import ILastLoan  from "../types/misc1.type"
+import ILastLoan1  from "../types/misc1.type"
 class SqlDataService1 {
 
   //localhost:8080/api/candidates?name=sajjad
@@ -18,7 +18,7 @@ class SqlDataService1 {
   //  return http.get<ILastLoan>(`/sql/lastloan/${id}`);
   //}
   findLastLoanByIdandCid(id: string,cid: string) {
-    return http.get<ILastLoan>(`/candidates/${id}`);
+    return http.get<ILastLoan1>(`/candidates/${id}`);
   }
      /*
   findMaxInstByCid(cid: string) {
