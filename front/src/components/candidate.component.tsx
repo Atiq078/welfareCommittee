@@ -11,7 +11,7 @@ interface RouterProps { // type for `match.params`
 type Props = RouteComponentProps<RouterProps>;
 
 type State = {
-  currentCandidate: ICandidateData;
+  currentCandidate1: ICandidateData;
   message: string;
 }
 
@@ -33,7 +33,7 @@ export default class Candidate extends Component<Props, State> {
     this.deleteCandidate = this.deleteCandidate.bind(this);
 
     this.state = {
-      currentCandidate: {
+      currentCandidate1: {
         id: null,
         name: "",
         hidden: "",
@@ -58,8 +58,8 @@ export default class Candidate extends Component<Props, State> {
 
     this.setState(function (prevState) {
       return {
-        currentCandidate: {
-          ...prevState.currentCandidate,
+        currentCandidate1: {
+          ...prevState.currentCandidate1,
           name: name,
         },
       };
@@ -71,8 +71,8 @@ export default class Candidate extends Component<Props, State> {
     const hidden = e.target.value;
 
     this.setState((prevState) => ({
-      currentCandidate: {
-        ...prevState.currentCandidate,
+      currentCandidate1: {
+        ...prevState.currentCandidate1,
         hidden: hidden,
       },
     }));
@@ -82,8 +82,8 @@ export default class Candidate extends Component<Props, State> {
     const inactive = e.target.value;
 
     this.setState((prevState) => ({
-      currentCandidate: {
-        ...prevState.currentCandidate,
+      currentCandidate1: {
+        ...prevState.currentCandidate1,
         inactive: inactive,
       },
     }));
@@ -93,8 +93,8 @@ export default class Candidate extends Component<Props, State> {
     const mode = e.target.value;
 
     this.setState((prevState) => ({
-      currentCandidate: {
-        ...prevState.currentCandidate,
+      currentCandidate1: {
+        ...prevState.currentCandidate1,
         mode: mode,
       },
     }));
@@ -104,8 +104,8 @@ export default class Candidate extends Component<Props, State> {
     const phone = e.target.value;
 
     this.setState((prevState) => ({
-      currentCandidate: {
-        ...prevState.currentCandidate,
+      currentCandidate1: {
+        ...prevState.currentCandidate1,
         phone: phone,
       },
     }));
@@ -115,8 +115,8 @@ export default class Candidate extends Component<Props, State> {
     const address = e.target.value;
 
     this.setState((prevState) => ({
-      currentCandidate: {
-        ...prevState.currentCandidate,
+      currentCandidate1: {
+        ...prevState.currentCandidate1,
         address: address,
       },
     }));
@@ -126,8 +126,8 @@ export default class Candidate extends Component<Props, State> {
     const bankdetails = e.target.value;
 
     this.setState((prevState) => ({
-      currentCandidate: {
-        ...prevState.currentCandidate,
+      currentCandidate1: {
+        ...prevState.currentCandidate1,
         bankdetails: bankdetails,
       },
     }));
@@ -137,8 +137,8 @@ export default class Candidate extends Component<Props, State> {
     const email = e.target.value;
 
     this.setState((prevState) => ({
-      currentCandidate: {
-        ...prevState.currentCandidate,
+      currentCandidate1: {
+        ...prevState.currentCandidate1,
         email: email,
       },
     }));
@@ -148,8 +148,8 @@ export default class Candidate extends Component<Props, State> {
     const password = e.target.value;
 
     this.setState((prevState) => ({
-      currentCandidate: {
-        ...prevState.currentCandidate,
+      currentCandidate1: {
+        ...prevState.currentCandidate1,
         password: password,
       },
     }));
@@ -159,7 +159,7 @@ export default class Candidate extends Component<Props, State> {
     CandidateDataService.get(id)
       .then((response: any) => {
         this.setState({
-          currentCandidate: response.data,
+          currentCandidate1: response.data,
         });
         console.log(response.data);
       })
@@ -170,23 +170,23 @@ export default class Candidate extends Component<Props, State> {
 
   updatePublished(status: boolean) {
     const data: ICandidateData = {
-      id: this.state.currentCandidate.id,
-      name: this.state.currentCandidate.name,
-      hidden: this.state.currentCandidate.hidden,
-      inactive: this.state.currentCandidate.inactive,//status,
-      mode: this.state.currentCandidate.mode,
-      phone: this.state.currentCandidate.phone,
-      address: this.state.currentCandidate.address,
-      bankdetails: this.state.currentCandidate.bankdetails,
-      email: this.state.currentCandidate.email,
-      password: this.state.currentCandidate.password,
+      id: this.state.currentCandidate1.id,
+      name: this.state.currentCandidate1.name,
+      hidden: this.state.currentCandidate1.hidden,
+      inactive: this.state.currentCandidate1.inactive,//status,
+      mode: this.state.currentCandidate1.mode,
+      phone: this.state.currentCandidate1.phone,
+      address: this.state.currentCandidate1.address,
+      bankdetails: this.state.currentCandidate1.bankdetails,
+      email: this.state.currentCandidate1.email,
+      password: this.state.currentCandidate1.password,
     };
 
-    CandidateDataService.update(data, this.state.currentCandidate.id)
+    CandidateDataService.update(data, this.state.currentCandidate1.id)
       .then((response: any) => {
         this.setState((prevState) => ({
-          currentCandidate: {
-            ...prevState.currentCandidate,
+          currentCandidate1: {
+            ...prevState.currentCandidate1,
             inactive: "",//status,
           },
           message: "The status was updated successfully!"
@@ -200,8 +200,8 @@ export default class Candidate extends Component<Props, State> {
 
   updateCandidate() {
     CandidateDataService.update(
-      this.state.currentCandidate,
-      this.state.currentCandidate.id
+      this.state.currentCandidate1,
+      this.state.currentCandidate1.id
     )
       .then((response: any) => {
         console.log(response.data);
@@ -215,7 +215,7 @@ export default class Candidate extends Component<Props, State> {
   }
 
   deleteCandidate() {
-    CandidateDataService.delete(this.state.currentCandidate.id)
+    CandidateDataService.delete(this.state.currentCandidate1.id)
       .then((response: any) => {
         console.log(response.data);
         this.props.history.push("/candidates");
@@ -226,11 +226,11 @@ export default class Candidate extends Component<Props, State> {
   }
 
   render() {
-    const { currentCandidate } = this.state;
+    const { currentCandidate1 } = this.state;
 
     return (
       <div>
-        {currentCandidate ? (
+        {currentCandidate1 ? (
           <div className="edit-form">
             <h4>Candidate</h4>
             <form>
@@ -240,7 +240,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="name"
-                  value={currentCandidate.name}
+                  value={currentCandidate1.name}
                   onChange={this.onChangeName}
                 />
               </div>
@@ -250,7 +250,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="hidden"
-                  value={currentCandidate.hidden}
+                  value={currentCandidate1.hidden}
                   onChange={this.onChangeHidden}
                 />
               </div>
@@ -260,7 +260,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="inactive"
-                  value={currentCandidate.inactive}
+                  value={currentCandidate1.inactive}
                   onChange={this.onChangeInactive}
                 />
               </div>
@@ -270,7 +270,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="mode"
-                  value={currentCandidate.mode}
+                  value={currentCandidate1.mode}
                   onChange={this.onChangeMode}
                 />
               </div>
@@ -280,7 +280,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="phone"
-                  value={currentCandidate.phone}
+                  value={currentCandidate1.phone}
                   onChange={this.onChangePhone}
                 />
               </div>
@@ -290,7 +290,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="address"
-                  value={currentCandidate.address}
+                  value={currentCandidate1.address}
                   onChange={this.onChangeAddress}
                 />
               </div>
@@ -300,7 +300,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="bankdetails"
-                  value={currentCandidate.bankdetails}
+                  value={currentCandidate1.bankdetails}
                   onChange={this.onChangeBankdetails}
                 />
               </div>
@@ -310,7 +310,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="email"
-                  value={currentCandidate.email}
+                  value={currentCandidate1.email}
                   onChange={this.onChangeEmail}
                 />
               </div>
@@ -320,7 +320,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="password"
-                  value={currentCandidate.password}
+                  value={currentCandidate1.password}
                   onChange={this.onChangePassword}
                 />
               </div>
@@ -328,7 +328,7 @@ export default class Candidate extends Component<Props, State> {
               
             </form>
 
-            {currentCandidate.inactive ? (
+            {currentCandidate1.inactive ? (
               <button
                 className="badge badge-primary mr-2"
                 onClick={() => this.updatePublished(false)}

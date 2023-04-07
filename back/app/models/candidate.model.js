@@ -28,6 +28,7 @@ Candidate.create = (newCandidate, result) => {
 
 Candidate.findById = (id, result) => {
   sql.query(`SELECT * FROM candidate WHERE id = ${id}`, (err, res) => {
+  //sql.query(`SELECT name,address,username FROM candidate WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);

@@ -36,6 +36,7 @@ app.get("/", (req, res) => {
 
 require("./app/routes/action.routes.js")(app);
 require("./app/routes/candidate.routes.js")(app);
+require("./app/routes/misc.routes.js")(app);
 require("./app/routes/protokoll.routes.js")(app);
 require("./app/routes/errorlog.routes.js")(app);
 require("./app/routes/loanunit.routes.js")(app);

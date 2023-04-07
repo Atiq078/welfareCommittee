@@ -2,7 +2,7 @@ import { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import Nav from 'react-bootstrap/Nav';
+//import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import AddCandidate from "./components/add-candidate.component";
@@ -86,7 +86,7 @@ class App extends Component<Props, State> {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
-            bezKoder
+            Akhuwat
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
@@ -110,7 +110,179 @@ class App extends Component<Props, State> {
                 </Link>
               </li>
             )}
+            {showAdminBoard && (
+            <li className="nav-item">
+              <Link to={"/candidates"} className="nav-link">
+                Candidates
+              </Link>
+            </li>
+            )}
 
+            {showAdminBoard && (
+            <li className="nav-item">
+              <Link to={"/add"} className="nav-link">
+                Add Candidate
+              </Link>
+            </li>
+            )}
+
+            {showAdminBoard && (
+            <li className="nav-item">
+              <Link to={"/protokolls"} className="nav-link">
+                Protokolls
+              </Link>
+            </li>
+            )}
+            {showAdminBoard && (
+            <li className="nav-item">
+              <Link to={"/addprotokolls"} className="nav-link">
+                Add Protokolls
+              </Link>
+            </li>
+            )}
+            {showAdminBoard && (
+            <li className="nav-item">
+              <Link to={"/candidates2"} className="nav-link">
+                CandidatesTests
+              </Link>
+            </li>
+            )}
+{showAdminBoard && (
+<NavDropdown title="Admin" id="nav-dropdown">
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/candidates"} >
+            List Candidate
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/add"} >
+            Add Candidate
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/protokolls"} >
+            List Protokoll
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/addprotokolls"} >
+            Add Protokoll
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/committees"} >
+            List Committee
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/addcommittees"} >
+            Add Committee
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/actions"} >
+            List Action
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/addactions"} >
+            Add Action
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/errorlogs"} >
+            List ErrorLog
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/adderrorlogs"} >
+            Add ErrorLog
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/loanunits"} >
+            List LoanUnit
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/loanunits"} >
+            Add LoanUnit
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/rfids"} >
+            List RFID
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/addrfids"} >
+            Add RFID
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/shareunits"} >
+            List ShareUnit
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/addshareunits"} >
+            Add ShareUnit
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/tokens"} >
+            List Token
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/addtokens"} >
+            Add Token
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/unknownrfids"} >
+            List UnknownRfid
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/addunknownrfids"} >
+            Add UnknownRfid
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+        <NavDropdown.Item eventKey="4.1" >
+          <Link to={"/welfarestands"} >
+            List WelfareStand
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">
+          <Link to={"/addwelfarestands"} >
+            Add WelfareStand
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Divider />
+
+      </NavDropdown>
+      )}
             {currentUser && (
               <li className="nav-item">
                 <Link to={"/user"} className="nav-link">
