@@ -21,9 +21,10 @@
   }
 
   .table-wrapper {
-    max-width: 400px;
-    max-height: 400px;
-    overflow: auto;
+    /*width: 700px;*/
+    width: 70%;
+    max-height: 100px;
+    overflow-y: auto;
     display:inline-block;
   }
   .table-earnings {
@@ -31,9 +32,11 @@
   }
 
 
-  th,
+
+th,
 td {
   border: 1px solid black;
   margin: 0px 0px;
   padding: 5px 5px;
 }
+

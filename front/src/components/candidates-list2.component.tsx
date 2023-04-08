@@ -1,11 +1,15 @@
 import { Component, ChangeEvent } from "react";
 import CandidateDataService from "../services/candidate.service";
+import ActionDataService from "../services/action.service";
+
 import SqlDataService from "../services/misc.service";
 import SqlDataService0 from "../services/misc0.service";
 import SqlDataService1 from "../services/misc1.service";
 import SqlDataService2 from "../services/misc2.service";
 import { Link } from "react-router-dom";
 import ICandidateData from '../types/candidate.type';
+import IActionData from '../types/action.type';
+
 import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,} from "../types/misc.type"
 import ILoanLeft0 from "../types/misc0.type"
 import ILastLoan1 from "../types/misc1.type"
@@ -23,6 +27,14 @@ type Props = {};
 type State = {
   candidates: Array<ICandidateData>,
   currentCandidate: ICandidateData | null,
+  currentIndex: number,
+  searchName: string,
+  
+  actions: Array<IActionData>,
+  currentAction: IActionData | null,
+  currentIndexAction: number,
+  searchAction: string,
+
   loanLeft0: ILoanLeft0,
   lastLoan1: ILastLoan1,
   lastLoan2: ILastLoan2,
@@ -39,8 +51,7 @@ type State = {
   overallBal: Array<IOverallBal>| null,  
   overallLoan: Array<IOverallLoan>| null,
   overallLoanDues: Array<IOverallLoanDues>| null,
-  currentIndex: number,
-  searchName: string,
+
   currentCommittee: string,
   currentCandidate1: ICandidateData| null,
   message: string,
@@ -74,10 +85,26 @@ export default class CandidatesList extends Component<Props, State>{
     this.getMaxInst = this.getMaxInst.bind(this);
     this.getLastLoan = this.getLastLoan.bind(this);
     this.getLoanLeft = this.getLoanLeft.bind(this);
+    //cand
+    this.onChangeSearchName = this.onChangeSearchName.bind(this);
+    this.refreshList = this.refreshList.bind(this);
+    this.setActiveCandidate = this.setActiveCandidate.bind(this);
+    this.searchName = this.searchName.bind(this);
+    //actions
+    this.onChangeSearchAction = this.onChangeSearchAction.bind(this);
+    this.setActiveAction = this.setActiveAction.bind(this);
+    this.searchAction = this.searchAction.bind(this);
 
     this.state = {
       candidates: [],
       currentCandidate: null,
+      currentIndex: -1,
+      searchName: "",
+      
+      actions: [],
+      currentAction: null,
+      currentIndexAction: -1,
+      searchAction: "",
       loanLeft0: {
         loan_left: null,
       },
@@ -104,8 +131,7 @@ export default class CandidatesList extends Component<Props, State>{
       overallBal: null,  
       overallLoan: null,
       overallLoanDues: null,
-      currentIndex: -1,
-      searchName: "",
+
       currentCommittee: "1",
       currentCandidate1: null,/* {
         id: null,
@@ -124,12 +150,14 @@ export default class CandidatesList extends Component<Props, State>{
   }
  
   componentDidMount() {
-    //this.retrieveCandidates();
-    //this.getCandidate("13");
+    
     let id: string; 
     let cid:string;
     id = "22"
     cid = "1"
+    this.retrieveCandidates();
+    this.retrieveActions();
+    //this.getCandidate("13");
     this.getLoanLeft0(id, cid);
     this.getLastLoan1(id, cid);
     this.getLastLoan2(id, cid);
@@ -149,8 +177,123 @@ export default class CandidatesList extends Component<Props, State>{
     this.getOverallLoan(cid);
     this.getOverallLoanDues(cid);
   }
+  
+  refreshList() {
+    this.retrieveCandidates();
+    this.retrieveActions();
+    this.setState({
+      currentCandidate: null,
+      currentIndex: -1,
+      
+      currentAction: null,
+      currentIndexAction: -1
+    });
+  }
+  
+  //Action
+  onChangeSearchAction(e: ChangeEvent<HTMLInputElement>) {
+    const searchAction = e.target.value;
+
+    this.setState({
+      searchAction: searchAction
+    });
+  }
 
   
+  retrieveActions() {
+    ActionDataService.getAll()
+
+      .then((response: any) => {
+        this.setState({
+          actions: response.data,
+        });
+        console.log(response.data);
+  
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
+
+
+
+  setActiveAction(action: IActionData, index: number) {
+    this.setState({
+      currentAction: action,
+      currentIndexAction: index
+    });
+  }
+
+
+  searchAction() {
+    this.setState({
+      currentAction: null,
+      currentIndexAction: -1
+    });
+
+    ActionDataService.findByTitle(this.state.searchAction)
+      .then((response: any) => {
+        this.setState({
+          actions: response.data
+        });
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
+  
+  
+  onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
+    const searchName = e.target.value;
+
+    this.setState({
+      searchName: searchName
+    });
+  }
+
+  //Candidates
+  retrieveCandidates() {
+    CandidateDataService.getAll()
+
+      .then((response: any) => {
+        this.setState({
+          candidates: response.data,
+        });
+        console.log(response.data);
+  
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
+
+  setActiveCandidate(candidate: ICandidateData, index: number) {
+    this.setState({
+      currentCandidate: candidate,
+      currentIndex: index
+    });
+  }
+
+
+  searchName() {
+    this.setState({
+      currentCandidate: null,
+      currentIndex: -1
+    });
+
+    CandidateDataService.findByTitle(this.state.searchName)
+      .then((response: any) => {
+        this.setState({
+          candidates: response.data
+        });
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
+  //tests
   getCandidate(id: string) {
     CandidateDataService.get(id)
       .then((response: any) => {
@@ -197,22 +340,6 @@ export default class CandidatesList extends Component<Props, State>{
           lastLoan2: response.data,
         });
         console.log(response.data);
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
-  }
-
-  
-  retrieveCandidates() {
-    CandidateDataService.getAll()
-
-      .then((response: any) => {
-        this.setState({
-          candidates: response.data,
-        });
-        console.log(response.data);
-  
       })
       .catch((e: Error) => {
         console.log(e);
@@ -393,7 +520,9 @@ getOverallLoanDues(cid:string) {
 
  
   render() {
-  const {  currentCandidate1, currentIndex, loanLeft0, lastLoan1, lastLoan2,
+  const {  searchName, candidates, currentCandidate,currentCandidate1, currentIndex, 
+    searchAction, actions, currentAction, currentIndexAction,
+    loanLeft0, lastLoan1, lastLoan2,
     //User
     loanLeft,
     lastLoan,   
@@ -707,26 +836,25 @@ getOverallLoanDues(cid:string) {
         <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Using Tables</h3>
         <h5>Overall Loan Left</h5>
         {overallLoanDues ? (
-          <div>
-            <p></p>
-<table>
-<tr key={"header"}>
-        {Object.keys(overallLoanDues[0]).map((key) => (
-          <th>{key}</th>
-        ))}
-      </tr>
+          
+        <div className="table-wrapper">
+        <table className="table table-earnings table-earnings__challenge">
+        <tr key={"header"}>
+                {Object.keys(overallLoanDues[0]).map((key) => (
+                  <th>{key}</th>
+                ))}
+              </tr>
 
-  {overallLoanDues.map((item =>
-  <tr key={item.id}> 
-  {Object.values(item).map((val) => (
-            <td>{val}</td>
+          {overallLoanDues.map((item =>
+          <tr key={item.id}> 
+          {Object.values(item).map((val) => (
+                    <td>{val}</td>
+                  ))}
+
+          </tr>
           ))}
-
-  </tr>
-  ))}
-</table>        
-			
-          </div>
+        </table>        
+        </div>
         ) : (
           <div>
             <br />
@@ -734,8 +862,53 @@ getOverallLoanDues(cid:string) {
           </div>
         )}
         </div>
-  
+        
+        <div>
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Payments</h3>
+        <h5>Select User</h5>
+        <div className="col-md-6">
+          <h4>Candidates List</h4>
 
+          <ul className="list-group">
+            {candidates &&
+              candidates.map((candidate: ICandidateData, index: number) => (
+                <li
+                  className={
+                    "list-group-item " +
+                    (index === currentIndex ? "active" : "")
+                  }
+                  onClick={() => this.setActiveCandidate(candidate, index)}
+                  key={index}
+                >
+                  {candidate.name}
+                </li>
+              ))}
+          </ul>
+        </div>
+        </div>
+
+        <div>
+        <h5>Select Action</h5>
+        <div className="col-md-6">
+          <h4>Action List</h4>
+
+          <ul className="list-group">
+            {actions &&
+              actions.map((action: IActionData, index: number) => (
+                <li
+                  className={
+                    "list-group-item " +
+                    (index === currentIndexAction ? "active" : "")
+                  }
+                  onClick={() => this.setActiveAction(action, index)}
+                  key={index}
+                >
+                  {action.description}
+                </li>
+              ))}
+          </ul>
+        </div>
+        </div>
 
       </div>
     );
