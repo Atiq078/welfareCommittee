@@ -910,6 +910,60 @@ getOverallLoanDues(cid:string) {
         </div>
         </div>
 
+        <div>
+        {currentCandidate ? (
+            <div>
+              <h4>Candidate</h4>
+              <div>
+                <label>
+                  <strong>Name:</strong>
+                </label>{" "}
+                {currentCandidate.name}
+              </div>
+
+              <Link
+                to={"/candidates/" + currentCandidate.id}
+                className="badge badge-warning"
+              >
+                Edit
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <br />
+              <p>Please click on a Candidate...</p>
+            </div>
+          )}
+        </div>
+
+
+        <div>
+        {currentAction ? (
+            <div>
+              <h4>Action</h4>
+              <div>
+                <label>
+                  <strong>Description:</strong>
+                </label>{" "}
+                {currentAction.description}
+              </div>
+
+              <Link
+                to={"/actions/" + currentAction.id}
+                className="badge badge-warning"
+              >
+                Edit
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <br />
+              <p>Please click on a Action...</p>
+            </div>
+          )}
+        </div>
+
+
       </div>
     );
   }
