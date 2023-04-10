@@ -50,8 +50,8 @@ Candidate.getAll = (name, result) => {
   let query = "SELECT * FROM candidate";
 
   if (name) {
-    //query += ` WHERE name LIKE '%${name}%'`;
-    query += ` WHERE name = '${name}'`;
+    query += ` WHERE name LIKE '%${name}%'`;
+    //query += ` WHERE name = '${name}'`;
   }
 
   sql.query(query, (err, res) => {

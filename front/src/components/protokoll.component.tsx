@@ -37,6 +37,7 @@ export default class Protokoll extends Component<Props, State> {
         timestamp: "",
         value: "",
       actionid: "",
+      approved: false,
 
       },
       message: "",
@@ -127,6 +128,7 @@ export default class Protokoll extends Component<Props, State> {
       timestamp: this.state.currentProtokoll.timestamp,//status,
       value: this.state.currentProtokoll.value,
       actionid: this.state.currentProtokoll.actionid,
+      approved: status,
 
     };
 
@@ -135,7 +137,7 @@ export default class Protokoll extends Component<Props, State> {
         this.setState((prevState) => ({
           currentProtokoll: {
             ...prevState.currentProtokoll,
-            timestamp: "",//status,
+            approved: status,
           },
           message: "The status was updated successfully!"
         }));
@@ -237,19 +239,19 @@ export default class Protokoll extends Component<Props, State> {
               
             </form>
 
-            {currentProtokoll.timestamp ? (
+            {currentProtokoll.approved ? (
               <button
                 className="badge badge-primary mr-2"
                 onClick={() => this.updatePublished(false)}
               >
-                UnPublish
+                Un-Approve
               </button>
             ) : (
               <button
                 className="badge badge-primary mr-2"
                 onClick={() => this.updatePublished(true)}
               >
-                Publish
+                Approve
               </button>
             )}
 

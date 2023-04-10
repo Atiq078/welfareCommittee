@@ -1,9 +1,3 @@
-/*export default interface ICandidateData {
-  id?: any | null,
-  title: string,
-  description: string,
-  published?: boolean,
-}*/
 export default interface ICandidateData {
   id?: any | null,
   name: string,

@@ -45,6 +45,8 @@ require("./app/routes/rfid.routes.js")(app);
 require("./app/routes/token.routes.js")(app);
 require("./app/routes/unknownrfid.routes.js")(app);
 require("./app/routes/welfarestand.routes.js")(app);
+//for modifications of user roles
+require("./app/routes/userrole.routes.js")(app);
 // routes
 /////// login registeration /////////
 require('./app/routes/auth.routes')(app);

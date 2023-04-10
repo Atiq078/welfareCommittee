@@ -6,4 +6,5 @@ export default interface ProtokollData {
     value: string,
     kommentar: string,
     actionid: string,
+    approved?: boolean,
   }

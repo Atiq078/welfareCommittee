@@ -3,7 +3,9 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import CandidateDataService from "../services/candidate.service";
 import ICandidateData from "../types/candidate.type";
-
+import UserRoleDataService from "../services/userrole.service";
+import IUserRoleData from "../types/userrole.type";
+import "./component.css";
 interface RouterProps { // type for `match.params`
   id: string; // must be type `string` since value comes from the URL
 }
@@ -12,6 +14,7 @@ type Props = RouteComponentProps<RouterProps>;
 
 type State = {
   currentCandidate1: ICandidateData;
+  currentUserRole1: IUserRoleData;
   message: string;
 }
 
@@ -31,6 +34,9 @@ export default class Candidate extends Component<Props, State> {
     this.updatePublished = this.updatePublished.bind(this);
     this.updateCandidate = this.updateCandidate.bind(this);
     this.deleteCandidate = this.deleteCandidate.bind(this);
+    //user roles
+    this.updateUserRole = this.updateUserRole.bind(this);
+    this.getUserRole = this.getUserRole.bind(this);
 
     this.state = {
       currentCandidate1: {
@@ -45,12 +51,20 @@ export default class Candidate extends Component<Props, State> {
       email: "",
       password: "",
       },
+      currentUserRole1: {
+        createdAt: null,
+        updatedAt: null,
+        userId: "",
+        roleId: "",
+      },
       message: "",
     };
   }
 
   componentDidMount() {
     this.getCandidate(this.props.match.params.id);
+    this.getUserRole(this.props.match.params.id);
+    this.updateUserRole("3")
   }
 
   onChangeName(e: ChangeEvent<HTMLInputElement>) {
@@ -167,6 +181,19 @@ export default class Candidate extends Component<Props, State> {
         console.log(e);
       });
   }
+  
+  getUserRole(id: string) {
+    UserRoleDataService.get(id)
+      .then((response: any) => {
+        this.setState({
+          currentUserRole1: response.data,
+        });
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
 
   updatePublished(status: boolean) {
     const data: ICandidateData = {
@@ -190,6 +217,30 @@ export default class Candidate extends Component<Props, State> {
             inactive: "",//status,
           },
           message: "The status was updated successfully!"
+        }));
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
+
+  updateUserRole(status: string) {
+    const data: IUserRoleData = {
+      createdAt: this.state.currentUserRole1.createdAt,
+      updatedAt: this.state.currentUserRole1.updatedAt,
+      userId: this.state.currentUserRole1.userId,
+      roleId: status//this.state.currentUserRole1.roleId,//status,
+    };
+
+    UserRoleDataService.update(data, this.state.currentUserRole1.userId)
+      .then((response: any) => {
+        this.setState((prevState) => ({
+          currentUserRole1: {
+            ...prevState.currentUserRole1,
+            roleId: status,
+          },
+          message: "The UserRole was updated successfully!"
         }));
         console.log(response.data);
       })
@@ -226,7 +277,7 @@ export default class Candidate extends Component<Props, State> {
   }
 
   render() {
-    const { currentCandidate1 } = this.state;
+    const { currentCandidate1,currentUserRole1 } = this.state;
 
     return (
       <div>
@@ -234,7 +285,7 @@ export default class Candidate extends Component<Props, State> {
           <div className="edit-form">
             <h4>Candidate</h4>
             <form>
-              <div className="form-group">
+            <div className="form-group">
                 <label htmlFor="name">NAME</label>
                 <input
                   type="text"
@@ -328,21 +379,24 @@ export default class Candidate extends Component<Props, State> {
               
             </form>
 
-            {currentCandidate1.inactive ? (
+            {currentUserRole1.roleId ==="2"? (
               <button
                 className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(false)}
+                onClick={() => this.updateUserRole("1")}
               >
-                UnPublish
+                User+{currentUserRole1.roleId}
               </button>
             ) : (
               <button
                 className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(true)}
+                onClick={() => this.updateUserRole("2")}
               >
-                Publish
+                Moderator+{currentUserRole1.roleId}
               </button>
             )}
+
+
+
 
             <button
               className="badge badge-danger mr-2"

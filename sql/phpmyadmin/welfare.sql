@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2023 at 03:42 PM
+-- Generation Time: Apr 10, 2023 at 09:11 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -81,32 +81,29 @@ CREATE TABLE `candidate` (
 --
 
 INSERT INTO `candidate` (`id`, `name`, `hidden`, `inactive`, `mode`, `phone`, `address`, `bankdetails`, `username`, `email`, `password`, `createdAt`, `updatedAt`) VALUES
-(1, 'Sajjad', 'no', 'no', 'admin', '+923342881402', 'Sanghar', 'ASkari Bank', '', 'Sajjad@gmail.com', 'password1', NULL, NULL),
-(2, 'Sajjad2', 'no', 'no', 'admin', '+923342881402', 'Sanghar', 'ASkari Bank', '', 'Sajjad2@gmail.com', 'password2', NULL, NULL),
-(3, 'Anees', 'no', 'no', 'admin', '+923342881403', 'Muzafabad', 'Meezan Bank', '', 'Anees@gmail.com', 'password3', NULL, NULL),
-(4, 'Anees2', 'no', 'no', 'admin', '+923342881403', 'Muzafabad', 'Meezan Bank', '', 'Anees2@gmail.com', 'password4', NULL, NULL),
-(5, 'Mohsin', 'no', 'no', 'admin', '+923342881404', 'Peshawar', 'Allied Bank', '', 'Mohsin@gmail.com', 'password5', NULL, NULL),
-(6, 'Mohsin2', 'no', 'no', 'admin', '+923342881404', 'Peshawar', 'Allied Bank', '', 'Mohsin2@gmail.com', 'password6', NULL, NULL),
-(7, 'Tanveer', 'no', 'no', 'regular', '+923342881405', 'Sawat', 'Habib Bank', '', 'Tanveer@gmail.com', 'password7', NULL, NULL),
-(8, 'Tanveer2', 'no', 'no', 'regular', '+923342881405', 'Sawat', 'Habib Bank', '', 'Tanveer2@gmail.com', 'password8', NULL, NULL),
-(9, 'Subhan', 'no', 'no', 'regular', '+923342881406', 'Sawat', 'National Bank', '', 'Subhan@gmail.com', 'password9', NULL, NULL),
-(10, 'Tajdar', 'no', 'no', 'regular', '+923342881407', 'Sawabi', 'Easypaisa Bank', '', 'Tajdar@gmail.com', 'password10', NULL, NULL),
-(11, 'Waseem', 'no', 'no', 'regular', '+923342881408', 'Rawalpindi', 'ASkari Bank', '', 'Waseem@gmail.com', 'password11', NULL, NULL),
-(12, 'Babar', 'no', 'no', 'regular', '+923342881409', 'Soan Garden', 'Meezan Bank', '', 'Babar@gmail.com', 'password12', NULL, NULL),
-(13, 'Nouman', 'no', 'no', 'regular', '+923342881410', 'Sanghar', 'ASkari Bank', '', 'Nouman@gmail.com', 'password13', NULL, NULL),
-(14, 'Shahzaib', 'no', 'no', 'regular', '+923342881411', 'Sanghar', 'Jazz Bank', '', 'Shahzaib@gmail.com', 'password14', NULL, NULL),
-(15, 'Saeed', 'no', 'no', 'regular', '+923342881412', 'Sanghar', 'Soneri Bank', '', 'Saeed@gmail.com', 'password15', NULL, NULL),
-(16, 'Moaz', 'no', 'no', 'regular', '+923342881413', 'Sanghar', 'ASkari Bank', '', 'Moaz@gmail.com', 'password16', NULL, NULL),
-(17, 'Sarfraz', 'no', 'no', 'regular', '+923342881414', 'Sanghar', 'ASkari Bank', '', 'Sarfraz@gmail.com', 'password17', NULL, NULL),
-(18, 'Mughal', 'no', 'no', 'regular', '+923342881415', 'Sanghar', 'ASkari Bank', '', 'Mughal@gmail.com', 'password18', NULL, NULL),
-(19, 'Amjad', 'no', 'no', 'regular', '+923342881416', 'Sanghar', 'ASkari Bank', '', 'Amjad@gmail.com', 'password19', NULL, NULL),
-(20, 'Qazi', 'no', 'no', 'regular', '+923342881417', 'Sanghar', 'ASkari Bank', '', 'Qazi@gmail.com', 'password20', NULL, NULL),
-(21, 'Ahmad', 'no', 'no', 'regular', '+923342881418', 'Sanghar', 'ASkari Bank', '', 'Ahmad@gmail.com', 'password21', NULL, NULL),
-(23, 'Zubair', 'yes', 'no', 'regular', '+923342881402', 'chak-10', 'habib bank', '', 'Zubair@gmail.com', 'Zubair', NULL, NULL),
-(24, 'faqir', 'yes', 'no', 'regular', '+923342881402', 'chak-10', 'habib bank', '', 'Zubair@gmail.com', 'Zubair', NULL, NULL),
-(33, 'abc2', 'no', 'no', 'regular', '0908088800', 'Pakistan', 'Askari', 'adminabc2', 'adminabc2@gmail.com', '$2a$08$v6d6STQ8rUjdI0fraJXN8..qBViYSc8F8pCnbWBgmfHHTtD00ouRe', '2023-04-01 11:55:34', '2023-04-01 11:55:34'),
-(37, 'Ajit', 'no', 'no', 'regular', '+432224343', 'Kalkutta South India', 'Commerzbank', 'ajit', 'ajit@gmail.com', '$2a$08$chEX4QXKDzLQk.FMzPTHwOy69Wz4mI0M7VKIPrq9HexsgyboGnrDG', '2023-04-01 13:18:52', '2023-04-01 13:18:52'),
-(38, 'Nurbek', 'no', 'no', 'regular', '+91233323232', 'Turkia South Asia Istanbul', 'Commerzbank', 'nurbek', 'nurbek@gmail.com', '$2a$08$tJ77SX5DgrNJx.rrZFLUUOLDGxYcabqz3kpjrQE82A2Vr5BjF5bvy', '2023-04-01 13:41:00', '2023-04-01 13:41:00');
+(1, 'Sajjad', 'no', '', 'admin', '+923342881402', 'Sanghar', 'ASkari Bank', 'sajjad', 'Sajjad@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(2, 'Sajjad2', 'no', 'no', 'admin', '+923342881402', 'Sanghar', 'ASkari Bank', 'sajjad2', 'Sajjad2@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(3, 'Anees', 'no', 'no', 'admin', '+923342881403', 'Muzafabad', 'Meezan Bank', 'anees', 'Anees@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(4, 'Anees2', 'no', 'no', 'admin', '+923342881403', 'Muzafabad', 'Meezan Bank', 'anees2', 'Anees2@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(5, 'Mohsin', 'no', 'no', 'admin', '+923342881404', 'Peshawar', 'Allied Bank', 'mohsin', 'Mohsin@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(6, 'Mohsin2', 'no', 'no', 'admin', '+923342881404', 'Peshawar', 'Allied Bank', 'mohsin2', 'Mohsin2@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(7, 'Tanveer', 'no', 'no', 'regular', '+923342881405', 'Sawat', 'Habib Bank', 'tanveer', 'Tanveer@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(8, 'Tanveer2', 'no', 'no', 'regular', '+923342881405', 'Sawat', 'Habib Bank', 'tanveer2', 'Tanveer2@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(9, 'Tajdar', 'no', 'no', 'regular', '+923342881407', 'Sawabi', 'Easypaisa Bank', 'tajdar', 'Tajdar@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(10, 'Subhan', 'no', 'no', 'regular', '+923342881406', 'Sawat', 'National Bank', 'subhan', 'Subhan@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(11, 'Sarfraz', 'no', 'no', 'regular', '+923342881414', 'Sanghar', 'ASkari Bank', 'sarfraz', 'Sarfraz@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(12, 'Saeed', 'no', 'no', 'regular', '+923342881412', 'Sanghar', 'Soneri Bank', 'saeed', 'Saeed@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(13, 'Shahzaib', 'no', 'no', 'regular', '+923342881411', 'Sanghar', 'Jazz Bank', 'sanghar', 'Shahzaib@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(14, 'Nouman', 'no', 'no', 'regular', '+923342881410', 'Sanghar', 'ASkari Bank', 'nouman', 'Nouman@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(15, 'Babar', 'no', 'no', 'regular', '+923342881409', 'Soan Garden', 'Meezan Bank', 'babar', 'Babar@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(16, 'Ahmad', 'no', 'no', 'regular', '+923342881418', 'Sanghar', 'ASkari Bank', 'ahmad', 'Ahmad@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(17, 'Moaz', 'no', 'no', 'regular', '+923342881413', 'Sanghar', 'ASkari Bank', 'moaz', 'Moaz@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(18, 'Mughal', 'no', 'no', 'regular', '+923342881415', 'Sanghar', 'ASkari Bank', 'mughal', 'Mughal@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(19, 'Waseem', 'no', 'no', 'regular', '+923342881408', 'Rawalpindi', 'ASkari Bank', 'waseem', 'Waseem@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(20, 'Murtaza', 'no', 'no', 'regular', '+49100100123', 'Bruchsal', 'Sparkasse', 'murtaza', 'murtaza@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-03 06:24:33', '2023-04-03 06:24:33'),
+(21, 'Amjad', 'no', 'no', 'regular', '+923342881416', 'Sanghar', 'ASkari Bank', 'amjad', 'Amjad@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(22, 'Qazi', 'no', 'no', 'regular', '+923342881417', 'Muzafarabad', 'Habib Bank', 'qazi', 'Qazi@gmail.com', '$2a$08$eXrW/6EDjuTL.3V7g1MIjexk6lUOB2Upz5NMZMT6Ye5z0lSewpGSC', '2023-04-01 13:18:52', '2023-04-01 11:55:34'),
+(25, 'admin', 'no', 'no', 'regular', '0908088800', 'Pakistan', 'Askari', 'admin', 'admin@gmail.com', '$2a$08$v6d6STQ8rUjdI0fraJXN8..qBViYSc8F8pCnbWBgmfHHTtD00ouRe', '2023-04-01 11:55:34', '2023-04-01 11:55:34');
 
 -- --------------------------------------------------------
 
@@ -136,32 +133,6 @@ CREATE TABLE `candidates_old` (
 
 INSERT INTO `candidates_old` (`id`, `name`, `hidden`, `inactive`, `mode`, `phone`, `address`, `bankdetails`, `username`, `email`, `password`, `createdAt`, `updatedAt`) VALUES
 (1, 'abc2', NULL, NULL, NULL, '0908088800', 'Pakistan', 'Askari', 'adminabc2', 'adminabc2@gmail.com', '$2a$08$hZZ/Kmyn34W7/qZqK2utAeq3gutu3MgYelikwE3W0kuPzGCKrfNvS', '2023-04-01 11:41:53', '2023-04-01 11:41:53');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cands`
---
-
-CREATE TABLE `cands` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `bankdetails` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cands`
---
-
-INSERT INTO `cands` (`id`, `name`, `phone`, `address`, `bankdetails`, `username`, `email`, `password`, `createdAt`, `updatedAt`) VALUES
-(1, 'abc2', '0908088800', 'Pakistan', 'Askari', 'adminabc2', 'adminabc2@gmail.com', '$2a$08$MtcG8xuTYXkHXDYLLc75Z.PLv/o8NzhOusFVOifGuf/aZ1S8MdnBa', '2023-04-01 11:21:11', '2023-04-01 11:21:11');
 
 -- --------------------------------------------------------
 
@@ -222,8 +193,9 @@ CREATE TABLE `loanunit` (
 --
 
 INSERT INTO `loanunit` (`id`, `timestamp`, `preis`, `maxinst`, `cid`) VALUES
-(1, '2023-09-01 11:26:27', -150000, 12, 1),
-(2, '2023-09-01 11:26:27', -100000, 12, 2);
+(1, '2022-09-01 11:26:27', -250, 15, 1),
+(2, '2023-09-01 11:26:27', -100, 12, 2),
+(3, '2023-04-04 05:33:20', -300, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -235,20 +207,108 @@ CREATE TABLE `protokoll` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `userid` int(11) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `value` int(11) NOT NULL,
+  `value` float(15,0) NOT NULL,
   `kommentar` char(100) NOT NULL,
   `actionid` int(11) NOT NULL,
-  `cid` int(11) NOT NULL
+  `cid` int(11) NOT NULL,
+  `approved` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `protokoll`
 --
 
-INSERT INTO `protokoll` (`id`, `userid`, `timestamp`, `value`, `kommentar`, `actionid`, `cid`) VALUES
-(2, 2, '2023-03-12 23:00:00', -50, 'regular loan', 2, 1),
-(3, 1, '2023-03-12 23:00:00', 50, ' deposits loan', 3, 1),
-(4, 3, '2023-03-12 23:00:00', 150, 'regular deposit', 1, 1);
+INSERT INTO `protokoll` (`id`, `userid`, `timestamp`, `value`, `kommentar`, `actionid`, `cid`, `approved`) VALUES
+(1, 21, '2023-03-12 20:00:00', 5, 'regular share deposit', 2, 1, 1),
+(2, 11, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(3, 5, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(4, 3, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(5, 18, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(6, 20, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(7, 10, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(8, 22, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(9, 7, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(10, 1, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(11, 12, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(12, 17, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(13, 11, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(14, 21, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(15, 10, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(16, 16, '2023-03-12 22:00:00', 30, 'regular share deposit', 2, 1, 0),
+(17, 18, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(18, 22, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(19, 7, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(20, 25, '2023-03-12 22:00:00', 30, 'random deposit', 1, 1, 0),
+(21, 5, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(22, 9, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(23, 1, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(24, 13, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(25, 11, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(26, 21, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(27, 18, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(28, 10, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(29, 22, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(30, 5, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(31, 7, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(32, 12, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(33, 11, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(34, 10, '2023-03-12 22:00:00', -15, 'revoked', 6, 1, 0),
+(35, 25, '2023-03-12 22:00:00', -30, 'random withdraw', 4, 1, 0),
+(36, 21, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(37, 25, '2023-03-12 22:00:00', 0, 'regular share deposit', 2, 1, 0),
+(38, 22, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(39, 3, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(40, 14, '2023-03-12 22:00:00', 40, 'regular share deposit', 2, 1, 0),
+(41, 18, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(42, 1, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(43, 5, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(44, 12, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(45, 20, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(46, 22, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(47, 21, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(48, 7, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(49, 18, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(50, 12, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(51, 5, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(52, 11, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(53, 13, '2023-02-12 22:00:00', -250, 'loan', 5, 1, 0),
+(55, 13, '2023-03-12 22:00:00', 7, 'regular share deposit', 2, 1, 0),
+(57, 13, '2023-03-12 22:00:00', 8, 'regular share deposit', 2, 1, 0),
+(58, 21, '2023-03-12 22:00:00', 25, 'regular share deposit', 2, 1, 0),
+(59, 5, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(60, 22, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(61, 1, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(62, 25, '2023-03-12 22:00:00', 30, 'regular share deposit', 2, 1, 0),
+(63, 9, '2023-03-12 22:00:00', -10, 'revoked', 6, 1, 0),
+(64, 20, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(65, 22, '2023-03-12 22:00:00', -300, 'loan', 5, 1, 0),
+(68, 22, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(69, 17, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(70, 1, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(71, 5, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(72, 16, '2023-03-12 22:00:00', 30, 'regular share deposit', 2, 1, 0),
+(73, 11, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(74, 6, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(75, 4, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(76, 8, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(77, 2, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(78, 8, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(79, 6, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(80, 2, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(81, 6, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(82, 8, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(83, 4, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(84, 2, '2023-03-12 22:00:00', 10, 'regular share deposit', 2, 1, 0),
+(85, 6, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(86, 8, '2023-03-12 22:00:00', 15, 'regular share deposit', 2, 1, 0),
+(87, 6, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(88, 6, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(89, 2, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(90, 2, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(91, 6, '2023-03-12 22:00:00', 5, 'regular share deposit', 2, 1, 0),
+(92, 22, '2023-04-04 04:58:01', 25, 'first loan installment', 3, 1, 0),
+(93, 13, '2023-03-01 06:05:00', 21, 'first loan installment', 3, 1, 0),
+(94, 13, '2023-04-04 06:24:14', 21, '2nd loan installments', 3, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -311,9 +371,9 @@ CREATE TABLE `shareunit` (
 --
 
 INSERT INTO `shareunit` (`id`, `timestamp`, `preis`, `cid`) VALUES
-(1, '2022-09-01 11:26:27', 300000, 1),
-(2, '2023-09-01 11:26:27', 100000, 2),
-(3, '2023-03-30 05:18:19', 250000, 1);
+(1, '2021-09-01 11:26:27', 15, 1),
+(2, '2023-09-01 11:26:27', 10, 2),
+(3, '2022-09-01 11:26:27', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -396,10 +456,8 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
-('2023-04-01 10:08:02', '2023-04-01 10:08:02', 1, 1),
 ('2023-04-01 10:16:01', '2023-04-01 10:16:01', 1, 2),
 ('2023-04-01 07:15:11', '2023-04-01 07:15:11', 1, 8),
-('2023-04-01 10:59:34', '2023-04-01 10:59:34', 1, 25),
 ('2023-04-01 11:03:44', '2023-04-01 11:03:44', 1, 26),
 ('2023-04-01 11:11:11', '2023-04-01 11:11:11', 1, 27),
 ('2023-04-01 11:15:12', '2023-04-01 11:15:12', 1, 28),
@@ -413,9 +471,9 @@ INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
 ('2023-04-01 13:11:47', '2023-04-01 13:11:47', 1, 36),
 ('2023-04-01 13:18:52', '2023-04-01 13:18:52', 1, 37),
 ('2023-04-01 13:41:00', '2023-04-01 13:41:00', 1, 38),
-('2023-04-01 10:08:02', '2023-04-01 10:08:02', 3, 1),
-('2023-04-01 10:16:01', '2023-04-01 10:16:01', 3, 2),
-('2023-04-01 10:59:34', '2023-04-01 10:59:34', 3, 25),
+('2023-04-01 13:58:21', '2023-04-01 13:58:21', 1, 39),
+('2023-04-09 16:51:47', '2023-04-09 00:51:47', 2, 1),
+('2023-04-01 10:59:34', '2023-04-09 08:59:34', 2, 25),
 ('2023-04-01 11:03:44', '2023-04-01 11:03:44', 3, 26),
 ('2023-04-01 11:11:11', '2023-04-01 11:11:11', 3, 27),
 ('2023-04-01 11:15:12', '2023-04-01 11:15:12', 3, 28),
@@ -423,7 +481,8 @@ INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
 ('2023-04-01 11:27:43', '2023-04-01 11:27:43', 3, 30),
 ('2023-04-01 11:40:23', '2023-04-01 11:40:23', 3, 31),
 ('2023-04-01 11:50:08', '2023-04-01 11:50:08', 3, 32),
-('2023-04-01 11:55:34', '2023-04-01 11:55:34', 3, 33);
+('2023-04-01 11:55:34', '2023-04-01 11:55:34', 3, 33),
+('2023-04-01 16:00:40', '2023-04-01 16:00:40', 3, 39);
 
 -- --------------------------------------------------------
 
@@ -468,12 +527,6 @@ ALTER TABLE `candidate`
 -- Indexes for table `candidates_old`
 --
 ALTER TABLE `candidates_old`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `cands`
---
-ALTER TABLE `cands`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -560,18 +613,12 @@ ALTER TABLE `action`
 -- AUTO_INCREMENT for table `candidate`
 --
 ALTER TABLE `candidate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213;
 
 --
 -- AUTO_INCREMENT for table `candidates_old`
 --
 ALTER TABLE `candidates_old`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `cands`
---
-ALTER TABLE `cands`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -584,13 +631,13 @@ ALTER TABLE `committee`
 -- AUTO_INCREMENT for table `loanunit`
 --
 ALTER TABLE `loanunit`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `protokoll`
 --
 ALTER TABLE `protokoll`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `shareunit`

@@ -87,6 +87,7 @@ export default class CandidatesList extends Component<Props, State>{
     this.getLoanLeft = this.getLoanLeft.bind(this);
     //cand
     this.onChangeSearchName = this.onChangeSearchName.bind(this);
+    this.onChangeSearchName2 = this.onChangeSearchName2.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveCandidate = this.setActiveCandidate.bind(this);
     this.searchName = this.searchName.bind(this);
@@ -242,15 +243,6 @@ export default class CandidatesList extends Component<Props, State>{
         console.log(e);
       });
   }
-  
-  
-  onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
-    const searchName = e.target.value;
-
-    this.setState({
-      searchName: searchName
-    });
-  }
 
   //Candidates
   retrieveCandidates() {
@@ -275,6 +267,36 @@ export default class CandidatesList extends Component<Props, State>{
     });
   }
 
+  
+  
+  onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
+    const searchName = e.target.value;
+
+    this.setState({
+      searchName: searchName
+    });
+  }
+  
+  
+  onChangeSearchName2(e: ChangeEvent<HTMLInputElement>) {
+    const searchName = e.target.value;
+
+    this.setState({
+      searchName: searchName,
+      currentCandidate: null,
+      currentIndex: -1
+    });
+    CandidateDataService.findByTitle(this.state.searchName)
+      .then((response: any) => {
+        this.setState({
+          candidates: response.data
+        });
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
 
   searchName() {
     this.setState({
@@ -539,6 +561,7 @@ getOverallLoanDues(cid:string) {
  
 
       <div>
+
         <div>
         <h3>Current Candidate</h3>
         {currentCandidate1 ? (
@@ -868,6 +891,27 @@ getOverallLoanDues(cid:string) {
         <h5>Select User</h5>
         <div className="col-md-6">
           <h4>Candidates List</h4>
+          <div className="col-md-8">
+
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by name"
+              value={searchName}
+              onChange={this.onChangeSearchName2}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={this.searchName}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
 
           <ul className="list-group">
             {candidates &&
