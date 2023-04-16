@@ -1,6 +1,8 @@
 import { Component, ChangeEvent } from "react";
 import CandidateDataService from "../services/candidate.service";
 import ActionDataService from "../services/action.service";
+import ProtokollDataService from "../services/protokoll.service";
+import ProtokollData from '../types/protokoll.type';
 
 import SqlDataService from "../services/misc.service";
 import SqlDataService0 from "../services/misc0.service";
@@ -23,6 +25,7 @@ import "./component.css";
 import { green, red } from "@material-ui/core/colors";
 
 type Props = {};
+
 
 type State = {
   candidates: Array<ICandidateData>,
@@ -55,7 +58,12 @@ type State = {
   currentCommittee: string,
   currentCandidate1: ICandidateData| null,
   message: string,
+  //button
+  
+  currentProtokoll: ProtokollData ,
+  submitted: boolean,
 };
+
 
 export default class CandidatesList extends Component<Props, State>{
   constructor(props: Props) {
@@ -95,6 +103,14 @@ export default class CandidatesList extends Component<Props, State>{
     this.onChangeSearchAction = this.onChangeSearchAction.bind(this);
     this.setActiveAction = this.setActiveAction.bind(this);
     this.searchAction = this.searchAction.bind(this);
+    //payment protokol
+    this.addPayment = this.addPayment.bind(this);
+    this.onChangeKommentar = this.onChangeKommentar.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
+    this.saveProtokoll = this.saveProtokoll.bind(this);
+    this.newProtokoll = this.newProtokoll.bind(this);
+
+
 
     this.state = {
       candidates: [],
@@ -135,11 +151,11 @@ export default class CandidatesList extends Component<Props, State>{
 
       currentCommittee: "1",
       currentCandidate1: null,/* {
-        id: null,
-        name: "",
-        hidden: "",
-        inactive: "",
-        mode: "",
+      id: null,
+      name: "",
+      hidden: "",
+      inactive: "",
+      mode: "",
       phone: "",
       address: "",
       bankdetails: "",
@@ -147,6 +163,17 @@ export default class CandidatesList extends Component<Props, State>{
       password: "",
       },*/
       message: "",
+      /*protokoll. payments*/
+      currentProtokoll :{
+        id: null,
+        kommentar: "",
+        userid: "",
+        timestamp: "",
+        value: "",
+        actionid: "",
+        cid: "1",
+      },
+      submitted: false
     };
   }
  
@@ -221,7 +248,8 @@ export default class CandidatesList extends Component<Props, State>{
   setActiveAction(action: IActionData, index: number) {
     this.setState({
       currentAction: action,
-      currentIndexAction: index
+      currentIndexAction: index,
+      
     });
   }
 
@@ -263,7 +291,8 @@ export default class CandidatesList extends Component<Props, State>{
   setActiveCandidate(candidate: ICandidateData, index: number) {
     this.setState({
       currentCandidate: candidate,
-      currentIndex: index
+      currentIndex: index,
+      //submitted: false,
     });
   }
 
@@ -539,8 +568,83 @@ getOverallLoanDues(cid:string) {
       console.log(e);
     });
 }
+//Protokoll/Payment
+addPayment(candidate_id:string,action_id:string,committee_id:string,)
+{
 
- 
+}
+
+
+onChangeKommentar(e: ChangeEvent<HTMLInputElement>) {
+  const kommentar = e.target.value;
+
+  this.setState(function (prevState) {
+    return {
+      currentProtokoll: {
+        ...prevState.currentProtokoll,
+        kommentar: kommentar,
+      },
+    };
+  });
+}
+
+onChangeValue(e: ChangeEvent<HTMLInputElement>) {
+  const value = e.target.value;
+
+  this.setState((prevState) => ({
+    currentProtokoll: {
+      ...prevState.currentProtokoll,
+      value: value,
+    },
+  }));
+}
+
+saveProtokoll() {
+  const data: ProtokollData = {
+    //id: this.state.currentProtokoll.id,
+    kommentar: this.state.currentProtokoll.kommentar,
+    //userid: this.state.currentProtokoll.userid,
+    userid: this.state.currentCandidate?.id,
+    //timestamp: this.state.currentProtokoll.timestamp,//status,
+    value: this.state.currentProtokoll.value,
+    //actionid: this.state.currentProtokoll.actionid,
+    actionid: this.state.currentAction?.id,
+    cid: this.state.currentCommittee,
+    //approved: status,
+
+  };
+
+  
+  ProtokollDataService.create(data)
+    .then((response: any) => {
+      this.setState((prevState) => ({
+        currentProtokoll: {
+          ...prevState.currentProtokoll,
+        },
+        submitted: true,
+      }));
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
+
+newProtokoll() {
+  this.setState({
+    currentProtokoll :{
+      id: null,
+      kommentar: "",
+      userid: "",
+      timestamp: "",
+      value: "",
+      actionid: "",
+      cid: "1",
+    },
+    submitted: false}
+  );
+}
+
   render() {
   const {  searchName, candidates, currentCandidate,currentCandidate1, currentIndex, 
     searchAction, actions, currentAction, currentIndexAction,
@@ -555,7 +659,9 @@ getOverallLoanDues(cid:string) {
     dueMonths,
     minInstAmount, 
     //Admin
-    totalBal,  allMonthlyDues,  overallBal,  overallLoan, overallLoanDues } = this.state;
+    totalBal,  allMonthlyDues,  overallBal,  overallLoan, overallLoanDues,
+    //Protokoll/Payment
+    submitted, currentProtokoll } = this.state;
     
     return (
  
@@ -955,36 +1061,28 @@ getOverallLoanDues(cid:string) {
         </div>
 
         <div>
-        {currentCandidate ? (
+        {currentCandidate && currentAction ? (
             <div>
               <h4>Candidate</h4>
+              <div>
+                <label>
+                  <strong>ID:</strong>
+                </label>{" "}
+                {currentCandidate.id}
+              </div>
               <div>
                 <label>
                   <strong>Name:</strong>
                 </label>{" "}
                 {currentCandidate.name}
               </div>
-
-              <Link
-                to={"/candidates/" + currentCandidate.id}
-                className="badge badge-warning"
-              >
-                Edit
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <br />
-              <p>Please click on a Candidate...</p>
-            </div>
-          )}
-        </div>
-
-
-        <div>
-        {currentAction ? (
-            <div>
               <h4>Action</h4>
+              <div>
+                <label>
+                  <strong>ID:</strong>
+                </label>{" "}
+                {currentAction.id}
+              </div>
               <div>
                 <label>
                   <strong>Description:</strong>
@@ -992,20 +1090,59 @@ getOverallLoanDues(cid:string) {
                 {currentAction.description}
               </div>
 
-              <Link
-                to={"/actions/" + currentAction.id}
-                className="badge badge-warning"
-              >
-                Edit
-              </Link>
+              
+              {submitted ? (
+          <div>
+            <h4>You submitted successfully!</h4>
+            <button className="btn btn-success" onClick={this.newProtokoll}>
+              Add
+            </button>
+          </div>
+        ) : (
+          <div>
+            <div className="form-group">
+              <label htmlFor="kommentar">Kommentar</label>
+              <input
+                type="text"
+                className="form-control"
+                id="kommentar"
+                required
+                value={currentProtokoll.kommentar}
+                onChange={this.onChangeKommentar}
+                name="kommentar"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="value">Value</label>
+              <input
+                type="text"
+                className="form-control"
+                id="value"
+                required
+                value={currentProtokoll.value}
+                onChange={this.onChangeValue}
+                name="value"
+              />
+            </div>
+
+            <button onClick={this.saveProtokoll} className="btn btn-success">
+              Submit
+            </button>
+          </div>
+        )}
+
             </div>
           ) : (
             <div>
               <br />
-              <p>Please click on a Action...</p>
+              <p>Please click on a Action and Candidate...</p>
             </div>
           )}
         </div>
+
+
+        
 
 
       </div>

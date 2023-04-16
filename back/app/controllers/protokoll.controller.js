@@ -15,7 +15,9 @@ exports.create = (req, res) => {
     timestamp: req.body.timestamp,
     value: req.body.value,
     kommentar: req.body.kommentar,
-    actionid: req.body.actionid || false
+    actionid: req.body.actionid ,
+    cid: req.body.cid,
+    approved: req.body.approved || false
   });
 
   // Save Protokoll in the database

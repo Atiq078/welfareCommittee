@@ -37,6 +37,7 @@ export default class Protokoll extends Component<Props, State> {
         timestamp: "",
         value: "",
       actionid: "",
+      cid: "1",
       approved: false,
 
       },
@@ -128,6 +129,7 @@ export default class Protokoll extends Component<Props, State> {
       timestamp: this.state.currentProtokoll.timestamp,//status,
       value: this.state.currentProtokoll.value,
       actionid: this.state.currentProtokoll.actionid,
+      cid: this.state.currentProtokoll.cid,
       approved: status,
 
     };

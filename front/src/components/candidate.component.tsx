@@ -285,7 +285,7 @@ export default class Candidate extends Component<Props, State> {
           <div className="edit-form">
             <h4>Candidate</h4>
             <form>
-            <div className="form-group">
+              <div className="form-group">
                 <label htmlFor="name">NAME</label>
                 <input
                   type="text"

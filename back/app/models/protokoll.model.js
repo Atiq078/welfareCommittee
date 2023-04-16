@@ -7,6 +7,7 @@ const Protokoll = function(protokoll) {
   this.value = protokoll.value;
   this.kommentar = protokoll.kommentar;
   this.actionid = protokoll.actionid;
+  this.cid = protokoll.cid;
   this.approved = protokoll.approved;
 };
 
@@ -78,7 +79,7 @@ Protokoll.getAllPublished = result => {
 
 Protokoll.updateById = (id, protokoll, result) => {
   sql.query(
-    "UPDATE protokoll SET userid = ?, timestamp = ?, value = ?,  kommentar = ?, actionid = ?, approved = ? WHERE id = ?",
+    "UPDATE protokoll SET userid = ?, timestamp = ?, value = ?,  kommentar = ?, actionid = ?, cid = ?, approved = ? WHERE id = ?",
     [protokoll.userid, protokoll.timestamp, protokoll.value,protokoll.kommentar,protokoll.actionid, protokoll.approved, id],
     (err, res) => {
       if (err) {

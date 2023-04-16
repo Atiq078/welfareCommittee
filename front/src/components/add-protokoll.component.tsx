@@ -27,7 +27,7 @@ export default class AddProtokoll extends Component<Props, State> {
       timestamp: "",
       value: "",
       actionid: "",
-
+      cid: "1",
       submitted: false
     };
   }
@@ -68,9 +68,10 @@ export default class AddProtokoll extends Component<Props, State> {
     const data: ProtokollData = {
       kommentar: this.state.kommentar,
       userid: this.state.userid,
-      timestamp: this.state.timestamp,
+      //timestamp: this.state.timestamp,
       value: this.state.value,
       actionid: this.state.actionid,
+      cid: this.state.cid,
 
     };
 
@@ -80,7 +81,7 @@ export default class AddProtokoll extends Component<Props, State> {
           id: response.data.id,
           kommentar: response.data.kommentar,
           userid: response.data.userid,
-          timestamp: response.data.timestamp,
+          //timestamp: response.data.timestamp,
           value: response.data.value,
           actionid: response.data.actionid,
 
@@ -153,7 +154,7 @@ export default class AddProtokoll extends Component<Props, State> {
                 className="form-control"
                 id="timestamp"
                 required
-                value={timestamp}
+                
                 onChange={this.onChangeTimestamp}
                 name="timestamp"
               />

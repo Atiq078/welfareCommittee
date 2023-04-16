@@ -48,7 +48,9 @@ export default class BoardAdmin extends Component<Props, State> {
         <header className="jumbotron">
           <h3>{this.state.content}</h3>
         </header>
+
       </div>
+      
     );
   }
 }
