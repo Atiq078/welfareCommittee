@@ -265,4 +265,23 @@ myModel.findOverallLoanDuesByCid = (cid, result) => {
     result(null, res);
   });
 };
+
+myModel.findMembersCount = ( result) => {
+  let query = `
+  SELECT
+  (SELECT COUNT(id) FROM candidate WHERE (inactive='no' and hidden = 'no'))  as active_members,
+  (SELECT COUNT(id) FROM candidate WHERE (inactive='yes' and hidden = 'no'))  as inactive_members
+  `;
+  myModel.query(query, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("sqlMembersCount: ", res);
+    result(null, res);
+  });
+};
+
 module.exports = myModel;

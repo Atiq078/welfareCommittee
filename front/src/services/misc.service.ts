@@ -1,5 +1,7 @@
 import http from "../http-common";
-import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,} from "../types/misc.type"
+import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,  
+  IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  
+  IOverallLoan,IOverallLoanDues,IMembersCount} from "../types/misc.type"
 
 class SqlDataService {
 
@@ -54,6 +56,10 @@ class SqlDataService {
 
   findOverallLoanDuesByCid(cid: string) {
     return http.get<Array<IOverallLoanDues>>(`/sql/overallloandues/${cid}`);
+  }
+
+  findMembersCount() {
+    return http.get<Array<IMembersCount>>(`/sql/memberscount/`);
   }
 }
 

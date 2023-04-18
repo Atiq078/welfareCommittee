@@ -12,7 +12,10 @@ import { Link } from "react-router-dom";
 import ICandidateData from '../types/candidate.type';
 import IActionData from '../types/action.type';
 
-import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,} from "../types/misc.type"
+import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,
+  IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,
+  IMembersCount} from "../types/misc.type"
+
 import ILoanLeft0 from "../types/misc0.type"
 import ILastLoan1 from "../types/misc1.type"
 import ILastLoan2 from "../types/misc2.type"
@@ -54,6 +57,7 @@ type State = {
   overallBal: Array<IOverallBal>| null,  
   overallLoan: Array<IOverallLoan>| null,
   overallLoanDues: Array<IOverallLoanDues>| null,
+  membersCount: Array<IMembersCount> | null,
 
   currentCommittee: string,
   currentCandidate1: ICandidateData| null,
@@ -79,6 +83,7 @@ export default class CandidatesList extends Component<Props, State>{
     this.getLastLoan2 = this.getLastLoan2.bind(this);
     this.getCandidate = this.getCandidate.bind(this);
     //Admin
+    this.getMembersCount = this.getMembersCount.bind(this);
     this.getOverallLoanDues = this.getOverallLoanDues.bind(this);
     this.getOverallLoan = this.getOverallLoan.bind(this);
     this.getOverallBal = this.getOverallBal.bind(this);
@@ -148,6 +153,7 @@ export default class CandidatesList extends Component<Props, State>{
       overallBal: null,  
       overallLoan: null,
       overallLoanDues: null,
+      membersCount: null,
 
       currentCommittee: "1",
       currentCandidate1: null,/* {
@@ -204,6 +210,7 @@ export default class CandidatesList extends Component<Props, State>{
     this.getOverallBal(cid);
     this.getOverallLoan(cid);
     this.getOverallLoanDues(cid);
+    this.getMembersCount();
   }
   
   refreshList() {
@@ -371,7 +378,7 @@ export default class CandidatesList extends Component<Props, State>{
       });
   }
 
-  getLastLoan1(id:string, cid:string) {
+getLastLoan1(id:string, cid:string) {
     SqlDataService1.findLastLoanByIdandCid(id,cid)
       .then((response: any) => {
         this.setState({
@@ -568,6 +575,20 @@ getOverallLoanDues(cid:string) {
       console.log(e);
     });
 }
+getMembersCount() {
+  SqlDataService.findMembersCount()
+    .then((response: any) => {
+      this.setState({
+        membersCount: response.data,
+      });
+      console.log("test1");
+      console.log(response.data);
+      console.log("test2");
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+}
 //Protokoll/Payment
 addPayment(candidate_id:string,action_id:string,committee_id:string,)
 {
@@ -659,7 +680,7 @@ newProtokoll() {
     dueMonths,
     minInstAmount, 
     //Admin
-    totalBal,  allMonthlyDues,  overallBal,  overallLoan, overallLoanDues,
+    totalBal,  allMonthlyDues,  overallBal,  overallLoan, overallLoanDues, membersCount,
     //Protokoll/Payment
     submitted, currentProtokoll } = this.state;
     
@@ -691,6 +712,24 @@ newProtokoll() {
           </div>
         )}
         </div>
+
+
+        <div>
+        <h3>Members Count</h3>
+        {membersCount ? (
+          <div>
+            <p></p>
+            <p>Active Members: {membersCount[0].active_members}</p>
+            <p>InActive Members: {membersCount[0].inactive_members}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Please click on a Candidate...</p>
+          </div>
+        )}
+        </div>
+
 
 
         <div>

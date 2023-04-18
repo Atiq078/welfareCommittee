@@ -21,6 +21,7 @@ module.exports = app => {
   router.get("/overallbal/:cid", myRoute.findOverallBal);
   router.get("/overallloan/:cid", myRoute.findOverallLoan);
   router.get("/overallloandues/:cid", myRoute.findOverallLoanDues);
+  router.get("/memberscount/", myRoute.findMembersCount);
 
   app.use('/api/sql', router);
 };

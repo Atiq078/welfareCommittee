@@ -224,4 +224,18 @@ exports.findAllMonthlyDues = (req, res) => {
         });
     };
        
-            
+    exports.findMembersCount = (req, res) => {
+      myCont.findMembersCount( (err, data) => {
+          if (err) {
+          if (err.kind === "not_found") {
+              res.status(404).send({
+              message: `Not found mySqlLoanLeft.`
+              });
+          } else {
+              res.status(500).send({
+              message: "Error retrieving mySqlLoanLeft "
+              });
+          }
+          } else res.send(data);
+      });
+  };            

@@ -67,3 +67,9 @@ export interface IOverallLoanDues {
     total_loan_left: string,
     kommentar: string,
 }
+
+export interface IMembersCount {
+    active_members: string,
+    inactive_members: string,
+
+}
