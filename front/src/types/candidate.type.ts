@@ -8,5 +8,5 @@ export default interface ICandidateData {
   address: string,
   bankdetails: string,
   email: string,
-  password: string,
+  username: string,
 }

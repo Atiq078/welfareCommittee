@@ -108,7 +108,8 @@ export default class AddProtokoll extends Component<Props, State> {
   }
 
   render() {
-    const { submitted, kommentar, userid, timestamp, value, actionid } = this.state;
+    const { submitted, kommentar, userid, /*timestamp,*/ 
+            value, actionid } = this.state;
 
     return (
       <div className="submit-form">

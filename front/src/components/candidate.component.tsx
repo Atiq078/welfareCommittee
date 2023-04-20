@@ -49,7 +49,7 @@ export default class Candidate extends Component<Props, State> {
       address: "",
       bankdetails: "",
       email: "",
-      password: "",
+      username: "",
       },
       currentUserRole1: {
         createdAt: null,
@@ -206,7 +206,7 @@ export default class Candidate extends Component<Props, State> {
       address: this.state.currentCandidate1.address,
       bankdetails: this.state.currentCandidate1.bankdetails,
       email: this.state.currentCandidate1.email,
-      password: this.state.currentCandidate1.password,
+      username: this.state.currentCandidate1.username,
     };
 
     CandidateDataService.update(data, this.state.currentCandidate1.id)
@@ -371,7 +371,7 @@ export default class Candidate extends Component<Props, State> {
                   type="text"
                   className="form-control"
                   id="password"
-                  value={currentCandidate1.password}
+                  value={currentCandidate1.username}
                   onChange={this.onChangePassword}
                 />
               </div>

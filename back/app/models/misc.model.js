@@ -189,7 +189,7 @@ myModel.findAllMonthlyDuesByCid = (cid, result) => {
   FROM candidate
   JOIN protokoll  ON protokoll.userid  = candidate.id
   JOIN action  ON protokoll.actionid  = action.id
-  WHERE (actionid=2) 
+  WHERE (actionid=2 and inactive='no' and hidden = 'no') 
   GROUP BY userid;
   `;
   myModel.query(query, (err, res) => {

@@ -19,7 +19,7 @@ export default class AddCandidate extends Component<Props, State> {
     this.onChangeAddress = this.onChangeAddress.bind(this);
     this.onChangeBankdetails = this.onChangeBankdetails.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
     this.saveCandidate = this.saveCandidate.bind(this);
     this.newCandidate = this.newCandidate.bind(this);
 
@@ -33,7 +33,7 @@ export default class AddCandidate extends Component<Props, State> {
       address: "",
       bankdetails: "",
       email: "",
-      password: "",
+      username: "",
       submitted: false
     };
   }
@@ -87,9 +87,9 @@ export default class AddCandidate extends Component<Props, State> {
     });
   }
 
-  onChangePassword(e: ChangeEvent<HTMLInputElement>) {
+  onChangeUsername(e: ChangeEvent<HTMLInputElement>) {
     this.setState({
-      password: e.target.value
+      username: e.target.value
     });
   }
 
@@ -103,7 +103,7 @@ export default class AddCandidate extends Component<Props, State> {
       address: this.state.address,
       bankdetails: this.state.bankdetails,
       email: this.state.email,
-      password: this.state.password,
+      username: this.state.username,
     };
 
     CandidateDataService.create(data)
@@ -118,7 +118,7 @@ export default class AddCandidate extends Component<Props, State> {
           address: response.data.address,
           bankdetails: response.data.bankdetails,
           email: response.data.email,
-          password: response.data.password,
+          username: response.data.username,
           submitted: true
         });
         console.log(response.data);
@@ -139,13 +139,13 @@ export default class AddCandidate extends Component<Props, State> {
       address: "",
       bankdetails: "",
       email: "",
-      password: "",
+      username: "",
       submitted: false
     });
   }
 
   render() {
-    const { submitted, name, hidden, inactive, mode, phone, address, bankdetails, email, password } = this.state;
+    const { submitted, name, hidden, inactive, mode, phone, address, bankdetails, email, username } = this.state;
 
     return (
       <div className="submit-form">
@@ -263,14 +263,14 @@ export default class AddCandidate extends Component<Props, State> {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">User Name</label>
               <input
                 type="text"
                 className="form-control"
                 id="password"
                 required
-                value={password}
-                onChange={this.onChangePassword}
+                value={username}
+                onChange={this.onChangeUsername}
                 name="password"
               />
             </div>

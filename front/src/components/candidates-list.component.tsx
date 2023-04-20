@@ -210,9 +210,9 @@ export default class CandidatesList extends Component<Props, State>{
               </div>
               <div>
                 <label>
-                  <strong>Password:</strong>
+                  <strong>User Name:</strong>
                 </label>{" "}
-                {currentCandidate.password}
+                {currentCandidate.username}
               </div>
               <div>
                 <label>
@@ -221,87 +221,7 @@ export default class CandidatesList extends Component<Props, State>{
                 {currentCandidate.mode==="admin" ? "Published" : "Pending"}
               </div>
 
-              <div className="table-wrapper">
-      <Table className="table table-earnings table-earnings__challenge">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>{currentCandidate.name}</td>
-          <td>{currentCandidate.hidden}</td>
-          <td>@{currentCandidate.inactive}</td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-    </div>
+      
     <div>
               <br />
             </div>

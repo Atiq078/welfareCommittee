@@ -8,9 +8,10 @@ import SqlDataService from "../services/misc.service";
 import SqlDataService0 from "../services/misc0.service";
 import SqlDataService1 from "../services/misc1.service";
 import SqlDataService2 from "../services/misc2.service";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import ICandidateData from '../types/candidate.type';
 import IActionData from '../types/action.type';
+import IProtokollData from '../types/protokoll.type';
 
 import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInstPaid ,   IDueMonths ,
   IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,
@@ -22,16 +23,17 @@ import ILastLoan2 from "../types/misc2.type"
 
 import React from "react";
 
-import Table from 'react-bootstrap/Table';
+//import Table from 'react-bootstrap/Table';
 
 import "./component.css";
-import { green, red } from "@material-ui/core/colors";
+//import { green, red } from "@material-ui/core/colors";
 
 type Props = {};
 
 
 type State = {
   candidates: Array<ICandidateData>,
+  protokolls: Array<IProtokollData>,
   currentCandidate: ICandidateData | null,
   currentIndex: number,
   searchName: string,
@@ -74,6 +76,7 @@ export default class CandidatesList extends Component<Props, State>{
     super(props);
     //this.onChangeSearchName = this.onChangeSearchName.bind(this);
     this.retrieveCandidates = this.retrieveCandidates.bind(this);
+    this.retrieveProtokolls = this.retrieveProtokolls.bind(this);
     //this.refreshList = this.refreshList.bind(this);
     //this.setActiveCandidate = this.setActiveCandidate.bind(this);
     //this.removeAllCandidates = this.removeAllCandidates.bind(this);
@@ -119,6 +122,7 @@ export default class CandidatesList extends Component<Props, State>{
 
     this.state = {
       candidates: [],
+      protokolls: [],
       currentCandidate: null,
       currentIndex: -1,
       searchName: "",
@@ -190,8 +194,9 @@ export default class CandidatesList extends Component<Props, State>{
     id = "22"
     cid = "1"
     this.retrieveCandidates();
+    this.retrieveProtokolls();
     this.retrieveActions();
-    //this.getCandidate("13");
+    this.getCandidate("13");
     this.getLoanLeft0(id, cid);
     this.getLastLoan1(id, cid);
     this.getLastLoan2(id, cid);
@@ -215,6 +220,7 @@ export default class CandidatesList extends Component<Props, State>{
   
   refreshList() {
     this.retrieveCandidates();
+    this.retrieveProtokolls();
     this.retrieveActions();
     this.setState({
       currentCandidate: null,
@@ -278,7 +284,21 @@ export default class CandidatesList extends Component<Props, State>{
         console.log(e);
       });
   }
+  //Protokolls
+  retrieveProtokolls() {
+    ProtokollDataService.getAll()
 
+      .then((response: any) => {
+        this.setState({
+          protokolls: response.data,
+        });
+        console.log(response.data);
+  
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
   //Candidates
   retrieveCandidates() {
     CandidateDataService.getAll()
@@ -667,8 +687,8 @@ newProtokoll() {
 }
 
   render() {
-  const {  searchName, candidates, currentCandidate,currentCandidate1, currentIndex, 
-    searchAction, actions, currentAction, currentIndexAction,
+  const {  searchName, candidates, protokolls, currentCandidate,currentCandidate1, currentIndex, 
+    /*searchAction,*/ actions, currentAction, currentIndexAction,
     loanLeft0, lastLoan1, lastLoan2,
     //User
     loanLeft,
@@ -690,7 +710,7 @@ newProtokoll() {
       <div>
 
         <div>
-        <h3>Current Candidate</h3>
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Current Candidate</h3>
         {currentCandidate1 ? (
           <div>
             <p></p>
@@ -702,7 +722,7 @@ newProtokoll() {
             <p>Address: {currentCandidate1.address}</p>
             <p>Bank Details: {currentCandidate1.bankdetails}</p>
             <p>Email: {currentCandidate1.email}</p>
-            <p>Password: {currentCandidate1.password}</p>
+            <p>User Name: {currentCandidate1.username}</p>
             <p>{this.state.message}</p>
           </div>
         ) : (
@@ -715,26 +735,8 @@ newProtokoll() {
 
 
         <div>
-        <h3>Members Count</h3>
-        {membersCount ? (
-          <div>
-            <p></p>
-            <p>Active Members: {membersCount[0].active_members}</p>
-            <p>InActive Members: {membersCount[0].inactive_members}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Candidate...</p>
-          </div>
-        )}
-        </div>
-
-
-
-        <div>
-        <h2>Tests</h2>
-        <h3>Current Loan Left</h3>
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Tests</h3>
+        <h5>Current Loan Left</h5>
         {loanLeft0 ? (
           <div>
             <p></p>
@@ -750,7 +752,7 @@ newProtokoll() {
 
 
         <div>
-        <h3>Last Loan</h3>
+        <h5>Last Loan</h5>
         {lastLoan1 ? (
           <div>
             <p></p>
@@ -767,7 +769,7 @@ newProtokoll() {
         </div>
 
         <div>
-        <h3>Last Loan2</h3>
+        <h5>Last Loan2</h5>
         {lastLoan2 ? (
           <div>
             <p></p>
@@ -784,51 +786,36 @@ newProtokoll() {
         </div>
 
 
+
         <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>User</h3>
-        <h5>Loan Left</h5>
-        {loanLeft ? (
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Individual Details</h3>
+        <h5>Members Count</h5>
+        {membersCount ? (
           <div>
             <p></p>
-            <p>Loan Left: {loanLeft.loan_left}</p>
+            <p>Active Members: {membersCount[0].active_members}</p>
+            <p>InActive Members: {membersCount[0].inactive_members}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a loanLeft...</p>
+            <p>Member Count is not retrieved...</p>
           </div>
         )}
         </div>
 
-        <div>
-        <h5>The Last Loan</h5>
-        {lastLoan ? (
-          <div>
-            <p></p>
-            <p>kommentar: {lastLoan.kommentar}</p>
-            <p>Loan: {lastLoan.loan}</p>
-            <p>timestamp: {lastLoan.timestamp}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a lastloan...</p>
-          </div>
-        )}
-        </div>
 
         <div>
-
         <h5>Max Installments</h5>
         {maxInst ? (
           <div>
             <p></p>
-            <p>Max Inst: {maxInst.maxinst}</p>
+            <p>Max No. of Inst: {maxInst.maxinst}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a maxInst...</p>
+            <p>Max Installments is not retrieved...</p>
           </div>
         )}
         </div>
@@ -837,35 +824,84 @@ newProtokoll() {
         {maxLoan ? (
           <div>
             <p></p>
-            <p>Max Loan: {maxLoan.loan}</p>
-            <p>Max Inst: {maxLoan.maxinst}</p>
+            <p>Max Possible Loan: {maxLoan.loan}</p>
+            <p>Max No. of Inst: {maxLoan.maxinst}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a maxLoan...</p>
+            <p>Max Loan  is not retrieved...</p>
           </div>
         )}
         </div>
 
         <div>
-        <h5>Loan Duration</h5>
+        <h5>The Last Loan Taken</h5>
+        {lastLoan ? (
+          <div>
+            <p></p>
+            <p>Comment: {lastLoan.kommentar}</p>
+            <p>Loan Amount: {lastLoan.loan}</p>
+            <p>Time Stamp: {lastLoan.timestamp}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Last loan is not retrieved...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+        <h5>Last Loan Duration</h5>
         {loanDuration ? (
           <div>
             <p></p>
-            <p>Loan Start: {loanDuration.loan_start}</p>
-            <p>Loan End: {loanDuration.loan_end}</p>
+            <p>Start Month: {loanDuration.loan_start}</p>
+            <p>End Month: {loanDuration.loan_end}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a loanDuration...</p>
+            <p>Loan duration is not retrieved...</p>
           </div>
         )}
         </div>
 
         <div>
-        <h5>Installments Paid</h5>
+        <h5>Min. Installment Amount</h5>
+        {minInstAmount ? (
+          <div>
+            <p></p>
+            <p>Installment Amount: {minInstAmount.min_instal}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Min Installment Amount is not retrieved...</p>
+          </div>
+        )}
+        </div>
+
+
+        <div>
+        <h5>Loan Due Till Now</h5>
+        {loanLeft ? (
+          <div>
+            <p></p>
+            <p>Amount Due: {loanLeft.loan_left}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Loan Left is not retrieved...</p>
+          </div>
+        )}
+        </div>
+
+
+        <div>
+        <h5>Total Installments Paid</h5>
         {instPaid ? (
           <div>
             <p></p>
@@ -876,45 +912,77 @@ newProtokoll() {
         ) : (
           <div>
             <br />
-            <p>Please click on a instPaid...</p>
+            <p>Installment Paid is not retrieved...</p>
           </div>
         )}
         </div>
 
         <div>
-        <h5>Due Months</h5>
+        <h5>Due Monthly Shares</h5>
         {dueMonths ? (
           <div>
             <p></p>
-            <p>Due Months: {dueMonths.due_months}</p>
+            <p>No. of Due Months: {dueMonths.due_months}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a dueMonths...</p>
+            <p>Due Months is not retrieved...</p>
           </div>
         )}
         </div>
 
+
         <div>
-        <h5>Min Installment Amount</h5>
-        {minInstAmount ? (
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Administration</h3>
+        <h5>Members Count</h5>
+        {membersCount ? (
           <div>
             <p></p>
-            <p>Inst Amount: {minInstAmount.min_instal}</p>
+            <p>Active Members: {membersCount[0].active_members}</p>
+            <p>InActive Members: {membersCount[0].inactive_members}</p>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a minInstAmount...</p>
+            <p>Member Count is not retrieved...</p>
           </div>
         )}
         </div>
 
 
         <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Administrator</h3>
-        <h5>Total Balance</h5>
+        <h5>Max Installments</h5>
+        {maxInst ? (
+          <div>
+            <p></p>
+            <p>Max No. of Inst: {maxInst.maxinst}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Max Installments is not retrieved...</p>
+          </div>
+        )}
+        </div>
+        <div>
+        <h5>Max Loan</h5>
+        {maxLoan ? (
+          <div>
+            <p></p>
+            <p>Max Possible Loan: {maxLoan.loan}</p>
+            <p>Max No. of Inst: {maxLoan.maxinst}</p>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>Max Loan is not retrieved...</p>
+          </div>
+        )}
+        </div>
+
+        <div>
+        <h5>Welfare Total Balance</h5>
         {totalBal ? (
           <div>
             <p></p>
@@ -923,85 +991,103 @@ newProtokoll() {
         ) : (
           <div>
             <br />
-            <p>Please click on a TotalBal...</p>
+            <p>Total Balance is not retrieved...</p>
           </div>
         )}
         </div>
-         
+        
         <div>
-        <h5>All Monthly Dues</h5>
+        <h5>All Monthly Dues using Tables</h5>
         {allMonthlyDues ? (
-          <div>
-            <p></p>
-            <p>ID: {allMonthlyDues[0].id}</p>
-            <p>Name: {allMonthlyDues[0].name}</p>
-            <p>Current Dues: {allMonthlyDues[0].current_dues}</p>
-          </div>
+          
+        <div className="table-wrapper">
+        <table className="table table-earnings table-earnings__challenge">
+        <tr key={"header"}>
+                {Object.keys(allMonthlyDues[0]).map((key) => (
+                  <th>{key}</th>
+                ))}
+              </tr>
+
+          {allMonthlyDues.map((item =>
+          <tr key={item.id}> 
+          {Object.values(item).map((val) => (
+                    <td>{val}</td>
+                  ))}
+
+          </tr>
+          ))}
+        </table>        
+        </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a allMonthlyDues...</p>
+            <p>All Monthly Dues is not retrieved...</p>
           </div>
         )}
         </div>
-        
+
         <div>
-        <h5>Overall Dues</h5>
+        <h5>Overall Balance Using Tables</h5>
         {overallBal ? (
-          <div>
-            <p></p>
-            <p>ID: {overallBal[0].id}</p>
-            <p>Name: {overallBal[0].name}</p>
-            <p>Current Balance: {overallBal[0].total_bal}</p>
-            <p>Komments: {overallBal[0].kommentar}</p>
-          </div>
+          
+        <div className="table-wrapper">
+        <table className="table table-earnings table-earnings__challenge">
+        <tr key={"header"}>
+                {Object.keys(overallBal[0]).map((key) => (
+                  <th>{key}</th>
+                ))}
+              </tr>
+
+          {overallBal.map((item =>
+          <tr key={item.id}> 
+          {Object.values(item).map((val) => (
+                    <td>{val}</td>
+                  ))}
+
+          </tr>
+          ))}
+        </table>        
+        </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a overallBal...</p>
+            <p>Overall Balance is not retrieved...</p>
           </div>
         )}
         </div>
-        
+
         <div>
-        <h5>Overall Loan</h5>
+        <h5>Overall Loan Using Tables</h5>
         {overallLoan ? (
-          <div>
-            <p></p>
-            <p>ID: {overallLoan[0].id}</p>
-            <p>Name: {overallLoan[0].name}</p>
-            <p>Current Overall Loan: {overallLoan[0].total_loan}</p>
-            <p>Komments: {overallLoan[0].kommentar}</p>
-          </div>
+          
+        <div className="table-wrapper">
+        <table className="table table-earnings table-earnings__challenge">
+        <tr key={"header"}>
+                {Object.keys(overallLoan[0]).map((key) => (
+                  <th>{key}</th>
+                ))}
+              </tr>
+
+          {overallLoan.map((item =>
+          <tr key={item.id}> 
+          {Object.values(item).map((val) => (
+                    <td>{val}</td>
+                  ))}
+
+          </tr>
+          ))}
+        </table>        
+        </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a overallLoan...</p>
+            <p>Overall loan is not retrieved...</p>
           </div>
         )}
         </div>
-
+        
         
         <div>
-        <h5>Overall Loan Left</h5>
-        {overallLoanDues ? (
-          <div>
-            <p></p>
-            <p>ID: {overallLoanDues[0].id}</p>
-            <p>Name: {overallLoanDues[0].name}</p>
-            <p>Current Loan Left: {overallLoanDues[0].total_loan_left}</p>
-            <p>Komments: {overallLoanDues[0].kommentar}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a overallLoanDues...</p>
-          </div>
-        )}
-        </div>
-
-        <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Using Tables</h3>
         <h5>Overall Loan Left</h5>
         {overallLoanDues ? (
           
@@ -1026,7 +1112,7 @@ newProtokoll() {
         ) : (
           <div>
             <br />
-            <p>Please click on a overallLoanDues...</p>
+            <p>Overall Loan Dues is not retrieved...</p>
           </div>
         )}
         </div>
@@ -1035,7 +1121,6 @@ newProtokoll() {
         <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Payments</h3>
         <h5>Select User</h5>
         <div className="col-md-6">
-          <h4>Candidates List</h4>
           <div className="col-md-8">
 
           <div className="input-group mb-3">
@@ -1079,8 +1164,6 @@ newProtokoll() {
         <div>
         <h5>Select Action</h5>
         <div className="col-md-6">
-          <h4>Action List</h4>
-
           <ul className="list-group">
             {actions &&
               actions.map((action: IActionData, index: number) => (
@@ -1102,34 +1185,16 @@ newProtokoll() {
         <div>
         {currentCandidate && currentAction ? (
             <div>
-              <h4>Candidate</h4>
+              <h5>Selected Candidate</h5>              
               <div>
-                <label>
-                  <strong>ID:</strong>
-                </label>{" "}
-                {currentCandidate.id}
+              <p>ID: {currentCandidate.id}</p>
+              <p>Name: {currentCandidate.name}</p>
               </div>
+              <h5>Selected Action</h5>
               <div>
-                <label>
-                  <strong>Name:</strong>
-                </label>{" "}
-                {currentCandidate.name}
+              <p>ID: {currentAction.id}</p>
+              <p>Description: {currentAction.description}</p>
               </div>
-              <h4>Action</h4>
-              <div>
-                <label>
-                  <strong>ID:</strong>
-                </label>{" "}
-                {currentAction.id}
-              </div>
-              <div>
-                <label>
-                  <strong>Description:</strong>
-                </label>{" "}
-                {currentAction.description}
-              </div>
-
-              
               {submitted ? (
           <div>
             <h4>You submitted successfully!</h4>
@@ -1138,9 +1203,10 @@ newProtokoll() {
             </button>
           </div>
         ) : (
-          <div>
-            <div className="form-group">
-              <label htmlFor="kommentar">Kommentar</label>
+          <div >
+            <h5>Enter the Amount and relevant comment.</h5> 
+            <div className="form-group" style={{width: '300px'}}>
+              <label htmlFor="kommentar">Comments</label>
               <input
                 type="text"
                 className="form-control"
@@ -1152,8 +1218,8 @@ newProtokoll() {
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="value">Value</label>
+            <div className="form-group" style={{width: '300px'}}>
+              <label htmlFor="value">Amount (in 1000s, e.g., for 5000 just enter 5.)</label>
               <input
                 type="text"
                 className="form-control"
@@ -1175,14 +1241,73 @@ newProtokoll() {
           ) : (
             <div>
               <br />
-              <p>Please click on a Action and Candidate...</p>
+              <p>Please select an Action and Candidate...</p>
             </div>
           )}
         </div>
 
 
-        
+        <div>
+        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>All Candidates and Protokolls</h3>
+        <h5>All Candidates</h5>
+        {candidates.length > 0 ? (
+          
+          <div className="table-wrapper" style={{width: '80%'}}>
+        <table className="table table-earnings table-earnings__challenge">
+        <tr key={"header"}>
+                {Object.keys(candidates[0]).map((key) => (
+                  <th>{key}</th>
+                ))}
+              </tr>
 
+          {candidates.map((item =>
+          <tr key={item.id}> 
+          {Object.values(item).map((val) => (
+                    <td>{val}</td>
+                  ))}
+
+          </tr>
+          ))}
+        </table>        
+        </div>
+        ) : (
+          <div>
+            <br />
+            <p>Candidates is not retrieved...</p>
+          </div>
+        )}
+        </div>
+
+
+        <div>
+        <h5>All Protokolls logs</h5>
+        {protokolls.length > 0 ? (
+          
+        <div className="table-wrapper" style={{width: '80%'}}>
+        <table className="table table-earnings table-earnings__challenge">
+        <tr key={"header"}>
+                {Object.keys(protokolls[0]).map((key) => (
+                  <th>{key}</th>
+                ))}
+              </tr>
+
+          {protokolls.map((item =>
+          <tr key={item.id}> 
+          {Object.values(item).map((val) => (
+                    <td>{val}</td>
+                  ))}
+
+          </tr>
+          ))}
+        </table>        
+        </div>
+        ) : (
+          <div>
+            <br />
+            <p>Protokolls is not retrieved...</p>
+          </div>
+        )}
+        </div>
 
       </div>
     );
