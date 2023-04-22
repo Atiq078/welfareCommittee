@@ -23,6 +23,7 @@ export interface ILoanDuration {
 }
 
 export interface IInstPaid {
+    id:string;
     timestamp: string,
     installment: string,
     kommentar: string,

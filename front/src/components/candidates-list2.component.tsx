@@ -1,4 +1,6 @@
 import { Component, ChangeEvent } from "react";
+import React from "react";
+
 import CandidateDataService from "../services/candidate.service";
 import ActionDataService from "../services/action.service";
 import ProtokollDataService from "../services/protokoll.service";
@@ -8,7 +10,6 @@ import SqlDataService from "../services/misc.service";
 import SqlDataService0 from "../services/misc0.service";
 import SqlDataService1 from "../services/misc1.service";
 import SqlDataService2 from "../services/misc2.service";
-//import { Link } from "react-router-dom";
 import ICandidateData from '../types/candidate.type';
 import IActionData from '../types/action.type';
 import IProtokollData from '../types/protokoll.type';
@@ -21,11 +22,10 @@ import ILoanLeft0 from "../types/misc0.type"
 import ILastLoan1 from "../types/misc1.type"
 import ILastLoan2 from "../types/misc2.type"
 
-import React from "react";
-
-//import Table from 'react-bootstrap/Table';
-
 import "./component.css";
+
+//import { Link } from "react-router-dom";
+//import Table from 'react-bootstrap/Table';
 //import { green, red } from "@material-ui/core/colors";
 
 type Props = {};
@@ -33,10 +33,14 @@ type Props = {};
 
 type State = {
   candidates: Array<ICandidateData>,
+  candidates2: Array<ICandidateData>,
   protokolls: Array<IProtokollData>,
   currentCandidate: ICandidateData | null,
+  currentCandidate2: ICandidateData | null,
   currentIndex: number,
+  currentIndex2: number,
   searchName: string,
+  searchName2: string,
   
   actions: Array<IActionData>,
   currentAction: IActionData | null,
@@ -46,14 +50,14 @@ type State = {
   loanLeft0: ILoanLeft0,
   lastLoan1: ILastLoan1,
   lastLoan2: ILastLoan2,
-  loanLeft: ILoanLeft| null,
+  loanLeft: ILoanLeft,
   lastLoan: ILastLoan| null,   
   maxInst: IMaxInst| null,   
   maxLoan: IMaxLoan| null,  
   loanDuration:ILoanDuration| null,  
-  instPaid: Array<IInstPaid>| null, 
-  dueMonths: IDueMonths| null,
-  minInstAmount: IMinInstAmount| null,  
+  instPaid: Array<IInstPaid>, 
+  dueMonths: IDueMonths,
+  minInstAmount: IMinInstAmount,  
   totalBal: ITotalBal| null,  
   allMonthlyDues: Array<IAllMonthlyDues>| null,  
   overallBal: Array<IOverallBal>| null,  
@@ -65,7 +69,6 @@ type State = {
   currentCandidate1: ICandidateData| null,
   message: string,
   //button
-  
   currentProtokoll: ProtokollData ,
   submitted: boolean,
 };
@@ -77,6 +80,9 @@ export default class CandidatesList extends Component<Props, State>{
     //this.onChangeSearchName = this.onChangeSearchName.bind(this);
     this.retrieveCandidates = this.retrieveCandidates.bind(this);
     this.retrieveProtokolls = this.retrieveProtokolls.bind(this);
+    this.searchName2 = this.searchName2.bind(this);
+    this.setActiveCandidate2 = this.setActiveCandidate2.bind(this);
+    this.onChangeSearchName2 = this.onChangeSearchName2.bind(this);
     //this.refreshList = this.refreshList.bind(this);
     //this.setActiveCandidate = this.setActiveCandidate.bind(this);
     //this.removeAllCandidates = this.removeAllCandidates.bind(this);
@@ -103,7 +109,7 @@ export default class CandidatesList extends Component<Props, State>{
     this.getLoanLeft = this.getLoanLeft.bind(this);
     //cand
     this.onChangeSearchName = this.onChangeSearchName.bind(this);
-    this.onChangeSearchName2 = this.onChangeSearchName2.bind(this);
+    this.onChangeSearchName1 = this.onChangeSearchName1.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveCandidate = this.setActiveCandidate.bind(this);
     this.searchName = this.searchName.bind(this);
@@ -122,10 +128,14 @@ export default class CandidatesList extends Component<Props, State>{
 
     this.state = {
       candidates: [],
+      candidates2: [],
       protokolls: [],
       currentCandidate: null,
+      currentCandidate2: null,
       currentIndex: -1,
+      currentIndex2: -1,
       searchName: "",
+      searchName2: "",
       
       actions: [],
       currentAction: null,
@@ -144,14 +154,18 @@ export default class CandidatesList extends Component<Props, State>{
         value: "",
         kommentar: "",
       },     
-      loanLeft: null,
+      loanLeft: {
+        loan_left:"",
+      },
       lastLoan: null,   
       maxInst: null,   
       maxLoan: null,  
       loanDuration:null,  
-      instPaid: null, 
-      dueMonths: null,
-      minInstAmount: null,  
+      instPaid: [], 
+      dueMonths: {due_months:""},
+      minInstAmount: {
+        min_instal:""
+      },  
       totalBal: null,  
       allMonthlyDues: null,  
       overallBal: null,  
@@ -189,14 +203,16 @@ export default class CandidatesList extends Component<Props, State>{
  
   componentDidMount() {
     
-    let id: string; 
+    
     let cid:string;
-    id = "22"
     cid = "1"
+    
     this.retrieveCandidates();
     this.retrieveProtokolls();
     this.retrieveActions();
-    this.getCandidate("13");
+    /*let id: string; 
+    id =  "25"
+    this.getCandidate(id);
     this.getLoanLeft0(id, cid);
     this.getLastLoan1(id, cid);
     this.getLastLoan2(id, cid);
@@ -209,6 +225,7 @@ export default class CandidatesList extends Component<Props, State>{
     this.getInstPaid(id, cid) ;
     this.getDueMonths(id, cid) ;
     this.getMinInstAmount(id,cid); 
+    */
     //Admin
     this.getTotalBal(cid);
     this.getAllMonthlyDues(cid);
@@ -225,12 +242,61 @@ export default class CandidatesList extends Component<Props, State>{
     this.setState({
       currentCandidate: null,
       currentIndex: -1,
+      currentCandidate2: null,
+      currentIndex2: -1,
       
       currentAction: null,
       currentIndexAction: -1
     });
   }
-  
+  //Searching on the top
+  onChangeSearchName2(e: ChangeEvent<HTMLInputElement>) {
+    const searchName2 = e.target.value;
+
+    this.setState({
+      searchName2: searchName2
+    });
+  }
+  setActiveCandidate2(candidate: ICandidateData, index: number) {
+    this.setState({
+      currentCandidate2: candidate,
+      currentIndex2: index
+    });
+    let cid:string;
+    cid = "1"
+    let id: string; 
+    id =  candidate.id;
+    this.getCandidate(id);
+    this.getLoanLeft0(id, cid);
+    this.getLastLoan1(id, cid);
+    this.getLastLoan2(id, cid);
+    //User Individuals
+    this.getLoanLeft(id, cid);
+    this.getLastLoan(id, cid);
+    this.getMaxInst(cid);
+    this.getMaxLoan(cid) ;
+    this.getLoanDuration(id, cid); 
+    this.getInstPaid(id, cid) ;
+    this.getDueMonths(id, cid) ;
+    this.getMinInstAmount(id,cid)
+  }
+  searchName2() {
+    this.setState({
+      currentCandidate2: null,
+      currentIndex2: -1
+    });
+
+    CandidateDataService.findByTitle(this.state.searchName2)
+      .then((response: any) => {
+        this.setState({
+          candidates2: response.data
+        });
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
   //Action
   onChangeSearchAction(e: ChangeEvent<HTMLInputElement>) {
     const searchAction = e.target.value;
@@ -306,6 +372,7 @@ export default class CandidatesList extends Component<Props, State>{
       .then((response: any) => {
         this.setState({
           candidates: response.data,
+          candidates2: response.data,
         });
         console.log(response.data);
   
@@ -334,7 +401,7 @@ export default class CandidatesList extends Component<Props, State>{
   }
   
   
-  onChangeSearchName2(e: ChangeEvent<HTMLInputElement>) {
+  onChangeSearchName1(e: ChangeEvent<HTMLInputElement>) {
     const searchName = e.target.value;
 
     this.setState({
@@ -687,7 +754,8 @@ newProtokoll() {
 }
 
   render() {
-  const {  searchName, candidates, protokolls, currentCandidate,currentCandidate1, currentIndex, 
+  const {  searchName,searchName2, candidates,candidates2, protokolls, currentCandidate,currentCandidate1,currentCandidate2, 
+    currentIndex, currentIndex2, 
     /*searchAction,*/ actions, currentAction, currentIndexAction,
     loanLeft0, lastLoan1, lastLoan2,
     //User
@@ -710,7 +778,7 @@ newProtokoll() {
       <div>
 
         <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Current Candidate</h3>
+        <h3 style={{color: '#CECECE',background: '#353A40'}}>Current Candidate</h3>
         {currentCandidate1 ? (
           <div>
             <p></p>
@@ -735,7 +803,7 @@ newProtokoll() {
 
 
         <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Tests</h3>
+        <h3 style={{color: '#CECECE',background: '#353A40'}}>Tests</h3>
         <h5>Current Loan Left</h5>
         {loanLeft0 ? (
           <div>
@@ -786,9 +854,50 @@ newProtokoll() {
         </div>
 
 
+        <div className="col-md-8">
+        <h3 style={{color: '#CECECE',background: '#353A40'}}>Individual Details</h3>
+        <h5>Search a Candidate to select:</h5>
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by name"
+              value={searchName2}
+              onChange={this.onChangeSearchName2}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={this.searchName2}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <h4>Candidates List</h4>
 
+          <ul className="list-group">
+            {candidates2 &&
+              candidates2.map((candidate: ICandidateData, index: number) => (
+                <li
+                  className={
+                    "list-group-item " +
+                    (index === currentIndex2 ? "active" : "")
+                  }
+                  onClick={() => this.setActiveCandidate2(candidate, index)}
+                  key={index}
+                >
+                  {candidate.name}
+                </li>
+              ))}
+          </ul>
+        </div>
+        
         <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Individual Details</h3>
+
         <h5>Members Count</h5>
         {membersCount ? (
           <div>
@@ -870,7 +979,7 @@ newProtokoll() {
 
         <div>
         <h5>Min. Installment Amount</h5>
-        {minInstAmount ? (
+        {minInstAmount.min_instal ? (
           <div>
             <p></p>
             <p>Installment Amount: {minInstAmount.min_instal}</p>
@@ -886,7 +995,7 @@ newProtokoll() {
 
         <div>
         <h5>Loan Due Till Now</h5>
-        {loanLeft ? (
+        {loanLeft.loan_left ? (
           <div>
             <p></p>
             <p>Amount Due: {loanLeft.loan_left}</p>
@@ -899,27 +1008,39 @@ newProtokoll() {
         )}
         </div>
 
-
         <div>
         <h5>Total Installments Paid</h5>
-        {instPaid ? (
-          <div>
-            <p></p>
-            <p>timestamp: {instPaid[0].timestamp}</p>
-            <p>installment: {instPaid[0].installment}</p>
-            <p>kommentar: {instPaid[0].kommentar}</p>
-          </div>
+        {instPaid.length > 0  ? (
+          
+        <div className="table-wrapper">
+        <table className="table table-earnings table-earnings__challenge">
+        <tr key={"header"}>
+                {Object.keys(instPaid[0]).map((key) => (
+                  <th>{key}</th>
+                ))}
+              </tr>
+
+          {instPaid.map((item =>
+          <tr key={item.id}> 
+          {Object.values(item).map((val) => (
+                    <td>{val}</td>
+                  ))}
+
+          </tr>
+          ))}
+        </table>        
+        </div>
         ) : (
           <div>
             <br />
-            <p>Installment Paid is not retrieved...</p>
+            <p>Total Installments Paid is not retrieved...</p>
           </div>
         )}
         </div>
 
         <div>
         <h5>Due Monthly Shares</h5>
-        {dueMonths ? (
+        {dueMonths.due_months ? (
           <div>
             <p></p>
             <p>No. of Due Months: {dueMonths.due_months}</p>
@@ -934,7 +1055,7 @@ newProtokoll() {
 
 
         <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Administration</h3>
+        <h3 style={{color: '#CECECE',background: '#353A40'}}>Administration</h3>
         <h5>Members Count</h5>
         {membersCount ? (
           <div>
@@ -1118,7 +1239,7 @@ newProtokoll() {
         </div>
         
         <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>Payments</h3>
+        <h3 style={{color: '#CECECE',background: '#353A40'}}>Payments</h3>
         <h5>Select User</h5>
         <div className="col-md-6">
           <div className="col-md-8">
@@ -1129,7 +1250,7 @@ newProtokoll() {
               className="form-control"
               placeholder="Search by name"
               value={searchName}
-              onChange={this.onChangeSearchName2}
+              onChange={this.onChangeSearchName1}
             />
             <div className="input-group-append">
               <button
@@ -1248,7 +1369,7 @@ newProtokoll() {
 
 
         <div>
-        <h3 style={{color: '#ffCC00',background: '#00CC00'}}>All Candidates and Protokolls</h3>
+        <h3 style={{color: '#CECECE',background: '#353A40'}}>All Candidates and Protokolls</h3>
         <h5>All Candidates</h5>
         {candidates.length > 0 ? (
           

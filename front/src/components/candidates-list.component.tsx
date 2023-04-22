@@ -162,6 +162,7 @@ export default class CandidatesList extends Component<Props, State>{
             Remove All
           </button>
         </div>
+        
         <div className="col-md-6">
           {currentCandidate ? (
             <div>

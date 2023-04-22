@@ -45,7 +45,7 @@ myModel.findLastLoanById = (id, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res[0]);
+    console.log("sqlLastLoan: ", res[0]);
     result(null, res[0]);
   });
 };
@@ -61,7 +61,7 @@ myModel.findLastLoanByIdandCid = (id, cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res[0]);
+    console.log("sqlLastLoan: ", res[0]);
     result(null, res[0]);
   });
 };
@@ -75,7 +75,7 @@ myModel.findMaxInstByCid = (cid, result) => {
     }
 
     if (res.length) {
-      console.log("found sqlLoanLeft: ", res[0]);
+      console.log("found sqlMaxInst: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -94,7 +94,7 @@ myModel.findMaxLoanByCid = (cid, result) => {
     }
 
     if (res.length) {
-      console.log("found sqlLoanLeft: ", res[0]);
+      console.log("found sqlMaxLoan: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -114,13 +114,13 @@ myModel.findLoanDurationByIdandCid = (id, cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res[0]);
+    console.log("sqlLoanDuration: ", res[0]);
     result(null, res[0]);
   });
 };
 
 myModel.findInstPaidByIdandCid = (id, cid, result) => {
-  let query = `SELECT timestamp, value*1000 as installment, kommentar FROM protokoll  WHERE (cid=${cid} and actionid=3 and userid=${id} and (timestamp > (SELECT timestamp FROM protokoll  WHERE (cid=${cid} and actionid=5 and userid=${id}) ORDER BY id DESC LIMIT 1)))`;
+  let query = `SELECT id, timestamp, value*1000 as installment, kommentar FROM protokoll  WHERE (cid=${cid} and actionid=3 and userid=${id} and (timestamp > (SELECT timestamp FROM protokoll  WHERE (cid=${cid} and actionid=5 and userid=${id}) ORDER BY id DESC LIMIT 1)))`;
   myModel.query(query, (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -128,7 +128,7 @@ myModel.findInstPaidByIdandCid = (id, cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res);
+    console.log("sqlInstPaid: ", res);
     result(null, res);
   });
 };
@@ -145,7 +145,7 @@ myModel.findDueMonthsByIdandCid = (id, cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res[0]);
+    console.log("sqlDueMonths: ", res[0]);
     result(null, res[0]);
   });
 };
@@ -164,7 +164,7 @@ myModel.findMinInstAmountByIdandCid = (id, cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res[0]);
+    console.log("sqlMinInstAmount: ", res[0]);
     result(null, res[0]);
   });
 };
@@ -178,7 +178,7 @@ myModel.findTotalBalByCid = (cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res[0]);
+    console.log("sqlTotalBal: ", res[0]);
     result(null, res[0]);
   });
 };
@@ -199,7 +199,7 @@ myModel.findAllMonthlyDuesByCid = (cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res);
+    console.log("sqlAllMonthlyDues: ", res);
     result(null, res);
   });
 };
@@ -221,7 +221,7 @@ myModel.findOverallBalByCid = (cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res);
+    console.log("sqlOverallBal: ", res);
     result(null, res);
   });
 };
@@ -241,7 +241,7 @@ myModel.findOverallLoanByCid = (cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res);
+    console.log("sqlOverallLoan: ", res);
     result(null, res);
   });
 };
@@ -261,7 +261,7 @@ myModel.findOverallLoanDuesByCid = (cid, result) => {
       return;
     }
 
-    console.log("sqlLoanLeft: ", res);
+    console.log("sqlOverallLoanDues: ", res);
     result(null, res);
   });
 };
