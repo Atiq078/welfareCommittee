@@ -47,9 +47,9 @@ type State = {
   currentIndexAction: number,
   searchAction: string,
 
-  loanLeft0: ILoanLeft0,
-  lastLoan1: ILastLoan1,
-  lastLoan2: ILastLoan2,
+  //loanLeft0: ILoanLeft0,
+  //lastLoan1: ILastLoan1,
+  //lastLoan2: ILastLoan2,
   loanLeft: ILoanLeft,
   lastLoan: ILastLoan| null,   
   maxInst: IMaxInst| null,   
@@ -87,10 +87,10 @@ export default class CandidatesList extends Component<Props, State>{
     //this.setActiveCandidate = this.setActiveCandidate.bind(this);
     //this.removeAllCandidates = this.removeAllCandidates.bind(this);
     //this.searchName = this.searchName.bind(this);
-    this.getLoanLeft0 = this.getLoanLeft0.bind(this);
+    /*this.getLoanLeft0 = this.getLoanLeft0.bind(this);
     this.getLastLoan1 = this.getLastLoan1.bind(this);
     this.getLastLoan2 = this.getLastLoan2.bind(this);
-    this.getCandidate = this.getCandidate.bind(this);
+    this.getCandidate = this.getCandidate.bind(this);*/
     //Admin
     this.getMembersCount = this.getMembersCount.bind(this);
     this.getOverallLoanDues = this.getOverallLoanDues.bind(this);
@@ -141,7 +141,7 @@ export default class CandidatesList extends Component<Props, State>{
       currentAction: null,
       currentIndexAction: -1,
       searchAction: "",
-      loanLeft0: {
+      /*loanLeft0: {
         loan_left: null,
       },
       lastLoan1: {
@@ -153,7 +153,7 @@ export default class CandidatesList extends Component<Props, State>{
         timestamp: "",
         value: "",
         kommentar: "",
-      },     
+      },*/     
       loanLeft: {
         loan_left:"",
       },
@@ -266,10 +266,10 @@ export default class CandidatesList extends Component<Props, State>{
     cid = "1"
     let id: string; 
     id =  candidate.id;
-    this.getCandidate(id);
+    /*this.getCandidate(id);
     this.getLoanLeft0(id, cid);
     this.getLastLoan1(id, cid);
-    this.getLastLoan2(id, cid);
+    this.getLastLoan2(id, cid);*/
     //User Individuals
     this.getLoanLeft(id, cid);
     this.getLastLoan(id, cid);
@@ -439,7 +439,7 @@ export default class CandidatesList extends Component<Props, State>{
       });
   }
   //tests
-  getCandidate(id: string) {
+  /*getCandidate(id: string) {
     CandidateDataService.get(id)
       .then((response: any) => {
         this.setState({
@@ -489,7 +489,7 @@ getLastLoan1(id:string, cid:string) {
       .catch((e: Error) => {
         console.log(e);
       });
-  }
+  }*/
 
   //User Individuals
 getLoanLeft(id:string, cid:string) {
@@ -668,9 +668,7 @@ getMembersCount() {
       this.setState({
         membersCount: response.data,
       });
-      console.log("test1");
       console.log(response.data);
-      console.log("test2");
     })
     .catch((e: Error) => {
       console.log(e);
@@ -754,10 +752,10 @@ newProtokoll() {
 }
 
   render() {
-  const {  searchName,searchName2, candidates,candidates2, protokolls, currentCandidate,currentCandidate1,currentCandidate2, 
+  const {  searchName,searchName2, candidates,candidates2, protokolls, currentCandidate,/*currentCandidate1,*/ currentCandidate2, 
     currentIndex, currentIndex2, 
     /*searchAction,*/ actions, currentAction, currentIndexAction,
-    loanLeft0, lastLoan1, lastLoan2,
+    /*loanLeft0, lastLoan1, lastLoan2,*/
     //User
     loanLeft,
     lastLoan,   
@@ -776,83 +774,6 @@ newProtokoll() {
  
 
       <div>
-
-        <div>
-        <h3 style={{color: '#CECECE',background: '#353A40'}}>Current Candidate</h3>
-        {currentCandidate1 ? (
-          <div>
-            <p></p>
-            <p>Name: {currentCandidate1.name}</p>
-            <p>Hidden: {currentCandidate1.hidden}</p>
-            <p>Inactive: {currentCandidate1.inactive}</p>
-            <p>Mode: {currentCandidate1.mode}</p>
-            <p>Phone: {currentCandidate1.phone}</p>
-            <p>Address: {currentCandidate1.address}</p>
-            <p>Bank Details: {currentCandidate1.bankdetails}</p>
-            <p>Email: {currentCandidate1.email}</p>
-            <p>User Name: {currentCandidate1.username}</p>
-            <p>{this.state.message}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Candidate...</p>
-          </div>
-        )}
-        </div>
-
-
-        <div>
-        <h3 style={{color: '#CECECE',background: '#353A40'}}>Tests</h3>
-        <h5>Current Loan Left</h5>
-        {loanLeft0 ? (
-          <div>
-            <p></p>
-            <p>Loan Left: {loanLeft0.loan_left}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Candidate...</p>
-          </div>
-        )}
-        </div>
-
-
-        <div>
-        <h5>Last Loan</h5>
-        {lastLoan1 ? (
-          <div>
-            <p></p>
-            <p>Timestamp: {lastLoan1.name}</p>
-            <p>loan: {lastLoan1.address}</p>
-            <p>kommentar: {lastLoan1.username}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Candidate...</p>
-          </div>
-        )}
-        </div>
-
-        <div>
-        <h5>Last Loan2</h5>
-        {lastLoan2 ? (
-          <div>
-            <p></p>
-            <p>Timestamp: {lastLoan2.timestamp}</p>
-            <p>loan: {lastLoan2.value}</p>
-            <p>kommentar: {lastLoan2.kommentar}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Candidate...</p>
-          </div>
-        )}
-        </div>
-
 
         <div className="col-md-8">
         <h3 style={{color: '#CECECE',background: '#353A40'}}>Individual Details</h3>
@@ -897,7 +818,18 @@ newProtokoll() {
         </div>
         
         <div>
+        {currentCandidate2 ? (
+          <div>
+            <p>A Candidate Selected, details are retrieved as belewo...</p>
+          </div>
+        ) : (
+          <div>
+            <p>No Candidate Selected, details can't be retrieved...</p>
+          </div>
+        )}
+        </div>
 
+        <div>
         <h5>Members Count</h5>
         {membersCount ? (
           <div>
