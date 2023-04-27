@@ -7,9 +7,9 @@ import ProtokollDataService from "../services/protokoll.service";
 import ProtokollData from '../types/protokoll.type';
 
 import SqlDataService from "../services/misc.service";
-import SqlDataService0 from "../services/misc0.service";
-import SqlDataService1 from "../services/misc1.service";
-import SqlDataService2 from "../services/misc2.service";
+//import SqlDataService0 from "../services/misc0.service";
+//import SqlDataService1 from "../services/misc1.service";
+//import SqlDataService2 from "../services/misc2.service";
 import ICandidateData from '../types/candidate.type';
 import IActionData from '../types/action.type';
 import IProtokollData from '../types/protokoll.type';
@@ -18,15 +18,11 @@ import {ILoanLeft , ILastLoan,   IMaxInst ,   IMaxLoan ,  ILoanDuration ,  IInst
   IMinInstAmount,  ITotalBal ,  IAllMonthlyDues ,  IOverallBal,  IOverallLoan,IOverallLoanDues,
   IMembersCount} from "../types/misc.type"
 
-import ILoanLeft0 from "../types/misc0.type"
-import ILastLoan1 from "../types/misc1.type"
-import ILastLoan2 from "../types/misc2.type"
+//import ILoanLeft0 from "../types/misc0.type"
+//import ILastLoan1 from "../types/misc1.type"
+//import ILastLoan2 from "../types/misc2.type"
 
 import "./component.css";
-
-//import { Link } from "react-router-dom";
-//import Table from 'react-bootstrap/Table';
-//import { green, red } from "@material-ui/core/colors";
 
 type Props = {};
 
@@ -66,7 +62,7 @@ type State = {
   membersCount: Array<IMembersCount> | null,
 
   currentCommittee: string,
-  currentCandidate1: ICandidateData| null,
+  //currentCandidate1: ICandidateData| null,
   message: string,
   //button
   currentProtokoll: ProtokollData ,
@@ -89,8 +85,8 @@ export default class CandidatesList extends Component<Props, State>{
     //this.searchName = this.searchName.bind(this);
     /*this.getLoanLeft0 = this.getLoanLeft0.bind(this);
     this.getLastLoan1 = this.getLastLoan1.bind(this);
-    this.getLastLoan2 = this.getLastLoan2.bind(this);
-    this.getCandidate = this.getCandidate.bind(this);*/
+    this.getLastLoan2 = this.getLastLoan2.bind(this);*/
+    this.getCandidate = this.getCandidate.bind(this);
     //Admin
     this.getMembersCount = this.getMembersCount.bind(this);
     this.getOverallLoanDues = this.getOverallLoanDues.bind(this);
@@ -174,7 +170,7 @@ export default class CandidatesList extends Component<Props, State>{
       membersCount: null,
 
       currentCommittee: "1",
-      currentCandidate1: null,/* {
+      /*currentCandidate1: null,*//* {
       id: null,
       name: "",
       hidden: "",
@@ -250,13 +246,27 @@ export default class CandidatesList extends Component<Props, State>{
     });
   }
   //Searching on the top
+
   onChangeSearchName2(e: ChangeEvent<HTMLInputElement>) {
     const searchName2 = e.target.value;
 
     this.setState({
-      searchName2: searchName2
+      searchName2: searchName2,
+      currentCandidate2: null,
+      currentIndex2: -1
     });
+    CandidateDataService.findByTitle(this.state.searchName2)
+      .then((response: any) => {
+        this.setState({
+          candidates2: response.data
+        });
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
   }
+
   setActiveCandidate2(candidate: ICandidateData, index: number) {
     this.setState({
       currentCandidate2: candidate,
@@ -266,8 +276,8 @@ export default class CandidatesList extends Component<Props, State>{
     cid = "1"
     let id: string; 
     id =  candidate.id;
-    /*this.getCandidate(id);
-    this.getLoanLeft0(id, cid);
+    this.getCandidate(id);
+    /*this.getLoanLeft0(id, cid);
     this.getLastLoan1(id, cid);
     this.getLastLoan2(id, cid);*/
     //User Individuals
@@ -438,12 +448,11 @@ export default class CandidatesList extends Component<Props, State>{
         console.log(e);
       });
   }
-  //tests
-  /*getCandidate(id: string) {
+  getCandidate(id: string) {
     CandidateDataService.get(id)
       .then((response: any) => {
         this.setState({
-          currentCandidate1: response.data,
+          currentCandidate2: response.data,
         });
         console.log(response.data);
       })
@@ -452,6 +461,8 @@ export default class CandidatesList extends Component<Props, State>{
       });
   }
 
+  //tests
+  /*
   getLoanLeft0(id:string, cid:string) {
     SqlDataService0.findLoanLeftByIdandCid(id,cid)
       .then((response: any) => {
@@ -786,15 +797,6 @@ newProtokoll() {
               value={searchName2}
               onChange={this.onChangeSearchName2}
             />
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={this.searchName2}
-              >
-                Search
-              </button>
-            </div>
           </div>
         </div>
         <div className="col-md-6">
@@ -820,11 +822,11 @@ newProtokoll() {
         <div>
         {currentCandidate2 ? (
           <div>
-            <p>A Candidate Selected, details are retrieved as belewo...</p>
+            <p style={{color: 'blue'}}>A Candidate Selected, details are retrieved as belewo...</p>
           </div>
         ) : (
           <div>
-            <p>No Candidate Selected, details can't be retrieved...</p>
+            <p style={{color: 'red'}}>No Candidate Selected, details can't be retrieved...</p>
           </div>
         )}
         </div>
@@ -1184,15 +1186,6 @@ newProtokoll() {
               value={searchName}
               onChange={this.onChangeSearchName1}
             />
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={this.searchName}
-              >
-                Search
-              </button>
-            </div>
           </div>
         </div>
 

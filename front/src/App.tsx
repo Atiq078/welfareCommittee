@@ -26,7 +26,7 @@ import EventBus from "./common/EventBus";
 
 /////// login registeration /////////
 
-import CandidatesList2 from "./components/candidates-list2.component";
+import mains from "./components/mains";
 /////// login registeration /////////
 type Props = {};
 
@@ -113,8 +113,8 @@ class App extends Component<Props, State> {
             {showAdminBoard && (
             <NavDropdown title="Admin" id="nav-dropdown">
               <NavDropdown.Item eventKey="4.1" >
-                <Link to={"/candidates2"} >
-                CandidatesTests
+                <Link to={"/mains"} >
+                Mains
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Item eventKey="4.1" >
@@ -301,7 +301,7 @@ class App extends Component<Props, State> {
             <Route exact path={["/protokolls"]} component={ProtokollsList} />
             <Route exact path="/addprotokolls" component={AddProtokoll} />
             <Route path="/protokolls/:id" component={Protokoll} />
-            <Route exact path={["/candidates2"]} component={CandidatesList2} />
+            <Route exact path={["/mains"]} component={mains} />
             <Route exact path={["/","/home"]} component={Home} />
             <Route exact path={["/login"]} component={Login} />
             <Route exact path={["/register"]} component={Register} />
@@ -348,7 +348,7 @@ class App extends Component<Props, State> {
             {showAdminBoard && (
             <NavDropdown title="Admin" id="nav-dropdown">
               <NavDropdown.Item eventKey="4.1" >
-                <Link to={"/candidates2"} >
+                <Link to={"/mains"} >
                 CandidatesTests
                 </Link>
               </NavDropdown.Item>
@@ -536,7 +536,7 @@ class App extends Component<Props, State> {
             <Route exact path={["/protokolls"]} component={ProtokollsList} />
             <Route exact path="/addprotokolls" component={AddProtokoll} />
             <Route path="/protokolls/:id" component={Protokoll} />
-            <Route exact path={["/candidates2"]} component={CandidatesList2} />
+            <Route exact path={["/mains"]} component={mains} />
             <Route exact path={["/","/home"]} component={Home} />
             <Route exact path={["/login"]} component={Login} />
             <Route exact path={["/register"]} component={Register} />
@@ -589,7 +589,7 @@ class App extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/candidates2"} className="nav-link">
+              <Link to={"/mains"} className="nav-link">
                 CandidatesTests
               </Link>
             </li>
@@ -739,7 +739,7 @@ class App extends Component {
             <Route exact path={["/protokolls"]} component={ProtokollsList} />
             <Route exact path="/addprotokolls" component={AddProtokoll} />
             <Route path="/protokolls/:id" component={Protokoll} />
-            <Route exact path={["/candidates2"]} component={CandidatesList2} />
+            <Route exact path={["/mains"]} component={mains} />
           </Switch>
         </div>
       </div>

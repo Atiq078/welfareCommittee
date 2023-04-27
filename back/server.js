@@ -5,7 +5,11 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  AccessControlAllowOrigin: '*',
+  //origin: "http://localhost:8081",
+  //origin: "http://e4ba-2003-c9-7f32-3f00-c49a-9605-630-69ee.ngrok.io"
+  origin: "*",
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
 };
 
 app.use(cors(corsOptions));

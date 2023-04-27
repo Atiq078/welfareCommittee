@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import ICandidateData from '../types/candidate.type';
 import React from "react";
 
-import Table from 'react-bootstrap/Table';
+//import Table from 'react-bootstrap/Table';
 
-//import ListGroup from 'react-bootstrap/ListGroup';
 import "./component.css";
 
 type Props = {};

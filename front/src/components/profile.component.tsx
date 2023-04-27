@@ -3,11 +3,7 @@ import { Redirect } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import IUser from "../types/user.type";
 //Sajjad.1
-import { ChangeEvent } from "react";
-import React from "react";
-
 import CandidateDataService from "../services/candidate.service";
-
 import SqlDataService from "../services/misc.service";
 import ICandidateData from '../types/candidate.type';
 
