@@ -1,0 +1,314 @@
+mysql> describe user;
++----------+--------------------------------+------+-----+---------+----------------+
+| Field    | Type                           | Null | Key | Default | Extra          |
++----------+--------------------------------+------+-----+---------+----------------+
+| Name     | varchar(100)                   | NO   |     | NULL    |                |
+| id       | int(11)                        | NO   | PRI | NULL    | auto_increment |
+| hidden   | enum('yes','no')               | NO   |     | no      |                |
+| inactive | enum('yes','no')               | NO   |     | no      |                |
+| mode     | enum('unknown','black','milk') | NO   |     | unknown |                |
++----------+--------------------------------+------+-----+---------+----------------+
+
+CREATE TABLE t (
+    colors TEXT CHECK (colors IN ('red', 'green', 'blue'))
+);
+
+CREATE TYPE enum_hidden AS ENUM('yes', 'no');
+CREATE TYPE enum_mode AS ENUM('unknown','admin','regular','revoked'); 
+CREATE TABLE Candidate(
+     name CHAR(50) NOT NULL,
+	 id SERIAL  PRIMARY KEY NOT NULL,
+	 hidden TEXT  NOT NULL CHECK (hidden IN('yes', 'no')) DEFAULT 'no',
+	 inactive TEXT  NOT NULL CHECK (inactive IN('yes', 'no')) DEFAULT 'no',
+	 mode TEXT  NOT NULL CHECK (mode IN('unknown','admin','regular','revoked')) DEFAULT 'unknown',
+	 phone CHAR(20) NOT NULL,
+	 address CHAR(100),
+	 bankdetails CHAR(100)
+);
+
+
+mysql> describe UnknownRfids;
++-------+-------------+------+-----+-------------------+-----------------------------+
+| Field | Type        | Null | Key | Default           | Extra                       |
++-------+-------------+------+-----+-------------------+-----------------------------+
+| rfid  | varchar(16) | NO   |     | NULL              |                             |
+| time  | timestamp   | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-------+-------------+------+-----+-------------------+-----------------------------+
+
+CREATE TABLE UnknownRfids (
+     rfid CHAR(16) NOT NULL,
+     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+mysql> describe token;
++--------+------------+------+-----+---------+-------+
+| Field  | Type       | Null | Key | Default | Extra |
++--------+------------+------+-----+---------+-------+
+| userid | int(11)    | NO   | PRI | NULL    |       |
+| token  | varchar(5) | NO   | UNI | NULL    |       |
++--------+------------+------+-----+---------+-------+
+
+CREATE TABLE Token (
+	 userid integer PRIMARY KEY NOT NULL,
+     token CHAR(5) UNIQUE NOT NULL
+);
+
+
+mysql> describe rfid;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| userid | int(11)     | NO   | MUL | NULL    |       |
+| rfid   | varchar(16) | NO   | PRI | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+CREATE TABLE rfid (
+	 userid integer NOT NULL,
+     rfid CHAR(16) NOT NULL,
+	 email CHAR(30) NOT NULL,
+	 pwd CHAR(30) NOT NULL,
+	PRIMARY KEY (userid,rfid)
+);
+
+
+
+mysql> describe protokoll;
++-----------+-------------+------+-----+-------------------+----------------+
+| Field     | Type        | Null | Key | Default           | Extra          |
++-----------+-------------+------+-----+-------------------+----------------+
+| id        | int(11)     | NO   | PRI | NULL              | auto_increment |
+| UserID    | int(11)     | NO   | MUL | NULL              |                |
+| Time      | timestamp   | NO   |     | CURRENT_TIMESTAMP |                |
+| Value     | int(11)     | NO   |     | NULL              |                |
+| Kommentar | varchar(80) | NO   |     | NULL              |                |
+| ActionID  | int(11)     | YES  | MUL | NULL              |                |
++-----------+-------------+------+-----+-------------------+----------------+
+
+CREATE TABLE Protokoll(
+	 id SERIAL NOT NULL,
+	 userid integer NOT NULL,
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 value integer NOT NULL,
+	 kommentar CHAR(100) NOT NULL,
+	 actionid integer NOT NULL,
+	 PRIMARY KEY (id,UserID,ActionID)
+);
+
+
+mysql> describe errorlog;
++-------------+-----------+------+-----+-------------------+-------+
+| Field       | Type      | Null | Key | Default           | Extra |
++-------------+-----------+------+-----+-------------------+-------+
+| LastUserID  | int(11)   | YES  |     | NULL              |       |
+| time        | timestamp | NO   |     | CURRENT_TIMESTAMP |       |
+| message     | text      | YES  |     | NULL              |       |
+| protokollid | int(11)   | YES  |     | NULL              |       |
++-------------+-----------+------+-----+-------------------+-------+
+
+CREATE TABLE ErrorLog(
+	 lastuserid integer,
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 message text,
+	 protokollid integer
+	 );
+
+mysql> describe actions;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int(11)      | NO   | PRI | NULL    | auto_increment |
+| text  | varchar(125) | YES  |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+
+CREATE TABLE Actions(
+	 id SERIAL NOT NULL,
+	 description CHAR(100) NOT NULL,
+	 PRIMARY KEY (id)
+);
+
+mysql> describe WasserPreis;
++-----------+-----------+------+-----+-------------------+----------------+
+| Field     | Type      | Null | Key | Default           | Extra          |
++-----------+-----------+------+-----+-------------------+----------------+
+| id        | int(11)   | NO   | PRI | NULL              | auto_increment |
+| timestamp | timestamp | NO   |     | CURRENT_TIMESTAMP |                |
+| preis     | int(11)   | NO   |     | NULL              |                |
++-----------+-----------+------+-----+-------------------+----------------+
+
+CREATE TABLE SharePreis(
+	 id SERIAL NOT NULL,
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 preis integer NOT NULL,
+	 PRIMARY KEY (id)
+);
+
+
+mysql> describe MilchPreis;
++-----------+-----------+------+-----+-------------------+----------------+
+| Field     | Type      | Null | Key | Default           | Extra          |
++-----------+-----------+------+-----+-------------------+----------------+
+| id        | int(11)   | NO   | PRI | NULL              | auto_increment |
+| timestamp | timestamp | NO   |     | CURRENT_TIMESTAMP |                |
+| preis     | int(11)   | NO   |     | NULL              |                |
++-----------+-----------+------+-----+-------------------+----------------+
+
+CREATE TABLE LoanPreis(
+	 id SERIAL NOT NULL,
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 preis integer NOT NULL,
+	 PRIMARY KEY (id)
+);
+
+
+mysql> describe MaschinenStand;
++-----------+-----------+------+-----+-------------------+-------+
+| Field     | Type      | Null | Key | Default           | Extra |
++-----------+-----------+------+-----+-------------------+-------+
+| timestamp | timestamp | NO   |     | CURRENT_TIMESTAMP |       |
+| wert      | int(11)   | NO   |     | NULL              |       |
++-----------+-----------+------+-----+-------------------+-------+
+
+CREATE TABLE WelfareStand(
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 wert integer NOT NULL
+	 );
+
+--------------------------------------------------------------------------------
+Cleaned Welfare DB
+--------------------------------------------------------------------------------
+
+phAdmin-4
+=========
+CREATE TABLE `Candidate` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `hidden` enum('yes','no') NOT NULL DEFAULT 'no',
+  `inactive` enum('yes','no') NOT NULL DEFAULT 'no',
+  `mode` enum('unknown','admin','regular','revoked') NOT NULL DEFAULT 'regular',
+  `phone` varchar(20) NOT NULL,
+  `address` varchar(100),
+  `bankdetails` varchar(100)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+CREATE TYPE enum_hidden AS ENUM('yes', 'no');
+CREATE TYPE enum_mode AS ENUM('unknown','admin','regular','revoked'); 
+CREATE TABLE candidate(
+     name CHAR(50) NOT NULL,
+	 id SERIAL  PRIMARY KEY NOT NULL,
+	 hidden enum_hidden NOT NULL DEFAULT 'no',
+	 inactive enum_hidden NOT NULL DEFAULT 'no',
+	 mode enum_mode NOT NULL DEFAULT 'unknown',
+	 phone CHAR(20) NOT NULL,
+	 address CHAR(100),
+	 bankdetails CHAR(100)
+);
+
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Sajjad', 'no','no','admin','+923342881402','Sanghar','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Sajjad2', 'no','no','admin','+923342881402','Sanghar','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Anees', 'no','no','admin','+923342881403','Muzafabad','Meezan Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Anees', 'no','no','admin','+923342881403','Muzafabad','Meezan Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Mohsin', 'no','no','admin','+923342881404','Peshawar','Allied Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Mohsin', 'no','no','admin','+923342881404','Peshawar','Allied Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Tanveer', 'no','no','regular','+923342881405','Sawat','Habib Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Tanveer', 'no','no','regular','+923342881405','Sawat','Habib Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Subhan', 'no','no','regular','+923342881406','Sawat','National Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Tajdar', 'no','no','regular','+923342881407','Sawabi','Easypaisa Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Waseem', 'no','no','regular','+923342881408','Rawalpindi','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Babar', 'no','no','regular','+923342881409','Soan Garden','Meezan Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Nouman', 'no','no','regular','+923342881410','Sanghar','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Shahzaib', 'no','no','regular','+923342881411','Sanghar','Jazz Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Saeed', 'no','no','regular','+923342881412','Sanghar','Soneri Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Moaz', 'no','no','regular','+923342881413','Sanghar','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Sarfraz', 'no','no','regular','+923342881414','Sanghar','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Mughal', 'no','no','regular','+923342881415','Sanghar','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Amjad', 'no','no','regular','+923342881416','Sanghar','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Qazi', 'no','no','regular','+923342881417','Sanghar','ASkari Bank');
+INSERT INTO candidate(name,hidden,inactive,mode,phone,address,bankdetails) VALUES ('Ahmad', 'no','no','regular','+923342881418','Sanghar','ASkari Bank');
+
+CREATE TABLE UnknownRfids (
+     rfid CHAR(16) NOT NULL,
+     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+
+CREATE TABLE Token (
+	 userid integer PRIMARY KEY NOT NULL,
+     token CHAR(5) UNIQUE NOT NULL
+);
+
+CREATE TABLE rfid (
+	 userid integer NOT NULL,
+     rfid CHAR(16) NOT NULL,
+	 email CHAR(30) NOT NULL,
+	 pwd CHAR(30) NOT NULL,
+	PRIMARY KEY (userid,rfid)
+);
+
+CREATE TABLE Protokoll(
+	 id SERIAL NOT NULL,
+	 userid integer NOT NULL,
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 value integer NOT NULL,
+	 kommentar CHAR(100) NOT NULL,
+	 actionid integer NOT NULL,
+	 PRIMARY KEY (id,userid,actionid)
+);
+INSERT INTO Protokoll(userid,timestamp,value,kommentar,actionid) VALUES ('2022-09-01 15:26:27',5000);
+
+
+CREATE TABLE ErrorLog(
+	 lastuserid integer,
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 message text,
+	 protokollid integer
+	 );
+
+CREATE TABLE Actions(
+	 id SERIAL NOT NULL,
+	 description CHAR(100) NOT NULL,
+	 PRIMARY KEY (id)
+);
+
+INSERT INTO Actions(description) VALUES ('deposit');
+INSERT INTO Actions(description) VALUES ('deposit-share');
+INSERT INTO Actions(description) VALUES ('deposit-installment');
+INSERT INTO Actions(description) VALUES ('withdraw');
+INSERT INTO Actions(description) VALUES ('withdraw-loan');
+INSERT INTO Actions(description) VALUES ('withdraw-revoked');
+INSERT INTO Actions(description) VALUES ('consummable');
+INSERT INTO Actions(description) VALUES ('consummable-guard');
+INSERT INTO Actions(description) VALUES ('consummable-water');
+INSERT INTO Actions(description) VALUES ('consummable-security');
+INSERT INTO Actions(description) VALUES ('consummable-option1');
+INSERT INTO Actions(description) VALUES ('consummable-option2');
+INSERT INTO Actions(description) VALUES ('consummable-option3');
+INSERT INTO Actions(description) VALUES ('unknown');
+INSERT INTO Actions(description) VALUES ('debugging');
+
+CREATE TABLE SharePreis(
+	 id SERIAL NOT NULL,
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 preis integer NOT NULL,
+	 PRIMARY KEY (id)
+);
+INSERT INTO SharePreis(timestamp,preis) VALUES ('2022-09-01 15:26:27',5000);
+
+CREATE TABLE LoanPreis(
+	 id SERIAL NOT NULL,
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 preis integer NOT NULL,
+	 PRIMARY KEY (id)
+);
+INSERT INTO LoanPreis(timestamp,preis) VALUES ('2022-09-01 15:26:27',300000);
+
+CREATE TABLE WelfareStand(
+	 timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	 wert integer NOT NULL
+	 );
+
+INSERT INTO WelfareStand(timestamp,wert) VALUES ('2022-09-01 15:26:27',0);
+

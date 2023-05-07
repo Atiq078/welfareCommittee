@@ -1,0 +1,113 @@
+- Select a protokoll by searching a name
+SELECT * FROM `protokoll` WHERE userid=(SELECT id FROM `candidate` WHERE name='Anees');
+
+-select name, timestamp, value, kommentar from candidate and protokoll
+SELECT candidate.name, protokoll.timestamp, protokoll.value, protokoll.kommentar 
+FROM candidate
+JOIN protokoll  ON protokoll.userid  = candidate.id
+
+-select name, timestamp, value, kommentar, description from candidate action and protokoll
+SELECT candidate.name, protokoll.timestamp, protokoll.value, protokoll.kommentar, action.description
+FROM candidate
+JOIN protokoll  ON protokoll.userid  = candidate.id
+JOIN action  ON protokoll.actionid  = action.id
+
+-select name, timestamp, value, kommentar, description from candidate action and protokoll, searching by NAME
+SELECT candidate.name, protokoll.timestamp, protokoll.value, protokoll.kommentar, action.description
+FROM candidate
+JOIN protokoll  ON protokoll.userid  = candidate.id
+JOIN action  ON protokoll.actionid  = action.id
+WHERE candidate.name='Anees'
+
+SELECT candidate.name, protokoll.timestamp, protokoll.value, protokoll.kommentar, action.description
+FROM candidate
+JOIN protokoll  ON protokoll.userid  = candidate.id
+JOIN action  ON protokoll.actionid  = action.id
+WHERE LOWER(candidate.name) LIKE LOWER('%sajjad%')
+
+SELECT candidate.name, protokoll.timestamp, protokoll.value, protokoll.kommentar, action.description
+FROM candidate
+JOIN protokoll  ON protokoll.userid  = candidate.id
+JOIN action  ON protokoll.actionid  = action.id
+WHERE LOWER(candidate.name) = LOWER('%sajjad%')
+
+
+- operations on dates
+SELECT timestamp FROM `shareunit` WHERE id=1;
+SELECT DATEDIFF('2007-12-31 23:59:59','2007-12-30');
+SELECT TIMESTAMPDIFF (month, timestamp, '2022-12-1' ) FROM `shareunit` WHERE id=1;
+SELECT TIMESTAMPDIFF (month, timestamp, NOW()  ) FROM `shareunit` WHERE id=1;
+SELECT (TIMESTAMPDIFF (month, timestamp, NOW())+1) FROM `shareunit` WHERE id=1;
+SELECT DATE_ADD(timestamp, INTERVAL 5 MONTH) FROM `shareunit` WHERE id=1;
+SELECT MONTHNAME(DATE_ADD(timestamp, INTERVAL 5 MONTH)) FROM `shareunit` WHERE id=1;
+SELECT MONTHNAME(timestamp) FROM `shareunit` WHERE id=1;
+
+
+
+-calculating date and month
+SELECT MONTHNAME(DATE_ADD(timestamp, INTERVAL 1 MONTH)) as loan_start, MONTHNAME(DATE_ADD(timestamp, INTERVAL 5 MONTH)) as loan_end FROM `shareunit` WHERE id=1;
+
+SELECT abs(preis) FROM `loanunit` WHERE cid=1;
+
+SELECT maxinst FROM `loanunit` WHERE cid=1;
+
+SELECT MONTHNAME(DATE_ADD(timestamp, INTERVAL 1 MONTH)) as loan_start, MONTHNAME(DATE_ADD(timestamp, INTERVAL (SELECT maxinst FROM `loanunit` WHERE cid=1;) MONTH)) as loan_end FROM `shareunit` WHERE id=1;
+
+SELECT preis FROM `shareunit` WHERE cid=1 ORDER BY id DESC LIMIT 1;
+
+
+
+
+- select userid wise overall balances
+SELECT
+  userid,
+  SUM(value)*1000
+FROM protokoll
+GROUP BY userid;
+
+- select userid/name wise overall balances
+SELECT candidate.name, protokoll.timestamp, SUM(protokoll.value)*1000, protokoll.kommentar, action.description
+FROM candidate
+JOIN protokoll  ON protokoll.userid  = candidate.id
+JOIN action  ON protokoll.actionid  = action.id
+GROUP BY userid;
+
+
+
+- TOTAL OVERALL BALANCE
+SELECT
+  SUM(value)*1000
+FROM protokoll;
+
+
+- shares due months for an id
+SELECT
+((SELECT ((TIMESTAMPDIFF (month, timestamp, NOW())+1))*preis FROM `shareunit` WHERE cid=1 ORDER BY id DESC LIMIT 1)
+-
+(SELECT SUM(value) FROM protokoll  WHERE userid=1 and actionid=2))/5 as due_share;
+
+
+
+
+- loans dues indivisual with and userid
+SELECT SUM(value) FROM protokoll  WHERE (userid=22 and (actionid=3 or actionid=5));
+- lasr lona individual  with and userid
+SELECT * FROM protokoll  WHERE (actionid=5 and userid=1) ORDER BY id DESC LIMIT 1;
+
+
+
+- loan dues all
+SELECT candidate.name, protokoll.timestamp, SUM(protokoll.value)*1000, protokoll.kommentar, action.description
+FROM candidate
+JOIN protokoll  ON protokoll.userid  = candidate.id
+JOIN action  ON protokoll.actionid  = action.id
+WHERE (actionid=5) 
+GROUP BY userid;
+
+- share dues all
+SELECT candidate.name, protokoll.timestamp, (SUM(protokoll.value)-((SELECT ((TIMESTAMPDIFF (month, timestamp, NOW())+1))*preis FROM `shareunit` WHERE cid=1 ORDER BY id DESC LIMIT 1)))*1000,protokoll.kommentar, action.description
+FROM candidate
+JOIN protokoll  ON protokoll.userid  = candidate.id
+JOIN action  ON protokoll.actionid  = action.id
+WHERE (actionid=2) 
+GROUP BY userid;

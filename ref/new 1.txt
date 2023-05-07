@@ -1,0 +1,162 @@
+
+bitbucket work pass
+ATBBUdLLJqDpzTPJkvEcg4aT2Yb4D3CCB3EF
+bitbucket personal pass
+ATBBkFHbsrP7MnZ8fbKQexPsKNXL06A36530
+
+
+https://whiteboxml.com/blog/the-definitive-guide-to-python-virtual-environments-with-conda
+https://davidadrian.cc/definitive-data-scientist-setup/
+https://codemuch.net/posts/vscode_jupyter_notebook/
+
+YOLOv6 Explained with Tutorial and Example
+https://machinelearningknowledge.ai/yolov6-explained-with-tutorial-and-example/
+
+YOLOv6
+https://github.com/meituan/YOLOv6
+
+Getting started with VS Code for Python
+Setting up a Development Environment for Python programming
+https://www.pythonguis.com/tutorials/getting-started-vs-code-python/
+
+How To Docker Create Container, Change Container, Save as new image, and Connect to Container Step-By-Step PLUS much more
+https://itproguru.com/expert/2016/10/docker-create-container-change-container-save-as-new-image-and-connect-to-container/
+
+
+
+A Complete Guide to Python Virtual Environments
+https://www.dataquest.io/blog/a-complete-guide-to-python-virtual-environments/
+
+
+Error message "error:0308010C:digital envelope routines::unsupported"
+https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported
+
+
+https://github.com/ousecTic/pern-todo-app
+https://www.youtube.com/watch?v=ldYcgPKEZC8
+PERN Stack Course - Postgres, Express, React, and Node
+
+Create MySQL Database And Table Using PHP In XAMPP
+https://ostechnix.com/create-mysql-database-and-table-using-php-in-xampp/
+
+
+How To Connect HTML Form To MySQL Database Using PHP
+https://www.webcodzing.com/connect-html-form-to-mysql-database-using-php/
+
+
+How to Insert Form Data into Database using PHP ?
+https://www.geeksforgeeks.org/how-to-insert-form-data-into-database-using-php/
+
+
+Web development basics -How to connect HTML Form to MySQL using PHP on Apache web-server Part-1.
+https://medium.com/analytics-vidhya/web-development-basics-how-to-connect-html-form-to-mysql-using-php-on-apache-web-server-part-1-7edce564169e
+
+
+PHP and MySQL/MariaDB tutorial on Ubuntu
+https://linuxhint.com/php-mysql-tutorial/
+How To Install Apache, MySQL & PHP on an Ubuntu 18.04 VPS or Dedicated Server
+https://hostadvice.com/how-to/how-to-install-apache-mysql-php-on-an-ubuntu-18-04-vps/
+
+Display Data in an HTML Table Using PHP & MySQL
+https://codingstatus.com/display-data-in-html-table-using-php-mysql/
+Insert Data into Database Using PHP & MySQL
+https://codingstatus.com/insert-data-into-database-using-php-mysql/
+6 Ways to Deploy your Personal Websites / PHP+ MySQL Web Apps for Free
+https://dev.to/jorenrui/6-ways-to-deploy-your-personal-websites--php-mysql-web-apps-for-free-4m3a#heroku-mysql
+Insert Update Delete Data from MySQL in Node JS using Express JS
+https://www.webslesson.info/2022/04/insert-update-delete-data-from-mysql-in-node-js-using-express-js.html
+React Node.js MySQL CRUD Tutorial for Beginners
+https://www.youtube.com/watch?v=fPuLnzSjPLE
+
+How to Create Login System in Node.js Express with MySQL
+https://www.webslesson.info/2022/06/how-to-create-login-system-in-nodejs-express-with-mysql.html
+
+
+React + Node App
+https://www.githubcode.com/react-node-app-github/
+Build Node.js Rest APIs with Express & MySQL
+https://www.bezkoder.com/react-node-express-mysql/
+React Typescript example Project with Axios and Web API
+https://www.bezkoder.com/react-typescript-axios/
+
+https://www.bezkoder.com/node-js-rest-api-express-mysql/
+https://github.com/bezkoder/react-axios-typescript-example
+https://github.com/bezkoder/nodejs-express-sequelize-mysql
+https://github.com/bezkoder/nodejs-express-mysql
+
+How to Create MySQL Connection with Node JS using Sequelize and Express
+https://www.turing.com/kb/mysql-connection-with-node-js-using-sequelize-and-express
+
+
+
+React Basics
+https://neu-se.github.io/CS4530-Spring-2022/tutorials/week6-react-basics
+https://codesandbox.io/s/nervous-morse-o3pwqm?file=/src/tutorial/UseStateExample.tsx:43-50
+CS4530, Spring 2022: Fundamentals of Software Engineering
+https://neu-se.github.io/CS4530-Spring-2022/modules/week1-overview-design-principles
+
+Dropdowns
+https://react-bootstrap.github.io/components/dropdowns/
+typescript-cheatsheet
+https://rmolinamir.github.io/typescript-cheatsheet/
+Render a React Component with State and Props using TypeScript
+https://www.pluralsight.com/guides/render-a-react-component-with-state-and-props-using-typescript
+
+
+
+
+
+
+NOTES
+========
+https://notespk.com/chapter-wise-pdf-mcqs-tests-with-answers-9th-10th-1st-year-2nd-year/
+https://www.selfstudys.com/books/cbse-sample-paper/english/10th
+
+
+1. Frontend Web Development Frameworks
+HTML, CSS, JavaScript, JQuery, are a few front-end languages.
+React, Vue, Ember, Bootstrap, Angular are a few front-end frameworks.
+2. Backend Web Development Frameworks
+Python, JavaScript, PHP, Ruby, .NET, are a few backend languages.
+Django, Ruby On Rails, Spring, Express, ASP.NET Core are a few backend frameworks.
+
+Top Frontend Frameworks
+Frameworks make developing software a lot easier, given the structure and out-of-the-box functionalities that they come with. Some common frontend frameworks include React, Vue, and Svelte. MonoCubed has put together a comprehensive list of the most popular frontend frameworks and their pros and cons. Here’s a condensed version:
+
+React
+Angular
+Vue
+Ember
+jQuery
+Semantic UI
+Backbone
+Preact
+Svelte
+Foundation
+
+
+Top Backend Programming Languages
+Language	Category Winner	Who’s hiring?
+Go	Fastest growing	Uber, Delivery Hero, Trivago, YouTube, Spotify
+Python	Most used for beginners	AirBnB, SpaceX, Stripe
+JavaScript	Most used	Facebook, Google, eBay
+Rust	Most loved	Meta, AWS, Discord, Mozilla, Brave
+Java	Legacy	LinkedIn, PayPal, Netflix
+PHP	Most likely to linger	Meta, Wikipedia, Tumblr, Slack
+Ruby	Highest paid	Crunchbase, Twitter, Etsy
+SQL	Best non-programming backend language	Accenture, Dell, Microsoft
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
